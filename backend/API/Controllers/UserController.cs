@@ -1,5 +1,6 @@
 ﻿using backend.API.DTOs;
 using backend.Core.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.API.Controllers;
@@ -44,9 +45,19 @@ public class UserController : ControllerBase
     var token = await _userService.Login(loginDto);
     if (token == null)
     {
-      return Unauthorized();
+      return Unauthorized(new { message = "Invalid username or password." });
     }
 
+    Response.Cookies.Append("token", token, new CookieOptions { HttpOnly = true });
+
     return Ok(new { token });
+  }
+
+  [Authorize]
+  [HttpGet("logout")]
+  public IActionResult Logout()
+  {
+    Response.Cookies.Append("token", "", new CookieOptions { HttpOnly = true });
+    return Ok(new { message = "Logout successful." });
   }
 }
