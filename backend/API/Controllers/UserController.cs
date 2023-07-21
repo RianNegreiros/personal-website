@@ -1,7 +1,9 @@
 ﻿using System.Security.Claims;
 using backend.API.DTOs;
 using backend.Core.Interfaces.Services;
+using backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.API.Controllers;
@@ -10,11 +12,11 @@ namespace backend.API.Controllers;
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-  private readonly IUserService _userService;
+  private readonly UserManager<User> _userManager;
 
-  public UserController(IUserService userService)
+  public UserController(UserManager<User> userManager)
   {
-    _userService = userService;
+    _userManager = userManager;
   }
 
   [HttpPost("register")]
@@ -25,14 +27,19 @@ public class UserController : ControllerBase
       return BadRequest(ModelState);
     }
 
-    if (await _userService.RegisterUser(registerDto))
+    var user = new User
     {
-      return Ok(new { message = "Registration successful." });
-    }
-    else
+      UserName = registerDto.Username
+    };
+
+    var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+    if (!result.Succeeded)
     {
-      return BadRequest(new { message = "Username already taken." });
+      return BadRequest(result.Errors);
     }
+
+    return Ok(new { message = "Registration successful." });
   }
 
   [HttpPost("login")]

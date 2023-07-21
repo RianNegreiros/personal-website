@@ -1,20 +1,19 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using backend.Core.Models;
 using MongoDB.Driver;
+using Microsoft.EntityFrameworkCore;
 
-namespace backend.Persistence;
-
-public class MongoDbContext
+namespace backend.Persistence
 {
-  private readonly IMongoDatabase _database;
-
-  public MongoDbContext(IConfiguration configuration)
+  public class MongoDbContext : IdentityDbContext<User>
   {
-    string connectionString = configuration.GetConnectionString("MongoDBConnection");
+    private readonly IMongoDatabase _database;
 
-    var mongoClient = new MongoClient(connectionString);
-
-    _database = mongoClient.GetDatabase(new MongoUrl(connectionString).DatabaseName);
+    public MongoDbContext(IConfiguration configuration) : base(new DbContextOptions<MongoDbContext>())
+    {
+      string connectionString = configuration.GetConnectionString("MongoDBConnection");
+      var mongoClient = new MongoClient(connectionString);
+      _database = mongoClient.GetDatabase(new MongoUrl(connectionString).DatabaseName);
+    }
   }
-
-  public IMongoCollection<User> Users => _database.GetCollection<User>("Users");
 }

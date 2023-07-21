@@ -1,8 +1,10 @@
 using System.Text;
 using backend.Application.Services;
 using backend.Core.Interfaces.Services;
+using backend.Core.Models;
 using backend.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<MongoDbContext>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddIdentity<User, IdentityRole>()
+  .AddEntityFrameworkStores<MongoDbContext>()
+  .AddDefaultTokenProviders();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
