@@ -1,4 +1,5 @@
-﻿using backend.API.DTOs;
+﻿using System.Security.Claims;
+using backend.API.DTOs;
 using backend.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -59,5 +60,15 @@ public class UserController : ControllerBase
   {
     Response.Cookies.Append("token", "", new CookieOptions { HttpOnly = true });
     return Ok(new { message = "Logout successful." });
+  }
+
+  [Authorize]
+  [HttpGet("profile")]
+  public IActionResult Profile()
+  {
+    var username = User.Identity.Name;
+    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+    return Ok(new { Username = username, UserId = userId });
   }
 }
