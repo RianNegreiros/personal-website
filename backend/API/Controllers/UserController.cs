@@ -1,28 +1,27 @@
-﻿using backend.Core.Interfaces.Services;
-using backend.Core.Models;
+﻿using backend.API.DTOs;
+using backend.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Controllers
+namespace backend.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class UserController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
+    private readonly IUserService _userService;
+
+    public UserController(IUserService userService)
     {
-        private readonly IUserService _userService;
+        _userService = userService;
+    }
 
-        public UserController(IUserService userService)
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+    {
+        if (await _userService.RegisterUser(registerDto))
         {
-            _userService = userService;
+            return Ok("Registration successful");
         }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] User user)
-        {
-            await _userService.RegisterUserAsync(user);
-            return Ok(new { Message = "User registered successfully." });
-        }
+        return BadRequest("Username already exists or registration failed");
     }
 }
-
-
-
