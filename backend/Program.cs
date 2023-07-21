@@ -1,7 +1,6 @@
 using backend.Application.Services;
 using backend.Core.Interfaces.Services;
 using backend.Persistence;
-using backend.API.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +11,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper(typeof(MappingProfiles));
 builder.Services.AddScoped<MongoDbContext>();
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -21,9 +19,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

@@ -5,15 +5,16 @@ namespace backend.Persistence;
 
 public class MongoDbContext
 {
-    private readonly IMongoDatabase _database;
+  private readonly IMongoDatabase _database;
 
-    public MongoDbContext(IConfiguration configuration)
-    {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
-        var databaseName = configuration.GetSection("DatabaseName").Value;
-        var client = new MongoClient(connectionString);
-        _database = client.GetDatabase(databaseName);
-    }
+  public MongoDbContext(IConfiguration configuration)
+  {
+    string connectionString = configuration.GetConnectionString("MongoDBConnection");
 
-    public IMongoCollection<User> Users => _database.GetCollection<User>("users");
+    var mongoClient = new MongoClient(connectionString);
+
+    _database = mongoClient.GetDatabase(new MongoUrl(connectionString).DatabaseName);
+  }
+
+  public IMongoCollection<User> Users => _database.GetCollection<User>("Users");
 }

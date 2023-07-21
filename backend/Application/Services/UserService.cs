@@ -1,50 +1,50 @@
-﻿using AutoMapper;
+﻿using backend.Core.Models;
 using backend.API.DTOs;
-using backend.Core.Interfaces.Services;
-using backend.Core.Models;
-using backend.Persistence;
 using MongoDB.Driver;
+using backend.Core.Interfaces.Services;
+using backend.Persistence;
 
 namespace backend.Application.Services;
 
 public class UserService : IUserService
 {
-    private readonly IMongoCollection<User> _usersCollection;
-    private readonly IMapper _mapper;
+  private readonly IMongoCollection<User> _usersCollection;
 
-    public UserService(MongoDbContext dbContext, IMapper mapper)
+  public UserService(MongoDbContext dbContext)
+  {
+    _usersCollection = dbContext.Users;
+  }
+
+  public async Task<bool> IsUsernameTaken(string username)
+  {
+    return await _usersCollection.Find(u => u.Username == username).AnyAsync();
+  }
+
+  public async Task<bool> RegisterUser(RegisterDto registerDto)
+  {
+    if (await IsUsernameTaken(registerDto.Username))
     {
-        _usersCollection = dbContext.Users;
-        _mapper = mapper;
+      return false;
     }
-        
-    public async Task<bool> IsUsernameTaken(string username)
+
+    var user = new User
     {
-        var existingUser = await _usersCollection.Find(u => u.Username == username).FirstOrDefaultAsync();
-        return existingUser != null;
-    }
+      Username = registerDto.Username,
+      PasswordHash = HashPassword(registerDto.Password)
+    };
 
-    public async Task<bool> RegisterUser(RegisterDto registerDto)
-    {
-        try
-        {
-            if (await IsUsernameTaken(registerDto.Username))
-            {
-                return false; // Username already exists
-            }
+    await _usersCollection.InsertOneAsync(user);
 
-            var user = new User
-            {
-                Username = registerDto.Username,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password)
-            };
+    return true;
+  }
 
-            await _usersCollection.InsertOneAsync(user);
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
-    }
+  private string HashPassword(string password)
+  {
+    return BCrypt.Net.BCrypt.HashPassword(password);
+  }
+
+  private bool VerifyPassword(string password, string hashedPassword)
+  {
+    return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+  }
 }

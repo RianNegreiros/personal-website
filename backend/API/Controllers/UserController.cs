@@ -4,24 +4,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.API.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly IUserService _userService;
+  private readonly IUserService _userService;
 
-    public UserController(IUserService userService)
+  public UserController(IUserService userService)
+  {
+    _userService = userService;
+  }
+
+  [HttpPost("register")]
+  public async Task<IActionResult> Register(RegisterDto registerDto)
+  {
+    if (!ModelState.IsValid)
     {
-        _userService = userService;
+      return BadRequest(ModelState);
     }
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+    if (await _userService.RegisterUser(registerDto))
     {
-        if (await _userService.RegisterUser(registerDto))
-        {
-            return Ok("Registration successful");
-        }
-        return BadRequest("Username already exists or registration failed");
+      return Ok(new { message = "Registration successful." });
     }
+    else
+    {
+      return BadRequest(new { message = "Username already taken." });
+    }
+  }
 }
