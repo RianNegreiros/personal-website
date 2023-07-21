@@ -32,4 +32,21 @@ public class UserController : ControllerBase
       return BadRequest(new { message = "Username already taken." });
     }
   }
+
+  [HttpPost("login")]
+  public async Task<IActionResult> Login(LoginDto loginDto)
+  {
+    if (!ModelState.IsValid)
+    {
+      return BadRequest(ModelState);
+    }
+
+    var token = await _userService.Login(loginDto);
+    if (token == null)
+    {
+      return Unauthorized();
+    }
+
+    return Ok(new { token });
+  }
 }
