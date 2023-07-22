@@ -1,15 +1,7 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace backend.Core.Models;
 
-public class User
+public class User : IdentityUser
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
-        
-    public string Username { get; set; }
-        
-    public string PasswordHash { get; set; }
 }
