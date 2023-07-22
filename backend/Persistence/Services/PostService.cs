@@ -14,17 +14,15 @@ public class PostService : IPostService
     _postCollection = database.GetCollection<Post>("posts");
   }
 
-  public async Task<Post> CreatePost(PostDto model, string authorId)
+  public async Task<Post> CreatePost(PostDto model, User author)
   {
-    var filePath = model.File != null ? SaveFile(model.File) : null;
-
     var post = new Post
     {
       Title = model.Title,
       Summary = model.Summary,
       Content = model.Content,
-      Cover = filePath,
-      AuthorId = authorId
+      Cover = "filePath",
+      Author = author
     };
 
     await _postCollection.InsertOneAsync(post);
@@ -37,18 +35,10 @@ public class PostService : IPostService
     if (post == null)
       return null;
 
-    if (!IsUserTheAuthor(post.AuthorId, authorId))
-      return null;
-
-    if (model.File != null)
-    {
-      DeleteFile(post.Cover);
-      post.Cover = SaveFile(model.File);
-    }
-
     post.Title = model.Title;
     post.Summary = model.Summary;
     post.Content = model.Content;
+    post.Cover = "filePath";
     post.UpdatedAt = DateTime.Now;
 
     await _postCollection.ReplaceOneAsync(p => p.Id == id, post);
@@ -65,17 +55,6 @@ public class PostService : IPostService
   public async Task<Post> GetPost(string id)
   {
     return await _postCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
-  }
-
-  private string SaveFile(IFormFile file)
-  {
-    // TODO
-    return null;
-  }
-
-  private void DeleteFile(string filePath)
-  {
-    // TODO
   }
 
   private bool IsUserTheAuthor(string postAuthorId, string requestingUserId)
