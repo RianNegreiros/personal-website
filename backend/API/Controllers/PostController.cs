@@ -4,6 +4,7 @@ using backend.Core.Interfaces.Services;
 using backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Persistence.Services;
 
 namespace backend.API.Controllers;
 
@@ -11,16 +12,18 @@ public class PostController : BaseApiController
 {
   private readonly IPostService _postService;
   private readonly IUserService _userService;
+  private readonly CloudinaryService _cloudinaryService;
 
-  public PostController(IPostService postService, IUserService userService)
+  public PostController(IPostService postService, IUserService userService, CloudinaryService cloudinaryService)
   {
     _postService = postService;
     _userService = userService;
+    _cloudinaryService = cloudinaryService;
   }
 
   [Authorize]
   [HttpPost]
-  public async Task<ActionResult<Post>> CreatePost(PostDto model)
+  public async Task<ActionResult<Post>> CreatePost([FromForm] PostDto model)
   {
     var currentUser = await _userService.GetCurrentUser(User.FindFirstValue(ClaimTypes.Email));
 
