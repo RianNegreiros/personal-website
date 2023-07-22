@@ -1,0 +1,11 @@
+using backend.API.DTOs;
+using backend.Core.Models;
+
+namespace backend.Core.Interfaces.Services;
+public interface IPostService
+{
+  Task<Post> CreatePost(PostDto model, string authorId);
+  Task<Post> UpdatePost(string id, PostDto model, string authorId);
+  Task<List<Post>> GetPosts();
+  Task<Post> GetPost(string id);
+}
