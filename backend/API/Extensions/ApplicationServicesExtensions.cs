@@ -3,6 +3,7 @@ using backend.Core.Interfaces.Services;
 using backend.Persistence;
 using backend.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Services;
 
 namespace API.Extensions;
 
@@ -13,6 +14,7 @@ public static class ApplicationServicesExtensions
     services.AddScoped<ITokenService, TokenService>();
     services.AddScoped<IUserService, UserService>();
     services.AddScoped<IPostService, PostService>();
+    services.AddScoped<CloudinaryService>();
 
     services.AddDbContext<IdentityDbContext>(opt =>
     {
