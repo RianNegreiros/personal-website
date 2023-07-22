@@ -9,19 +9,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class UserController : ControllerBase
+public class UserController : BaseApiController
 {
   private readonly UserManager<User> _userManager;
   private readonly SignInManager<User> _signInManager;
   private readonly ITokenService _tokenService;
+  private readonly IUserService _userService;
 
-  public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
+  public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService, IUserService userService)
   {
     _userManager = userManager;
     _signInManager = signInManager;
     _tokenService = tokenService;
+    _userService = userService;
   }
 
   [HttpPost("register")]
@@ -112,17 +112,12 @@ public class UserController : ControllerBase
   {
     var user = await _userManager.FindByEmailFromClaimsPrinciple(User);
 
-    return new UserDto
-    {
-      Email = user.Email,
-      Username = user.UserName,
-      Token = _tokenService.GenerateJwtToken(user)
-    };
+    return await _userService.GetCurrentUser(user.Email);
   }
 
   [HttpGet("emailexists")]
   public async Task<ActionResult<bool>> CheckEmailExists([FromQuery] string email)
   {
-    return await _userManager.FindByEmailAsync(email) != null;
+    return await _userService.CheckEmailExists(email);
   }
 }
