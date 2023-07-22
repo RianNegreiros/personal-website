@@ -1,4 +1,3 @@
-using backend.API.DTOs;
 using backend.Core.Interfaces.Services;
 using backend.Core.Models;
 using Microsoft.AspNetCore.Identity;
@@ -16,17 +15,9 @@ public class UserService : IUserService
     _tokenService = tokenService;
   }
 
-  public async Task<UserDto> GetCurrentUser(string userEmail)
+  public async Task<User> GetCurrentUser(string userEmail)
   {
-    var user = await _userManager.FindByEmailAsync(userEmail);
-
-    return new UserDto
-    {
-      Id = user.Id,
-      Username = user.UserName,
-      Token = _tokenService.GenerateJwtToken(user),
-      Email = user.Email
-    };
+    return await _userManager.FindByEmailAsync(userEmail);
   }
 
   public async Task<bool> CheckEmailExists(string email)

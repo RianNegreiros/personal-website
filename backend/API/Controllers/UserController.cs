@@ -112,7 +112,12 @@ public class UserController : BaseApiController
   {
     var user = await _userManager.FindByEmailFromClaimsPrinciple(User);
 
-    return await _userService.GetCurrentUser(user.Email);
+    return new UserDto
+    {
+      Username = user.UserName,
+      Token = _tokenService.GenerateJwtToken(user),
+      Email = user.Email
+    };
   }
 
   [HttpGet("emailexists")]

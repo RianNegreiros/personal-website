@@ -23,7 +23,8 @@ public class PostController : BaseApiController
   public async Task<ActionResult<Post>> CreatePost(PostDto model)
   {
     var currentUser = await _userService.GetCurrentUser(User.FindFirstValue(ClaimTypes.Email));
-    var post = await _postService.CreatePost(model, currentUser.Id);
+
+    var post = await _postService.CreatePost(model, currentUser);
     return Ok(post);
   }
 
