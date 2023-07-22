@@ -12,6 +12,7 @@ public static class ApplicationServicesExtensions
   {
     services.AddScoped<ITokenService, TokenService>();
     services.AddScoped<IUserService, UserService>();
+    services.AddScoped<IPostService, PostService>();
 
     services.AddDbContext<IdentityDbContext>(opt =>
     {
