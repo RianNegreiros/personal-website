@@ -2,6 +2,7 @@ using backend.API.DTOs;
 using backend.Core.Interfaces.Services;
 using backend.Core.Models;
 using MongoDB.Driver;
+using Persistence.Services;
 
 namespace backend.Persistence.Services;
 
@@ -9,19 +10,23 @@ public class PostService : IPostService
 {
   private readonly IMongoCollection<Post> _postCollection;
 
-  public PostService(IMongoDatabase database)
+  private readonly CloudinaryService _cloudinaryService;
+
+  public PostService(IMongoDatabase database, CloudinaryService cloudinaryService)
   {
+    _cloudinaryService = cloudinaryService;
     _postCollection = database.GetCollection<Post>("posts");
   }
 
   public async Task<Post> CreatePost(PostDto model, User author)
   {
+    var imageUrl = await UploadImageAsync(model.CoverImage);
     var post = new Post
     {
       Title = model.Title,
       Summary = model.Summary,
       Content = model.Content,
-      Cover = "filePath",
+      Cover = imageUrl,
       Author = author
     };
 
@@ -57,10 +62,13 @@ public class PostService : IPostService
     return await _postCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
   }
 
-  private bool IsUserTheAuthor(string postAuthorId, string requestingUserId)
+  public async Task<string> UploadImageAsync(IFormFile coverImage)
   {
-    // Your implementation to check if the requesting user is the author of the post
-    // Replace this with your actual implementation to verify the user's authority
-    return postAuthorId == requestingUserId;
+    if (coverImage == null || coverImage.Length <= 0)
+      return null;
+
+    string imageUrl = await _cloudinaryService.UploadImageAsync(coverImage.OpenReadStream(), coverImage.FileName);
+
+    return imageUrl;
   }
 }
