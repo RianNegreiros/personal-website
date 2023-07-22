@@ -1,31 +1,38 @@
 version: '3.9'
 
 services:
-  api:
+  blog-api:
     build:
       context: .
+      dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "5000:80"
     depends_on:
-      - mongodb
+      - postgres
+    networks:
+      - blog_app_network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    networks:
-      - my_network
 
-  mongodb:
-    image: mongo
-    container_name: mongodb
+  # PostgreSQL service
+  postgres:
+    image: postgres:latest
     restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
     ports:
-      - "27017:27017"
+      - "5432:5432"
     volumes:
-      - mongodb_data:/data/db
+      - postgres_data:/var/lib/postgresql/data
     networks:
-      - my_network
-
-volumes:
-  mongodb_data:
+      - blog_app_network
 
 networks:
-  my_network:
+  blog_app_network:
+
+
+volumes:
+  postgres_data:
+  mongo_data:

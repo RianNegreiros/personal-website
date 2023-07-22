@@ -1,7 +1,8 @@
-﻿using System.Security.Claims;
+﻿using API.Extensions;
 using backend.API.DTOs;
 using backend.Core.Interfaces.Services;
 using backend.Core.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,22 +14,32 @@ namespace backend.API.Controllers;
 public class UserController : ControllerBase
 {
   private readonly UserManager<User> _userManager;
+  private readonly SignInManager<User> _signInManager;
+  private readonly ITokenService _tokenService;
 
-  public UserController(UserManager<User> userManager)
+  public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
   {
     _userManager = userManager;
+    _signInManager = signInManager;
+    _tokenService = tokenService;
   }
 
   [HttpPost("register")]
-  public async Task<IActionResult> Register(RegisterDto registerDto)
+  public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
   {
     if (!ModelState.IsValid)
     {
       return BadRequest(ModelState);
     }
 
+    if (CheckEmailExists(registerDto.Email).Result.Value)
+    {
+      return BadRequest("Email address is in use.");
+    }
+
     var user = new User
     {
+      Email = registerDto.Email,
       UserName = registerDto.Username
     };
 
@@ -39,43 +50,79 @@ public class UserController : ControllerBase
       return BadRequest(result.Errors);
     }
 
-    return Ok(new { message = "Registration successful." });
+    return new UserDto
+    {
+      Username = user.UserName,
+      Token = _tokenService.GenerateJwtToken(user),
+      Email = user.Email
+    };
   }
 
   [HttpPost("login")]
-  public async Task<IActionResult> Login(LoginDto loginDto)
+  public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
   {
     if (!ModelState.IsValid)
     {
       return BadRequest(ModelState);
     }
 
-    var token = await _userService.Login(loginDto);
-    if (token == null)
+    var user = await _userManager.FindByEmailAsync(loginDto.Email);
+
+    if (user == null)
     {
-      return Unauthorized(new { message = "Invalid username or password." });
+      return BadRequest("Invalid username or password.");
     }
 
-    Response.Cookies.Append("token", token, new CookieOptions { HttpOnly = true });
+    var result = await _signInManager.PasswordSignInAsync(user, loginDto.Password, false, true);
 
-    return Ok(new { token });
+    if (!result.Succeeded)
+    {
+      return BadRequest("Invalid username or password.");
+    }
+
+    var token = _tokenService.GenerateJwtToken(user);
+
+    return Ok(new UserDto
+    {
+      Username = user.UserName,
+      Token = token,
+      Email = user.Email
+    });
   }
 
   [Authorize]
-  [HttpGet("logout")]
-  public IActionResult Logout()
+  [HttpPost("logout")]
+  public async Task<IActionResult> Logout()
   {
-    Response.Cookies.Append("token", "", new CookieOptions { HttpOnly = true });
-    return Ok(new { message = "Logout successful." });
+    try
+    {
+      await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+    }
+    catch (Exception)
+    {
+      return BadRequest(new { message = "Error logging out." });
+    }
+
+    return Ok(new { message = "User logged out successfully." });
   }
 
   [Authorize]
-  [HttpGet("profile")]
-  public IActionResult Profile()
+  [HttpGet]
+  public async Task<ActionResult<UserDto>> GetCurrentUser()
   {
-    var username = User.Identity.Name;
-    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    var user = await _userManager.FindByEmailFromClaimsPrinciple(User);
 
-    return Ok(new { Username = username, UserId = userId });
+    return new UserDto
+    {
+      Email = user.Email,
+      Username = user.UserName,
+      Token = _tokenService.GenerateJwtToken(user)
+    };
+  }
+
+  [HttpGet("emailexists")]
+  public async Task<ActionResult<bool>> CheckEmailExists([FromQuery] string email)
+  {
+    return await _userManager.FindByEmailAsync(email) != null;
   }
 }
