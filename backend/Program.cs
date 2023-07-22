@@ -10,6 +10,7 @@ builder.Services.AddSwaggerDocumentation();
 
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddMongoDb(builder.Configuration);
 
 var app = builder.Build();
 

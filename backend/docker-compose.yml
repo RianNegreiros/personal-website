@@ -9,12 +9,12 @@ services:
       - "5000:80"
     depends_on:
       - postgres
+      - mongodb
     networks:
       - blog_app_network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
-  # PostgreSQL service
   postgres:
     image: postgres:latest
     restart: always
@@ -29,10 +29,21 @@ services:
     networks:
       - blog_app_network
 
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - blog_app_network
+
 networks:
   blog_app_network:
 
 
 volumes:
   postgres_data:
-  mongo_data:
+  mongodb_data:
