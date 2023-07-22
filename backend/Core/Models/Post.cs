@@ -19,4 +19,10 @@ public class Post
 
   [BsonIgnore]
   public User Author { get; set; }
+
+  [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+  public DateTime CreatedAt { get; } = DateTime.Now;
+
+  [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+  public DateTime UpdatedAt { get; set; } = DateTime.Now;
 }
