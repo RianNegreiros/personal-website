@@ -1,4 +1,5 @@
 using backend.API.DTOs;
+using backend.API.Errors;
 using backend.Core.Interfaces.Services;
 using backend.Core.Models;
 using MongoDB.Driver;
@@ -20,13 +21,12 @@ public class PostService : IPostService
 
   public async Task<Post> CreatePost(PostDto model, User author)
   {
-    var imageUrl = await UploadImageAsync(model.CoverImage);
     var post = new Post
     {
       Title = model.Title,
       Summary = model.Summary,
       Content = model.Content,
-      Cover = imageUrl,
+      Cover = model.CoverImage != null ? await UploadImageAsync(model.CoverImage) : null,
       Author = author
     };
 
@@ -36,19 +36,24 @@ public class PostService : IPostService
 
   public async Task<Post> UpdatePost(string id, PostDto model, User author)
   {
+
     var post = await _postCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
     if (post == null)
-      return null;
+      throw new Exception("Post not found");
 
     if (post.Author.Id != author.Id)
     {
-      throw new Exception("You are not the author of this post");
+      throw new CustomException("You are not authorized to update this post");
+    }
+
+    if (model.CoverImage != null)
+    {
+      post.Cover = await UploadImageAsync(model.CoverImage);
     }
 
     post.Title = model.Title;
     post.Summary = model.Summary;
     post.Content = model.Content;
-    post.Cover = model.CoverImage != null ? await UploadImageAsync(model.CoverImage) : post.Cover;
     post.UpdatedAt = DateTime.Now;
 
     await _postCollection.ReplaceOneAsync(p => p.Id == id, post);
@@ -70,7 +75,7 @@ public class PostService : IPostService
   public async Task<string> UploadImageAsync(IFormFile coverImage)
   {
     if (coverImage == null || coverImage.Length <= 0)
-      return null;
+      throw new CustomException("Invalid image");
 
     string imageUrl = await _cloudinaryService.UploadImageAsync(coverImage.OpenReadStream(), coverImage.FileName);
 

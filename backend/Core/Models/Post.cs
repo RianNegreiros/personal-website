@@ -13,8 +13,6 @@ public class Post
   public string Summary { get; set; }
   public string Content { get; set; }
   public string Cover { get; set; }
-
-  [BsonIgnore]
   public User Author { get; set; }
 
   [BsonDateTimeOptions(Kind = DateTimeKind.Local)]

@@ -25,7 +25,12 @@ public class PostController : BaseApiController
   [HttpPost]
   public async Task<ActionResult<Post>> CreatePost([FromForm] PostDto model)
   {
+    if (!ModelState.IsValid)
+      return BadRequest(ModelState);
+
     var currentUser = await _userService.GetCurrentUser(User.FindFirstValue(ClaimTypes.Email));
+    if (currentUser == null)
+      return Unauthorized();
 
     var post = await _postService.CreatePost(model, currentUser);
     return Ok(post);
@@ -33,13 +38,16 @@ public class PostController : BaseApiController
 
   [Authorize]
   [HttpPut("{id}")]
-  public async Task<IActionResult> UpdatePost(string id, PostDto model)
+  public async Task<ActionResult<Post>> UpdatePost(string id, [FromForm] PostDto model)
   {
-    var currentUser = await _userService.GetCurrentUser(User.FindFirstValue(ClaimTypes.Email));
-    var post = await _postService.UpdatePost(id, model, currentUser);
-    if (post == null)
-      return NotFound();
+    if (!ModelState.IsValid)
+      return BadRequest(ModelState);
 
+    var currentUser = await _userService.GetCurrentUser(User.FindFirstValue(ClaimTypes.Email));
+    if (currentUser == null)
+      return Unauthorized();
+
+    var post = await _postService.UpdatePost(id, model, currentUser);
     return Ok(post);
   }
 
