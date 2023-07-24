@@ -4,7 +4,7 @@ using backend.Core.Interfaces.Services;
 using backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Persistence.Services;
+using backend.Persistence.Services;
 
 namespace backend.API.Controllers;
 

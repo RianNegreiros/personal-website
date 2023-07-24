@@ -1,7 +1,7 @@
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 
-namespace Persistence.Services;
+namespace backend.Persistence.Services;
 
 public class CloudinaryService
 {

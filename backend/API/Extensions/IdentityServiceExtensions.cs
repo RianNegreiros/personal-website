@@ -6,7 +6,7 @@ using backend.Persistence;
 using backend.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Extensions;
+namespace backend.API.Extensions;
 
 public static class IdentityServiceExtensions
 {

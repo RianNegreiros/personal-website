@@ -1,5 +1,5 @@
-﻿using API.Extensions;
-using backend.API.DTOs;
+﻿using backend.API.DTOs;
+using backend.API.Extensions;
 using backend.Core.Interfaces.Services;
 using backend.Core.Models;
 using Microsoft.AspNetCore.Authentication;

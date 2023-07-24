@@ -2,7 +2,7 @@ using backend.API.DTOs;
 using backend.Core.Interfaces.Services;
 using backend.Core.Models;
 using MongoDB.Driver;
-using Persistence.Services;
+using backend.Persistence.Services;
 
 namespace backend.Persistence.Services;
 
