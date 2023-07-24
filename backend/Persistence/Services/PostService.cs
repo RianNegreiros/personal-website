@@ -34,16 +34,21 @@ public class PostService : IPostService
     return post;
   }
 
-  public async Task<Post> UpdatePost(string id, PostDto model, string authorId)
+  public async Task<Post> UpdatePost(string id, PostDto model, User author)
   {
     var post = await _postCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
     if (post == null)
       return null;
 
+    if (post.Author.Id != author.Id)
+    {
+      throw new Exception("You are not the author of this post");
+    }
+
     post.Title = model.Title;
     post.Summary = model.Summary;
     post.Content = model.Content;
-    post.Cover = "filePath";
+    post.Cover = model.CoverImage != null ? await UploadImageAsync(model.CoverImage) : post.Cover;
     post.UpdatedAt = DateTime.Now;
 
     await _postCollection.ReplaceOneAsync(p => p.Id == id, post);

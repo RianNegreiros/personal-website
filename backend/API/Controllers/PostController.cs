@@ -36,7 +36,7 @@ public class PostController : BaseApiController
   public async Task<IActionResult> UpdatePost(string id, PostDto model)
   {
     var currentUser = await _userService.GetCurrentUser(User.FindFirstValue(ClaimTypes.Email));
-    var post = await _postService.UpdatePost(id, model, currentUser.Id);
+    var post = await _postService.UpdatePost(id, model, currentUser);
     if (post == null)
       return NotFound();
 
