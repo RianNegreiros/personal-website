@@ -1,5 +1,4 @@
 using backend.API.DTOs;
-using backend.API.Errors;
 using backend.Core.Interfaces.Services;
 using backend.Core.Models;
 using MongoDB.Driver;
@@ -39,12 +38,10 @@ public class PostService : IPostService
 
     var post = await _postCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
     if (post == null)
-      throw new Exception("Post not found");
+      return null;
 
     if (post.Author.Id != author.Id)
-    {
-      throw new CustomException("You are not authorized to update this post");
-    }
+      return null;
 
     if (model.CoverImage != null)
     {
@@ -75,7 +72,7 @@ public class PostService : IPostService
   public async Task<string> UploadImageAsync(IFormFile coverImage)
   {
     if (coverImage == null || coverImage.Length <= 0)
-      throw new CustomException("Invalid image");
+      return null;
 
     string imageUrl = await _cloudinaryService.UploadImageAsync(coverImage.OpenReadStream(), coverImage.FileName);
 

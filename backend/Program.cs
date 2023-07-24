@@ -1,5 +1,4 @@
 using API.Extensions;
-using backend.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +18,6 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment()) { }
 
 app.UseSwaggerDocumentation();
-
-app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
