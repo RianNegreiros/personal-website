@@ -63,7 +63,7 @@ public static class IdentityServiceExtensions
       }
       else
       {
-        connStr = config["IdentityProductionConnection"];
+        connStr = config.GetConnectionString("IdentityConnection");
       }
 
       opt.UseNpgsql(connStr);
