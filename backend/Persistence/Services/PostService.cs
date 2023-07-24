@@ -20,13 +20,12 @@ public class PostService : IPostService
 
   public async Task<Post> CreatePost(PostDto model, User author)
   {
-    var imageUrl = await UploadImageAsync(model.CoverImage);
     var post = new Post
     {
       Title = model.Title,
       Summary = model.Summary,
       Content = model.Content,
-      Cover = imageUrl,
+      Cover = model.CoverImage != null ? await UploadImageAsync(model.CoverImage) : null,
       Author = author
     };
 
@@ -38,7 +37,7 @@ public class PostService : IPostService
   {
     var post = await _postCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
     if (post == null)
-      return null;
+      throw new Exception("Post not found");
 
     if (post.Author.Id != author.Id)
     {
@@ -70,7 +69,7 @@ public class PostService : IPostService
   public async Task<string> UploadImageAsync(IFormFile coverImage)
   {
     if (coverImage == null || coverImage.Length <= 0)
-      return null;
+      throw new Exception("Image is required");
 
     string imageUrl = await _cloudinaryService.UploadImageAsync(coverImage.OpenReadStream(), coverImage.FileName);
 
