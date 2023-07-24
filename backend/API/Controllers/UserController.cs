@@ -84,6 +84,7 @@ public class UserController : BaseApiController
 
     return Ok(new UserDto
     {
+      Id = user.Id,
       Username = user.UserName,
       Token = token,
       Email = user.Email
@@ -114,6 +115,7 @@ public class UserController : BaseApiController
 
     return new UserDto
     {
+      Id = user.Id,
       Username = user.UserName,
       Token = _tokenService.GenerateJwtToken(user),
       Email = user.Email
