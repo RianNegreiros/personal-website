@@ -15,6 +15,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build-env /app/out .
 
+COPY ./appsettings.Development.json ./
+
 # Start the API
 ENTRYPOINT ["dotnet", "backend.dll"]
 CMD ["dotnet", "ef", "database", "update"]
