@@ -111,15 +111,22 @@ public class UserController : BaseApiController
   [HttpGet]
   public async Task<ActionResult<UserDto>> GetCurrentUser()
   {
-    var user = await _userManager.FindByEmailFromClaimsPrinciple(User);
-
-    return new UserDto
+    try
     {
-      Id = user.Id,
-      Username = user.UserName,
-      Token = _tokenService.GenerateJwtToken(user),
-      Email = user.Email
-    };
+      var user = await _userManager.FindByEmailFromClaimsPrinciple(HttpContext.User);
+
+      return new UserDto
+      {
+        Id = user.Id,
+        Username = user.UserName,
+        Token = _tokenService.GenerateJwtToken(user),
+        Email = user.Email
+      };
+    }
+    catch (Exception)
+    {
+      return BadRequest(new { message = "Error getting current user." });
+    }
   }
 
   [HttpGet("emailexists")]
