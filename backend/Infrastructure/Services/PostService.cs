@@ -2,9 +2,8 @@ using backend.API.DTOs;
 using backend.Core.Interfaces.Services;
 using backend.Core.Models;
 using MongoDB.Driver;
-using backend.Persistence.Services;
 
-namespace backend.Persistence.Services;
+namespace backend.Infrastructure.Services;
 
 public class PostService : IPostService
 {
@@ -38,10 +37,10 @@ public class PostService : IPostService
 
     var post = await _postCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
     if (post == null)
-      return null;
+      throw new Exception("Post not found");
 
     if (post.Author.Id != author.Id)
-      return null;
+      throw new Exception("You are not the author of this post");
 
     if (model.CoverImage != null)
     {
@@ -60,7 +59,6 @@ public class PostService : IPostService
   public async Task<List<Post>> GetPosts()
   {
     return await _postCollection.Find(_ => true)
-      .SortByDescending(p => p.CreatedAt)
       .ToListAsync();
   }
 
@@ -72,7 +70,7 @@ public class PostService : IPostService
   public async Task<string> UploadImageAsync(IFormFile coverImage)
   {
     if (coverImage == null || coverImage.Length <= 0)
-      return null;
+      throw new Exception("Image is required");
 
     string imageUrl = await _cloudinaryService.UploadImageAsync(coverImage.OpenReadStream(), coverImage.FileName);
 

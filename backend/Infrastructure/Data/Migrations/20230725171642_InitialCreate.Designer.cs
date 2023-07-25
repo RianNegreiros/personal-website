@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using backend.Persistence;
+using backend.Infrastructure.Data;
 
 #nullable disable
 
-namespace backend.Migrations
+namespace backend.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20230724204136_InitialCreate")]
+    [Migration("20230725171642_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using backend.Persistence;
+using backend.Infrastructure.Data;
 
 #nullable disable
 
-namespace backend.Migrations
+namespace backend.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
     partial class IdentityDbContextModelSnapshot : ModelSnapshot
