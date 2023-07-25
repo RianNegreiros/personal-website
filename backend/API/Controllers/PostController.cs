@@ -28,12 +28,19 @@ public class PostController : BaseApiController
     if (!ModelState.IsValid)
       return BadRequest(ModelState);
 
-    var currentUser = await _userService.GetCurrentUser(User.FindFirstValue(ClaimTypes.Email));
-    if (currentUser == null)
-      return Unauthorized();
+    try
+    {
+      var currentUser = await _userService.GetCurrentUser(User.FindFirstValue(ClaimTypes.Email));
+      if (currentUser == null)
+        return Unauthorized();
 
-    var post = await _postService.CreatePost(model, currentUser);
-    return Ok(post);
+      var post = await _postService.CreatePost(model, currentUser);
+      return Ok(post);
+    }
+    catch (Exception ex)
+    {
+      return BadRequest(ex.Message);
+    }
   }
 
   [Authorize]
@@ -43,12 +50,19 @@ public class PostController : BaseApiController
     if (!ModelState.IsValid)
       return BadRequest(ModelState);
 
-    var currentUser = await _userService.GetCurrentUser(User.FindFirstValue(ClaimTypes.Email));
-    if (currentUser == null)
-      return Unauthorized();
+    try
+    {
+      var currentUser = await _userService.GetCurrentUser(User.FindFirstValue(ClaimTypes.Email));
+      if (currentUser == null)
+        return Unauthorized();
 
-    var post = await _postService.UpdatePost(id, model, currentUser);
-    return Ok(post);
+      var post = await _postService.UpdatePost(id, model, currentUser);
+      return Ok(post);
+    }
+    catch (Exception ex)
+    {
+      return BadRequest(ex.Message);
+    }
   }
 
   [HttpGet]
