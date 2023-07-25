@@ -2,9 +2,8 @@ using backend.API.DTOs;
 using backend.Core.Interfaces.Services;
 using backend.Core.Models;
 using MongoDB.Driver;
-using backend.Persistence.Services;
 
-namespace backend.Persistence.Services;
+namespace backend.Infrastructure.Services;
 
 public class PostService : IPostService
 {
@@ -60,7 +59,6 @@ public class PostService : IPostService
   public async Task<List<Post>> GetPosts()
   {
     return await _postCollection.Find(_ => true)
-      .SortByDescending(p => p.CreatedAt)
       .ToListAsync();
   }
 

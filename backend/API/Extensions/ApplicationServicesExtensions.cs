@@ -1,9 +1,7 @@
-using backend.Application.Services;
 using backend.Core.Interfaces.Services;
-using backend.Persistence;
-using backend.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
-using backend.Persistence.Services;
+using backend.Infrastructure.Services;
+using backend.Infrastructure.Data;
 
 namespace backend.API.Extensions;
 
