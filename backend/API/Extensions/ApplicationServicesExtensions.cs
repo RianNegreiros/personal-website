@@ -10,7 +10,7 @@ public static class ApplicationServicesExtensions
     services.AddScoped<ITokenService, TokenService>();
     services.AddScoped<IUserService, UserService>();
     services.AddScoped<IPostService, PostService>();
-    services.AddScoped<CloudinaryService>();
+    services.AddScoped<ICloudinaryService, CloudinaryService>();
 
     return services;
   }

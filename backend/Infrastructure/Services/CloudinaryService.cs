@@ -1,9 +1,10 @@
+using backend.Core.Interfaces.Services;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 
 namespace backend.Infrastructure.Services;
 
-public class CloudinaryService
+public class CloudinaryService : ICloudinaryService
 {
   private readonly Cloudinary _cloudinary;
 

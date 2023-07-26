@@ -9,9 +9,9 @@ public class PostService : IPostService
 {
   private readonly IMongoCollection<Post> _postCollection;
 
-  private readonly CloudinaryService _cloudinaryService;
+  private readonly ICloudinaryService _cloudinaryService;
 
-  public PostService(IMongoDatabase database, CloudinaryService cloudinaryService)
+  public PostService(IMongoDatabase database, ICloudinaryService cloudinaryService)
   {
     _cloudinaryService = cloudinaryService;
     _postCollection = database.GetCollection<Post>("posts");
