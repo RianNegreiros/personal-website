@@ -1,5 +1,6 @@
-using BlogBackend.Core.Interfaces.Services;
-using BlogBackend.Infrastructure.Services;
+using BlogBackend.Application.Services;
+using BlogBackend.Core.Inferfaces.CloudServices;
+using BlogBackend.Infrastructure.CloudServices;
 
 namespace BlogBackend.API.Extensions;
 

@@ -1,6 +1,6 @@
 using BlogBackend.Core.Models;
 
-namespace BlogBackend.Core.Interfaces.Services;
+namespace BlogBackend.Application.Services;
 
 public interface IUserService
 {

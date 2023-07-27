@@ -1,6 +1,6 @@
-﻿using BlogBackend.API.DTOs;
-using BlogBackend.API.Extensions;
-using BlogBackend.Core.Interfaces.Services;
+﻿using BlogBackend.API.Extensions;
+using BlogBackend.Application.Models;
+using BlogBackend.Application.Services;
 using BlogBackend.Core.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -25,33 +25,34 @@ public class UserController : BaseApiController
   }
 
   [HttpPost("register")]
-  public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+  public async Task<ActionResult<UserViewModel>> Register(RegisterInputModel model)
   {
     if (!ModelState.IsValid)
     {
       return BadRequest(ModelState);
     }
 
-    if (CheckEmailExists(registerDto.Email).Result.Value)
+    if (CheckEmailExists(model.Email).Result.Value)
     {
       return BadRequest("Email address is in use.");
     }
 
     var user = new User
     {
-      Email = registerDto.Email,
-      UserName = registerDto.Username
+      Email = model.Email,
+      UserName = model.Username
     };
 
-    var result = await _userManager.CreateAsync(user, registerDto.Password);
+    var result = await _userManager.CreateAsync(user, model.Password);
 
     if (!result.Succeeded)
     {
       return BadRequest(result.Errors);
     }
 
-    return new UserDto
+    return new UserViewModel
     {
+      Id = user.Id,
       Username = user.UserName,
       Token = _tokenService.GenerateJwtToken(user),
       Email = user.Email
@@ -59,21 +60,21 @@ public class UserController : BaseApiController
   }
 
   [HttpPost("login")]
-  public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+  public async Task<ActionResult<UserViewModel>> Login(LoginInputModel model)
   {
     if (!ModelState.IsValid)
     {
       return BadRequest(ModelState);
     }
 
-    var user = await _userManager.FindByEmailAsync(loginDto.Email);
+    var user = await _userManager.FindByEmailAsync(model.Email);
 
     if (user == null)
     {
       return BadRequest("Invalid username or password.");
     }
 
-    var result = await _signInManager.PasswordSignInAsync(user, loginDto.Password, false, true);
+    var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, true);
 
     if (!result.Succeeded)
     {
@@ -82,7 +83,7 @@ public class UserController : BaseApiController
 
     var token = _tokenService.GenerateJwtToken(user);
 
-    return Ok(new UserDto
+    return Ok(new UserViewModel
     {
       Id = user.Id,
       Username = user.UserName,
@@ -109,13 +110,13 @@ public class UserController : BaseApiController
 
   [Authorize]
   [HttpGet]
-  public async Task<ActionResult<UserDto>> GetCurrentUser()
+  public async Task<ActionResult<UserViewModel>> GetCurrentUser()
   {
     try
     {
       var user = await _userManager.FindByEmailFromClaimsPrinciple(HttpContext.User);
 
-      return new UserDto
+      return new UserViewModel
       {
         Id = user.Id,
         Username = user.UserName,

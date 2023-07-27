@@ -1,4 +1,4 @@
-namespace BlogBackend.Core.Interfaces.Services;
+namespace BlogBackend.Core.Inferfaces.CloudServices;
 
 public interface ICloudinaryService
 {

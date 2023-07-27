@@ -1,8 +1,7 @@
 using System.Security.Claims;
-using BlogBackend.API.DTOs;
-using BlogBackend.Core.Interfaces.Services;
-using BlogBackend.Core.Models;
-using BlogBackend.Infrastructure.Services;
+using BlogBackend.Application.Models;
+using BlogBackend.Application.Services;
+using BlogBackend.Infrastructure.CloudServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,18 +11,16 @@ public class PostController : BaseApiController
 {
   private readonly IPostService _postService;
   private readonly IUserService _userService;
-  private readonly CloudinaryService _cloudinaryService;
 
-  public PostController(IPostService postService, IUserService userService, CloudinaryService cloudinaryService)
+  public PostController(IPostService postService, IUserService userService)
   {
     _postService = postService;
     _userService = userService;
-    _cloudinaryService = cloudinaryService;
   }
 
   [Authorize]
   [HttpPost]
-  public async Task<ActionResult<Post>> CreatePost([FromForm] PostDto model)
+  public async Task<ActionResult<PostViewModel>> CreatePost([FromForm] PostInputModel model)
   {
     if (!ModelState.IsValid)
       return BadRequest(ModelState);
@@ -35,7 +32,17 @@ public class PostController : BaseApiController
         return Unauthorized();
 
       var post = await _postService.CreatePost(model, currentUser);
-      return Ok(post);
+
+      var postViewModel = new PostViewModel
+      {
+        Id = post.Id,
+        Title = post.Title,
+        Summary = post.Summary,
+        Content = post.Content,
+        CoverImageUrl = post.CoverImageUrl
+      };
+
+      return Ok(postViewModel);
     }
     catch (Exception ex)
     {
@@ -45,7 +52,7 @@ public class PostController : BaseApiController
 
   [Authorize]
   [HttpPut("{id}")]
-  public async Task<ActionResult<Post>> UpdatePost(string id, [FromForm] PostDto model)
+  public async Task<ActionResult<PostViewModel>> UpdatePost(string id, [FromForm] PostInputModel model)
   {
     if (!ModelState.IsValid)
       return BadRequest(ModelState);
@@ -57,7 +64,17 @@ public class PostController : BaseApiController
         return Unauthorized();
 
       var post = await _postService.UpdatePost(id, model, currentUser);
-      return Ok(post);
+
+      var postViewModel = new PostViewModel
+      {
+        Id = post.Id,
+        Title = post.Title,
+        Summary = post.Summary,
+        Content = post.Content,
+        CoverImageUrl = post.CoverImageUrl
+      };
+
+      return Ok(postViewModel);
     }
     catch (Exception ex)
     {

@@ -12,7 +12,7 @@ public class Post
   public string Title { get; set; }
   public string Summary { get; set; }
   public string Content { get; set; }
-  public string Cover { get; set; }
+  public string CoverImageUrl { get; set; }
   public User Author { get; set; }
 
   [BsonDateTimeOptions(Kind = DateTimeKind.Local)]

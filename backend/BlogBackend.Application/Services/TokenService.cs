@@ -1,12 +1,11 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.Text;
+﻿using System.Text;
 using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using BlogBackend.Core.Interfaces.Services;
 using BlogBackend.Core.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
-namespace BlogBackend.Infrastructure.Services;
+namespace BlogBackend.Application.Services;
 
 public class TokenService : ITokenService
 {

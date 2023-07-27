@@ -1,8 +1,8 @@
-using BlogBackend.Core.Interfaces.Services;
+using BlogBackend.Application.Services;
 using BlogBackend.Core.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace BlogBackend.Infrastructure.Services;
+namespace BlogBackend.Application.Services;
 
 public class UserService : IUserService
 {

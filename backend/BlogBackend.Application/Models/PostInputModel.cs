@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
-namespace BlogBackend.API.DTOs;
+namespace BlogBackend.Application.Models;
 
-public class PostDto
+public class PostInputModel
 {
   [Required]
   [MinLength(4)]
@@ -15,5 +16,6 @@ public class PostDto
   [Required]
   [MinLength(50)]
   public string Content { get; set; }
+
   public IFormFile? CoverImage { get; set; }
 }

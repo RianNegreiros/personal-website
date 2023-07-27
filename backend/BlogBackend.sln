@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogBackend.Infrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogBackend.API", "BlogBackend.API\BlogBackend.API.csproj", "{C966D3DC-73CF-4BC7-9D70-2476ACC8629E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogBackend.Application", "BlogBackend.Application\BlogBackend.Application.csproj", "{AB208809-77FC-4642-927C-4B23995BC169}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{C966D3DC-73CF-4BC7-9D70-2476ACC8629E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C966D3DC-73CF-4BC7-9D70-2476ACC8629E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C966D3DC-73CF-4BC7-9D70-2476ACC8629E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB208809-77FC-4642-927C-4B23995BC169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB208809-77FC-4642-927C-4B23995BC169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB208809-77FC-4642-927C-4B23995BC169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB208809-77FC-4642-927C-4B23995BC169}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

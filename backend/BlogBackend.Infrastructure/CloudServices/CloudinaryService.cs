@@ -1,9 +1,9 @@
-using BlogBackend.Core.Interfaces.Services;
+using BlogBackend.Core.Inferfaces.CloudServices;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Configuration;
 
-namespace BlogBackend.Infrastructure.Services;
+namespace BlogBackend.Infrastructure.CloudServices;
 
 public class CloudinaryService : ICloudinaryService
 {
