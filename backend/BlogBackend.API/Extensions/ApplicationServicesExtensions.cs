@@ -1,7 +1,7 @@
-using backend.Core.Interfaces.Services;
-using backend.Infrastructure.Services;
+using BlogBackend.Core.Interfaces.Services;
+using BlogBackend.Infrastructure.Services;
 
-namespace backend.API.Extensions;
+namespace BlogBackend.API.Extensions;
 
 public static class ApplicationServicesExtensions
 {

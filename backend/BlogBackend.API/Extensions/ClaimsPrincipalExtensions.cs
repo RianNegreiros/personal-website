@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace backend.API.Extensions;
+namespace BlogBackend.API.Extensions;
 
 public static class ClaimsPrincipalExtensions
 {

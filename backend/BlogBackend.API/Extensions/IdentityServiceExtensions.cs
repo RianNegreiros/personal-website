@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Identity;
+using System.Text;
+using BlogBackend.Core.Models;
+using BlogBackend.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using backend.Core.Models;
-using Microsoft.EntityFrameworkCore;
-using backend.Infrastructure.Data;
 
-namespace backend.API.Extensions;
+namespace BlogBackend.API.Extensions;
 
 public static class IdentityServiceExtensions
 {

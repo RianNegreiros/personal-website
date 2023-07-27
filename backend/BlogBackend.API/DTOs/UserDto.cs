@@ -1,4 +1,4 @@
-namespace backend.API.DTOs
+namespace BlogBackend.API.DTOs
 {
   public class UserDto
   {

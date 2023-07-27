@@ -1,13 +1,13 @@
-﻿using backend.API.DTOs;
-using backend.API.Extensions;
-using backend.Core.Interfaces.Services;
-using backend.Core.Models;
+﻿using BlogBackend.API.DTOs;
+using BlogBackend.API.Extensions;
+using BlogBackend.Core.Interfaces.Services;
+using BlogBackend.Core.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.API.Controllers;
+namespace BlogBackend.API.Controllers;
 
 public class UserController : BaseApiController
 {

@@ -1,7 +1,7 @@
-using backend.API.Filters;
+using BlogBackend.API.Filters;
 using Microsoft.OpenApi.Models;
 
-namespace backend.API.Extensions;
+namespace BlogBackend.API.Extensions;
 public static class SwaggerServiceExtensions
 {
   public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)

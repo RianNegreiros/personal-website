@@ -1,12 +1,12 @@
 using System.Security.Claims;
-using backend.API.DTOs;
-using backend.Core.Interfaces.Services;
-using backend.Core.Models;
+using BlogBackend.API.DTOs;
+using BlogBackend.Core.Interfaces.Services;
+using BlogBackend.Core.Models;
+using BlogBackend.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using backend.Infrastructure.Services;
 
-namespace backend.API.Controllers;
+namespace BlogBackend.API.Controllers;
 
 public class PostController : BaseApiController
 {

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace backend.API.Filters;
+namespace BlogBackend.API.Filters;
 
 public class SwaggerLogoutOperationFilter : IOperationFilter
 {

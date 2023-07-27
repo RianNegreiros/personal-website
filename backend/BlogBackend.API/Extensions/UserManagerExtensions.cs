@@ -1,9 +1,9 @@
 using System.Security.Claims;
-using backend.Core.Models;
+using BlogBackend.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.API.Extensions;
+namespace BlogBackend.API.Extensions;
 
 public static class UserManagerExtensions
 {

@@ -1,6 +1,6 @@
 using MongoDB.Driver;
 
-namespace backend.API.Extensions;
+namespace BlogBackend.API.Extensions;
 
 public static class MongoDbExtensions
 {
