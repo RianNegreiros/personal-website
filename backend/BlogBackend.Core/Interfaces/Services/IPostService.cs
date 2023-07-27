@@ -1,7 +1,7 @@
 using backend.API.DTOs;
-using backend.Core.Models;
+using BlogBackend.Core.Models;
 
-namespace backend.Core.Interfaces.Services;
+namespace BlogBackend.Core.Interfaces.Services;
 public interface IPostService
 {
   Task<Post> CreatePost(PostDto model, User author);
