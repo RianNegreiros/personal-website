@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "wGYfhA2GzjUtSgskJScqWsWbctkh+rk1w8rCa1ul5OGYpYi5cFvy/OnkFQ8Fgh8NpKBz8eRpf6yfatPewiYW/g==",
+  "success": true,
+  "projectFilePath": "/home/riann/dev/blog/backend/BlogBackend.Infrastructure/BlogBackend.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "/home/riann/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.20/microsoft.aspnetcore.app.ref.6.0.20.nupkg.sha512"
+  ],
+  "logs": []
+}

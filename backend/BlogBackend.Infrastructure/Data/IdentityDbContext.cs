@@ -1,5 +1,5 @@
+using BlogBackend.Core.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using backend.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Infrastructure.Data;
