@@ -1,6 +1,7 @@
 using BlogBackend.Core.Interfaces.Services;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Microsoft.Extensions.Configuration;
 
 namespace BlogBackend.Infrastructure.Services;
 

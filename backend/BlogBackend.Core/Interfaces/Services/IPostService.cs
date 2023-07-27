@@ -1,4 +1,3 @@
-using backend.API.DTOs;
 using BlogBackend.Core.Models;
 
 namespace BlogBackend.Core.Interfaces.Services;

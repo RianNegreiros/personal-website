@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using BlogBackend.Core.Interfaces.Services;
 using BlogBackend.Core.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace BlogBackend.Infrastructure.Services;
 

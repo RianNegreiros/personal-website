@@ -4,6 +4,7 @@ using BlogBackend.Core.Models;
 using BlogBackend.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogBackend.API.Extensions;
 

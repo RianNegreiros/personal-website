@@ -2,7 +2,7 @@ using BlogBackend.Core.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.Infrastructure.Data;
+namespace BlogBackend.Infrastructure.Data;
 
 public class IdentityDbContext : IdentityDbContext<User>
 {
