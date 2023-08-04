@@ -1,5 +1,7 @@
 using BlogBackend.Application.Models;
+using BlogBackend.Core.Exceptions;
 using BlogBackend.Core.Inferfaces.CloudServices;
+using BlogBackend.Core.Inferfaces.Repositories;
 using BlogBackend.Core.Models;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
@@ -8,14 +10,13 @@ namespace BlogBackend.Application.Services;
 
 public class PostService : IPostService
 {
-  private readonly IMongoCollection<Post> _postCollection;
-
+  private readonly IPostRepository _postRepository;
   private readonly ICloudinaryService _cloudinaryService;
 
-  public PostService(IMongoDatabase database, ICloudinaryService cloudinaryService)
+  public PostService(IPostRepository postRepository, ICloudinaryService cloudinaryService)
   {
+    _postRepository = postRepository;
     _cloudinaryService = cloudinaryService;
-    _postCollection = database.GetCollection<Post>("posts");
   }
 
   public async Task<Post> CreatePost(PostInputModel model, User author)
@@ -29,18 +30,18 @@ public class PostService : IPostService
       Author = author
     };
 
-    await _postCollection.InsertOneAsync(post);
-    return post;
+    return await _postRepository.Create(post);
   }
 
   public async Task<Post> UpdatePost(string id, PostInputModel model, User author)
   {
-    var post = await _postCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
+    var post = await _postRepository.GetById(id);
     if (post == null)
-      throw new Exception("Post not found");
+      throw new PostNotFoundException("Post not found");
 
     if (post.Author.Id != author.Id)
-      throw new Exception("You are not the author of this post");
+      throw new AuthorizationException("You are not the author of this post");
+
 
     post.Title = model.Title;
     post.Summary = model.Summary;
@@ -52,16 +53,14 @@ public class PostService : IPostService
       post.CoverImageUrl = await UploadImageAsync(model.CoverImage);
     }
 
-    await _postCollection.ReplaceOneAsync(p => p.Id == id, post);
-
-    return post;
+    return await _postRepository.Update(post);
   }
 
   public async Task<List<PostViewModel>> GetPosts()
   {
-    var posts = await _postCollection.Find(_ => true).ToListAsync();
+    var posts = await _postRepository.GetAll();
 
-    var postViewModels = posts.Select(post => new PostViewModel
+    return posts.Select(post => new PostViewModel
     {
       Id = post.Id,
       Title = post.Title,
@@ -69,20 +68,18 @@ public class PostService : IPostService
       Content = post.Content,
       CoverImageUrl = post.CoverImageUrl
     }).ToList();
-
-    return postViewModels;
   }
 
   public async Task<PostViewModel> GetPost(string id)
   {
-    var post = await _postCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
+    var post = await _postRepository.GetById(id);
 
     if (post == null)
     {
       return null;
     }
 
-    var postViewModel = new PostViewModel
+    return new PostViewModel
     {
       Id = post.Id,
       Title = post.Title,
@@ -90,17 +87,13 @@ public class PostService : IPostService
       Content = post.Content,
       CoverImageUrl = post.CoverImageUrl
     };
-
-    return postViewModel;
   }
 
   public async Task<string> UploadImageAsync(IFormFile coverImage)
   {
     if (coverImage == null || coverImage.Length <= 0)
-      throw new Exception("Image is required");
+      throw new ImageUploadException("Image is required");
 
-    string imageUrl = await _cloudinaryService.UploadImageAsync(coverImage.OpenReadStream(), coverImage.FileName);
-
-    return imageUrl;
+    return await _cloudinaryService.UploadImageAsync(coverImage.OpenReadStream(), coverImage.FileName);
   }
 }

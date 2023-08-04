@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using BlogBackend.Application.Models;
 using BlogBackend.Application.Services;
-using BlogBackend.Infrastructure.CloudServices;
+using BlogBackend.Core.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,9 +44,21 @@ public class PostController : BaseApiController
 
       return Ok(postViewModel);
     }
-    catch (Exception ex)
+    catch (PostNotFoundException ex)
+    {
+      return NotFound(ex.Message);
+    }
+    catch (AuthorizationException ex)
+    {
+      return Unauthorized(ex.Message);
+    }
+    catch (ImageUploadException ex)
     {
       return BadRequest(ex.Message);
+    }
+    catch (Exception)
+    {
+      return BadRequest("An error occurred while processing the request.");
     }
   }
 
@@ -76,9 +88,21 @@ public class PostController : BaseApiController
 
       return Ok(postViewModel);
     }
-    catch (Exception ex)
+    catch (PostNotFoundException ex)
+    {
+      return NotFound(ex.Message);
+    }
+    catch (AuthorizationException ex)
+    {
+      return Unauthorized(ex.Message);
+    }
+    catch (ImageUploadException ex)
     {
       return BadRequest(ex.Message);
+    }
+    catch (Exception)
+    {
+      return BadRequest("An error occurred while processing the request.");
     }
   }
 
