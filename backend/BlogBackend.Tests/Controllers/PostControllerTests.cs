@@ -191,7 +191,7 @@ namespace BlogBackend.Tests.Controllers
 
             // Assert
             Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult));
-            Assert.IsInstanceOfType(result, typeof(ActionResult<PostViewModel>));
+            Assert.IsInstanceOfType(result, typeof(ActionResult<ApiResponse<PostViewModel>>));
             Assert.IsNotNull((result.Result as OkObjectResult).Value);
             Assert.IsInstanceOfType((result.Result as OkObjectResult).Value, typeof(PostViewModel));
             Assert.AreEqual(updatedPost.Id, ((result.Result as OkObjectResult).Value as PostViewModel).Id);

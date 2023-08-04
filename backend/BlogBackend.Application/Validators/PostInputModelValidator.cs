@@ -7,8 +7,8 @@ public class PostInputModelValidator : AbstractValidator<PostInputModel>
 {
     public PostInputModelValidator()
     {
-        RuleFor(x => x.Title).NotEmpty().MaximumLength(100);
-        RuleFor(x => x.Summary).NotEmpty().MaximumLength(250);
-        RuleFor(x => x.Content).NotEmpty();
+        RuleFor(model => model.Title).NotEmpty().WithMessage("Title is required.");
+        RuleFor(model => model.Summary).NotEmpty().WithMessage("Summary is required.");
+        RuleFor(model => model.Content).NotEmpty().WithMessage("Content is required.");
     }
 }
