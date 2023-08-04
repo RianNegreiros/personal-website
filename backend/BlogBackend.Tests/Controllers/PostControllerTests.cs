@@ -104,5 +104,140 @@ namespace BlogBackend.Tests.Controllers
             Assert.IsInstanceOfType(result, typeof(ActionResult<PostViewModel>));
             Assert.IsInstanceOfType(result.Result, typeof(BadRequestObjectResult));
         }
+
+        [TestMethod]
+        public async Task CreatePost_UserNotAuthenticated_ReturnsUnauthorized()
+        {
+            // Arrange
+            var postServiceMock = new Mock<IPostService>();
+            var userServiceMock = new Mock<IUserService>();
+            var controller = new PostController(postServiceMock.Object, userServiceMock.Object);
+
+            var file = new FormFile(new MemoryStream(), 0, 0, "CoverImage", "cover.jpg");
+            var model = new PostInputModel
+            {
+                Title = "Test Title",
+                Content = "Test Content",
+                Summary = "Test Summary",
+                CoverImage = file
+            };
+
+            // Mock an unauthenticated user (HttpContext.User is null)
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            };
+
+            // Act
+            var result = await controller.CreatePost(model);
+
+            // Assert
+            Assert.AreEqual(typeof(UnauthorizedResult), result.Result.GetType());
+        }
+
+        [TestMethod]
+        public async Task UpdatePost_ValidModel_ReturnsOkResult()
+        {
+            // Arrange
+            var postServiceMock = new Mock<IPostService>();
+            var userServiceMock = new Mock<IUserService>();
+            var controller = new PostController(postServiceMock.Object, userServiceMock.Object);
+
+            var file = new FormFile(new MemoryStream(), 0, 0, "CoverImage", "cover.jpg");
+            var model = new PostInputModel
+            {
+                Title = "Test Title",
+                Content = "Test Content",
+                Summary = "Test Summary",
+                CoverImage = file
+            };
+
+            var user = new User { Id = "user1", UserName = "testuser", Email = "test@example.com" };
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email, user.Email)
+            };
+            var identity = new ClaimsIdentity(claims, "TestAuth");
+            var principal = new ClaimsPrincipal(identity);
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = principal }
+            };
+
+            var expectedPost = new Post
+            {
+                Id = "post1",
+                Title = model.Title,
+                Content = model.Content,
+                Summary = model.Summary,
+                CoverImageUrl = "http://example.com/cover.jpg",
+                Author = user
+            };
+            userServiceMock.Setup(x => x.GetCurrentUser(user.Email)).ReturnsAsync(user);
+            postServiceMock.Setup(x => x.CreatePost(It.IsAny<PostInputModel>(), It.IsAny<User>())).ReturnsAsync(expectedPost);
+            var updatedPost = new Post
+            {
+                Id = "post1",
+                Title = "Updated Title",
+                Content = "Updated Content",
+                Summary = "Updated Summary",
+                CoverImageUrl = "http://example.com/cover.jpg"
+            };
+            postServiceMock.Setup(x => x.UpdatePost(It.IsAny<string>(), It.IsAny<PostInputModel>(), It.IsAny<User>())).ReturnsAsync(updatedPost);
+
+            // Act
+            var result = await controller.UpdatePost("post1", model);
+
+            // Assert
+            Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult));
+            Assert.IsInstanceOfType(result, typeof(ActionResult<PostViewModel>));
+            Assert.IsNotNull((result.Result as OkObjectResult).Value);
+            Assert.IsInstanceOfType((result.Result as OkObjectResult).Value, typeof(PostViewModel));
+            Assert.AreEqual(updatedPost.Id, ((result.Result as OkObjectResult).Value as PostViewModel).Id);
+            Assert.AreEqual(updatedPost.Title, ((result.Result as OkObjectResult).Value as PostViewModel).Title);
+            Assert.AreEqual(updatedPost.Summary, ((result.Result as OkObjectResult).Value as PostViewModel).Summary);
+            Assert.AreEqual(updatedPost.Content, ((result.Result as OkObjectResult).Value as PostViewModel).Content);
+            Assert.AreEqual(updatedPost.CoverImageUrl, ((result.Result as OkObjectResult).Value as PostViewModel).CoverImageUrl);
+        }
+
+        [TestMethod]
+        public async Task UpdatePost_UnauthorizedUser_ReturnsBadRequest()
+        {
+            // Arrange
+            var postServiceMock = new Mock<IPostService>();
+            var userServiceMock = new Mock<IUserService>();
+            var controller = new PostController(postServiceMock.Object, userServiceMock.Object);
+
+            var file = new FormFile(new MemoryStream(), 0, 0, "CoverImage", "cover.jpg");
+            var model = new PostInputModel
+            {
+                Title = "Test Title",
+                Content = "Test Content",
+                Summary = "Test Summary",
+                CoverImage = file
+            };
+
+            // Mock an unauthenticated user (HttpContext.User is null)
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            };
+
+            var updatedPost = new Post
+            {
+                Id = "post1",
+                Title = "Updated Title",
+                Content = "Updated Content",
+                Summary = "Updated Summary",
+                CoverImageUrl = "http://example.com/cover.jpg"
+            };
+            postServiceMock.Setup(x => x.UpdatePost(It.IsAny<string>(), It.IsAny<PostInputModel>(), It.IsAny<User>())).ReturnsAsync(updatedPost);
+
+            // Act
+            var result = await controller.UpdatePost("post1", model);
+
+            // Assert
+            Assert.IsInstanceOfType(result.Result, typeof(UnauthorizedResult));
+        }
     }
 }
