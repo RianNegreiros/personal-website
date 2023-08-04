@@ -1,6 +1,8 @@
 using System.Security.Claims;
+using BlogBackend.API.Models;
 using BlogBackend.Application.Models;
 using BlogBackend.Application.Services;
+using BlogBackend.Application.Validators;
 using BlogBackend.Core.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,10 +22,19 @@ public class PostController : BaseApiController
 
   [Authorize]
   [HttpPost]
-  public async Task<ActionResult<PostViewModel>> CreatePost([FromForm] PostInputModel model)
+  public async Task<ActionResult<ApiResponse<PostViewModel>>> CreatePost([FromForm] PostInputModel model)
   {
-    if (!ModelState.IsValid)
-      return BadRequest(ModelState);
+    var validator = new PostInputModelValidator();
+    var validationResult = await validator.ValidateAsync(model);
+
+    if (!validationResult.IsValid)
+    {
+      return BadRequest(new ApiResponse<PostViewModel>
+      {
+        Success = false,
+        Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
+      });
+    }
 
     try
     {

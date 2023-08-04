@@ -10,6 +10,7 @@ using System.IO;
 using BlogBackend.Core.Models;
 using System.Security.Claims;
 using System.Collections.Generic;
+using BlogBackend.API.Models;
 
 namespace BlogBackend.Tests.Controllers
 {
@@ -61,7 +62,7 @@ namespace BlogBackend.Tests.Controllers
             var result = await controller.CreatePost(model);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(ActionResult<PostViewModel>));
+            Assert.IsInstanceOfType(result, typeof(ActionResult<ApiResponse<PostViewModel>>));
 
             if (result.Result is OkObjectResult okResult)
             {
@@ -101,7 +102,7 @@ namespace BlogBackend.Tests.Controllers
             var result = await controller.CreatePost(model);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(ActionResult<PostViewModel>));
+            Assert.IsInstanceOfType(result, typeof(ActionResult<ApiResponse<PostViewModel>>));
             Assert.IsInstanceOfType(result.Result, typeof(BadRequestObjectResult));
         }
 

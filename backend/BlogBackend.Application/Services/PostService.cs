@@ -6,94 +6,85 @@ using BlogBackend.Core.Models;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 
-namespace BlogBackend.Application.Services;
-
-public class PostService : IPostService
+namespace BlogBackend.Application.Services
 {
-  private readonly IPostRepository _postRepository;
-  private readonly ICloudinaryService _cloudinaryService;
-
-  public PostService(IPostRepository postRepository, ICloudinaryService cloudinaryService)
+  public class PostService : IPostService
   {
-    _postRepository = postRepository;
-    _cloudinaryService = cloudinaryService;
-  }
+    private readonly IPostRepository _postRepository;
+    private readonly ICloudinaryService _cloudinaryService;
 
-  public async Task<Post> CreatePost(PostInputModel model, User author)
-  {
-    var post = new Post
+    public PostService(IPostRepository postRepository, ICloudinaryService cloudinaryService)
     {
-      Title = model.Title,
-      Summary = model.Summary,
-      Content = model.Content,
-      CoverImageUrl = model.CoverImage != null ? await UploadImageAsync(model.CoverImage) : null,
-      Author = author
-    };
-
-    return await _postRepository.Create(post);
-  }
-
-  public async Task<Post> UpdatePost(string id, PostInputModel model, User author)
-  {
-    var post = await _postRepository.GetById(id);
-    if (post == null)
-      throw new PostNotFoundException("Post not found");
-
-    if (post.Author.Id != author.Id)
-      throw new AuthorizationException("You are not the author of this post");
-
-
-    post.Title = model.Title;
-    post.Summary = model.Summary;
-    post.Content = model.Content;
-    post.UpdatedAt = DateTime.Now;
-
-    if (model.CoverImage != null)
-    {
-      post.CoverImageUrl = await UploadImageAsync(model.CoverImage);
+      _postRepository = postRepository;
+      _cloudinaryService = cloudinaryService;
     }
 
-    return await _postRepository.Update(post);
-  }
-
-  public async Task<List<PostViewModel>> GetPosts()
-  {
-    var posts = await _postRepository.GetAll();
-
-    return posts.Select(post => new PostViewModel
+    public async Task<Post> CreatePost(PostInputModel model, User author)
     {
-      Id = post.Id,
-      Title = post.Title,
-      Summary = post.Summary,
-      Content = post.Content,
-      CoverImageUrl = post.CoverImageUrl
-    }).ToList();
-  }
+      var post = new Post
+      {
+        Title = model.Title,
+        Summary = model.Summary,
+        Content = model.Content,
+        CoverImageUrl = model.CoverImage != null ? await UploadImageAsync(model.CoverImage) : null,
+        Author = author
+      };
 
-  public async Task<PostViewModel> GetPost(string id)
-  {
-    var post = await _postRepository.GetById(id);
-
-    if (post == null)
-    {
-      return null;
+      return await _postRepository.Create(post);
     }
 
-    return new PostViewModel
+    public async Task<Post> UpdatePost(string id, PostInputModel model, User author)
     {
-      Id = post.Id,
-      Title = post.Title,
-      Summary = post.Summary,
-      Content = post.Content,
-      CoverImageUrl = post.CoverImageUrl
-    };
-  }
+      var post = await _postRepository.GetById(id) ?? throw new PostNotFoundException("Post not found");
 
-  public async Task<string> UploadImageAsync(IFormFile coverImage)
-  {
-    if (coverImage == null || coverImage.Length <= 0)
-      throw new ImageUploadException("Image is required");
+      if (post.Author.Id != author.Id)
+        throw new AuthorizationException("You are not the author of this post");
 
-    return await _cloudinaryService.UploadImageAsync(coverImage.OpenReadStream(), coverImage.FileName);
+      post.Title = model.Title;
+      post.Summary = model.Summary;
+      post.Content = model.Content;
+      post.UpdatedAt = DateTime.Now;
+
+      if (model.CoverImage != null)
+      {
+        post.CoverImageUrl = await UploadImageAsync(model.CoverImage);
+      }
+
+      return await _postRepository.Update(post);
+    }
+
+    public async Task<List<PostViewModel>> GetPosts() => (await _postRepository.GetAll())
+        .Select(post => new PostViewModel
+        {
+          Id = post.Id,
+          Title = post.Title,
+          Summary = post.Summary,
+          Content = post.Content,
+          CoverImageUrl = post.CoverImageUrl
+        }).ToList();
+
+    public async Task<PostViewModel> GetPost(string id)
+    {
+      var post = await _postRepository.GetById(id);
+      if (post == null)
+        return null;
+
+      return new PostViewModel
+      {
+        Id = post.Id,
+        Title = post.Title,
+        Summary = post.Summary,
+        Content = post.Content,
+        CoverImageUrl = post.CoverImageUrl
+      };
+    }
+
+    public async Task<string> UploadImageAsync(IFormFile coverImage)
+    {
+      if (coverImage == null || coverImage.Length <= 0)
+        throw new ImageUploadException("Image is required");
+
+      return await _cloudinaryService.UploadImageAsync(coverImage.OpenReadStream(), coverImage.FileName);
+    }
   }
 }
