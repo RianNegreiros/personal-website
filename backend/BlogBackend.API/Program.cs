@@ -12,10 +12,20 @@ builder.Services.AddApplicationServices();
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddMongoDb(builder.Configuration);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) { }
+
+app.UseCors("CorsPolicy");
 
 app.UseSwaggerDocumentation();
 
