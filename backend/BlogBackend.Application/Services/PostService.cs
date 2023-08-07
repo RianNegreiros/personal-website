@@ -26,7 +26,6 @@ namespace BlogBackend.Application.Services
         Title = model.Title,
         Summary = model.Summary,
         Content = model.Content,
-        CoverImageUrl = model.CoverImage != null ? await UploadImageAsync(model.CoverImage) : null,
         Author = author
       };
 
@@ -45,11 +44,6 @@ namespace BlogBackend.Application.Services
       post.Content = model.Content;
       post.UpdatedAt = DateTime.Now;
 
-      if (model.CoverImage != null)
-      {
-        post.CoverImageUrl = await UploadImageAsync(model.CoverImage);
-      }
-
       return await _postRepository.Update(post);
     }
 
@@ -59,8 +53,7 @@ namespace BlogBackend.Application.Services
           Id = post.Id,
           Title = post.Title,
           Summary = post.Summary,
-          Content = post.Content,
-          CoverImageUrl = post.CoverImageUrl
+          Content = post.Content
         }).ToList();
 
     public async Task<PostViewModel> GetPost(string id)
@@ -74,8 +67,7 @@ namespace BlogBackend.Application.Services
         Id = post.Id,
         Title = post.Title,
         Summary = post.Summary,
-        Content = post.Content,
-        CoverImageUrl = post.CoverImageUrl
+        Content = post.Content
       };
     }
 

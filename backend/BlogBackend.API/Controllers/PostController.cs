@@ -22,7 +22,7 @@ namespace BlogBackend.API.Controllers;
 
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult<ApiResponse<PostViewModel>>> CreatePost([FromForm] PostInputModel model)
+    public async Task<ActionResult<ApiResponse<PostViewModel>>> CreatePost([FromBody] PostInputModel model)
     {
       var validationResult = ValidateModel(model);
 
@@ -46,8 +46,7 @@ namespace BlogBackend.API.Controllers;
           Id = post.Id,
           Title = post.Title,
           Summary = post.Summary,
-          Content = post.Content,
-          CoverImageUrl = post.CoverImageUrl
+          Content = post.Content
         };
 
         return Ok(postViewModel);
@@ -96,8 +95,7 @@ namespace BlogBackend.API.Controllers;
           Id = post.Id,
           Title = post.Title,
           Summary = post.Summary,
-          Content = post.Content,
-          CoverImageUrl = post.CoverImageUrl
+          Content = post.Content
         };
 
         return Ok(postViewModel);

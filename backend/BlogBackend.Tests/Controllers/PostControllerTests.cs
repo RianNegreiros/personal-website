@@ -25,13 +25,11 @@ namespace BlogBackend.Tests.Controllers
             var userServiceMock = new Mock<IUserService>();
             var controller = new PostController(postServiceMock.Object, userServiceMock.Object);
 
-            var file = new FormFile(new MemoryStream(), 0, 0, "CoverImage", "cover.jpg");
             var model = new PostInputModel
             {
                 Title = "Test Title",
                 Content = "Test Content",
-                Summary = "Test Summary",
-                CoverImage = file
+                Summary = "Test Summary"
             };
 
             var user = new User { Id = "user1", UserName = "testuser", Email = "test@example.com" };
@@ -52,7 +50,6 @@ namespace BlogBackend.Tests.Controllers
                 Title = model.Title,
                 Content = model.Content,
                 Summary = model.Summary,
-                CoverImageUrl = "http://example.com/cover.jpg",
                 Author = user
             };
             userServiceMock.Setup(x => x.GetCurrentUser(user.Email)).ReturnsAsync(user);
@@ -74,7 +71,6 @@ namespace BlogBackend.Tests.Controllers
                 Assert.AreEqual(expectedPost.Title, postViewModel.Title);
                 Assert.AreEqual(expectedPost.Summary, postViewModel.Summary);
                 Assert.AreEqual(expectedPost.Content, postViewModel.Content);
-                Assert.AreEqual(expectedPost.CoverImageUrl, postViewModel.CoverImageUrl);
             }
             else if (result.Result is BadRequestObjectResult badRequestResult)
             {
@@ -114,13 +110,11 @@ namespace BlogBackend.Tests.Controllers
             var userServiceMock = new Mock<IUserService>();
             var controller = new PostController(postServiceMock.Object, userServiceMock.Object);
 
-            var file = new FormFile(new MemoryStream(), 0, 0, "CoverImage", "cover.jpg");
             var model = new PostInputModel
             {
                 Title = "Test Title",
                 Content = "Test Content",
-                Summary = "Test Summary",
-                CoverImage = file
+                Summary = "Test Summary"
             };
 
             // Mock an unauthenticated user (HttpContext.User is null)
@@ -144,13 +138,11 @@ namespace BlogBackend.Tests.Controllers
             var userServiceMock = new Mock<IUserService>();
             var controller = new PostController(postServiceMock.Object, userServiceMock.Object);
 
-            var file = new FormFile(new MemoryStream(), 0, 0, "CoverImage", "cover.jpg");
             var model = new PostInputModel
             {
                 Title = "Test Title",
                 Content = "Test Content",
-                Summary = "Test Summary",
-                CoverImage = file
+                Summary = "Test Summary"
             };
 
             var user = new User { Id = "user1", UserName = "testuser", Email = "test@example.com" };
@@ -171,7 +163,6 @@ namespace BlogBackend.Tests.Controllers
                 Title = model.Title,
                 Content = model.Content,
                 Summary = model.Summary,
-                CoverImageUrl = "http://example.com/cover.jpg",
                 Author = user
             };
             userServiceMock.Setup(x => x.GetCurrentUser(user.Email)).ReturnsAsync(user);
@@ -181,8 +172,7 @@ namespace BlogBackend.Tests.Controllers
                 Id = "post1",
                 Title = "Updated Title",
                 Content = "Updated Content",
-                Summary = "Updated Summary",
-                CoverImageUrl = "http://example.com/cover.jpg"
+                Summary = "Updated Summary"
             };
             postServiceMock.Setup(x => x.UpdatePost(It.IsAny<string>(), It.IsAny<PostInputModel>(), It.IsAny<User>())).ReturnsAsync(updatedPost);
 
@@ -198,7 +188,6 @@ namespace BlogBackend.Tests.Controllers
             Assert.AreEqual(updatedPost.Title, ((result.Result as OkObjectResult).Value as PostViewModel).Title);
             Assert.AreEqual(updatedPost.Summary, ((result.Result as OkObjectResult).Value as PostViewModel).Summary);
             Assert.AreEqual(updatedPost.Content, ((result.Result as OkObjectResult).Value as PostViewModel).Content);
-            Assert.AreEqual(updatedPost.CoverImageUrl, ((result.Result as OkObjectResult).Value as PostViewModel).CoverImageUrl);
         }
 
         [TestMethod]
@@ -209,13 +198,11 @@ namespace BlogBackend.Tests.Controllers
             var userServiceMock = new Mock<IUserService>();
             var controller = new PostController(postServiceMock.Object, userServiceMock.Object);
 
-            var file = new FormFile(new MemoryStream(), 0, 0, "CoverImage", "cover.jpg");
             var model = new PostInputModel
             {
                 Title = "Test Title",
                 Content = "Test Content",
-                Summary = "Test Summary",
-                CoverImage = file
+                Summary = "Test Summary"
             };
 
             // Mock an unauthenticated user (HttpContext.User is null)
@@ -229,8 +216,7 @@ namespace BlogBackend.Tests.Controllers
                 Id = "post1",
                 Title = "Updated Title",
                 Content = "Updated Content",
-                Summary = "Updated Summary",
-                CoverImageUrl = "http://example.com/cover.jpg"
+                Summary = "Updated Summary"
             };
             postServiceMock.Setup(x => x.UpdatePost(It.IsAny<string>(), It.IsAny<PostInputModel>(), It.IsAny<User>())).ReturnsAsync(updatedPost);
 
