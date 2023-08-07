@@ -60,4 +60,23 @@ async function signInUser(formData: SignInData) {
   }
 }
 
-export { signUpUser, signInUser };
+async function checkUserLoggedIn() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    return response.json();
+  } catch (error) {
+    return null;
+  }
+}
+
+export { signUpUser, signInUser, checkUserLoggedIn }

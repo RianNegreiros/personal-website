@@ -4,6 +4,13 @@ export interface Post {
   body: string
 }
 
+export interface UserData {
+  id: string;
+  username: string;
+  email: string;
+  token: string;
+}
+
 export interface SignUpData {
   email: string;
   username: string;

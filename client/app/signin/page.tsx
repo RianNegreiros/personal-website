@@ -4,12 +4,15 @@ import { FormEvent, useState } from "react"
 import { SignInData } from "../models"
 import { signInUser } from "../utils/api";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function SignInPage() {
   const [formData, setFormData] = useState<SignInData>({
     email: "",
     password: "",
   })
+
+  const { setIsLoggedIn } = useAuth();
 
   const router = useRouter();
 
@@ -24,6 +27,8 @@ export default function SignInPage() {
     try {
       await signInUser(formData);
       console.log("Sign in successful!");
+
+      setIsLoggedIn(true)
 
       router.push("/");
     } catch (error) {
