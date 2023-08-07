@@ -10,3 +10,8 @@ export interface SignUpData {
   password: string;
   confirmPassword: string;
 }
+
+export interface SignInData {
+  email: string;
+  password: string;
+}
