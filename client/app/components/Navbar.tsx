@@ -2,11 +2,26 @@
 
 import Link from "next/link";
 import ThemeButton from "./ThemeButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AuthLinks from "./AuthLinks";
+import { checkUserLoggedIn } from "../utils/api";
+import { useAuth } from "../contexts/AuthContext";
+import { UserData } from "../models";
 
 export default function Navbar() {
-  const [userLogged, setUserLogged] = useState(true);
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const [user, setUser] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await checkUserLoggedIn();
+      if (userData) {
+        setIsLoggedIn(true);
+        setUser(userData);
+      }
+    };
+    fetchUser();
+  }, []);
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,7 +35,7 @@ export default function Navbar() {
 
           <div className="flex items-center space-x-4">
 
-            <AuthLinks userLogged={userLogged} />
+            <AuthLinks userLogged={isLoggedIn} />
 
             <ThemeButton />
           </div>

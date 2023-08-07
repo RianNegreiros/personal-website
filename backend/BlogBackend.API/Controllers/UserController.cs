@@ -108,8 +108,7 @@ public class UserController : BaseApiController
     return Ok(new { message = "User logged out successfully." });
   }
 
-  [Authorize]
-  [HttpGet]
+  [HttpGet("me")]
   public async Task<ActionResult<UserViewModel>> GetCurrentUser()
   {
     try

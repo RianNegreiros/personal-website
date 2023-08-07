@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Yyj4aB6N2IISahlGSBYzHFuuQcfqoQQXRWsN8qKb3NeXNsBDsAc865pxnXCYuanOyXk0EnH2JIXDlqOITxOkMg==",
+  "dgSpecHash": "c5fLwbIV15swVrdaRJZYGg7PvDT/Ve+lxdy0JH78QxnybJTjdhxwp5biAkaiR2OQy35PX3x8Ozil/w+gZq7khw==",
   "success": true,
   "projectFilePath": "/home/riann/dev/blog/backend/BlogBackend.Infrastructure/BlogBackend.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -9,7 +9,6 @@
     "/home/riann/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/home/riann/.nuget/packages/cloudinarydotnet/1.21.0/cloudinarydotnet.1.21.0.nupkg.sha512",
     "/home/riann/.nuget/packages/dnsclient/1.6.1/dnsclient.1.6.1.nupkg.sha512",
-    "/home/riann/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/home/riann/.nuget/packages/microsoft.aspnetcore.cryptography.internal/6.0.20/microsoft.aspnetcore.cryptography.internal.6.0.20.nupkg.sha512",
     "/home/riann/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/6.0.20/microsoft.aspnetcore.cryptography.keyderivation.6.0.20.nupkg.sha512",
     "/home/riann/.nuget/packages/microsoft.aspnetcore.html.abstractions/2.2.0/microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
@@ -19,9 +18,7 @@
     "/home/riann/.nuget/packages/microsoft.entityframeworkcore/6.0.20/microsoft.entityframeworkcore.6.0.20.nupkg.sha512",
     "/home/riann/.nuget/packages/microsoft.entityframeworkcore.abstractions/6.0.20/microsoft.entityframeworkcore.abstractions.6.0.20.nupkg.sha512",
     "/home/riann/.nuget/packages/microsoft.entityframeworkcore.analyzers/6.0.20/microsoft.entityframeworkcore.analyzers.6.0.20.nupkg.sha512",
-    "/home/riann/.nuget/packages/microsoft.entityframeworkcore.design/6.0.20/microsoft.entityframeworkcore.design.6.0.20.nupkg.sha512",
     "/home/riann/.nuget/packages/microsoft.entityframeworkcore.relational/6.0.20/microsoft.entityframeworkcore.relational.6.0.20.nupkg.sha512",
-    "/home/riann/.nuget/packages/microsoft.entityframeworkcore.tools/6.0.20/microsoft.entityframeworkcore.tools.6.0.20.nupkg.sha512",
     "/home/riann/.nuget/packages/microsoft.extensions.caching.abstractions/6.0.0/microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
     "/home/riann/.nuget/packages/microsoft.extensions.caching.memory/6.0.1/microsoft.extensions.caching.memory.6.0.1.nupkg.sha512",
     "/home/riann/.nuget/packages/microsoft.extensions.configuration.abstractions/6.0.0/microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
