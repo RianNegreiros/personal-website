@@ -135,6 +135,25 @@ namespace BlogBackend.API.Controllers;
       return Ok(post);
     }
 
+    [Authorize]
+    [HttpPost("upload")]
+    public async Task<ActionResult<ApiResponse<string>>> UploadImage([FromForm] IFormFile image)
+    {
+      try
+      {
+        var imageUrl = await _postService.UploadImageAsync(image);
+        return Ok(imageUrl);
+      }
+      catch (ImageUploadException ex)
+      {
+        return BadRequest(ex.Message);
+      }
+      catch (Exception)
+      {
+        return BadRequest("An error occurred while processing the request.");
+      }
+    }
+
     private FluentValidation.Results.ValidationResult ValidateModel(PostInputModel model)
     {
       var validator = new PostInputModelValidator();
