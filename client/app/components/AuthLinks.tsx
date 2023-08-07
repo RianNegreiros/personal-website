@@ -1,5 +1,4 @@
 import Link from "next/link"
-import ThemeButton from "./ThemeButton"
 
 export default function AuthLinks({ userLogged }: { userLogged: boolean }) {
   if (userLogged) {
