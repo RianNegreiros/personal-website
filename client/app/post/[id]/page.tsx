@@ -1,7 +1,7 @@
 import { Post } from "@/app/models";
 
 async function getData(id: string) {
-  const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/posts/' + id);
   const data = await response.json();
   return data;
 }
