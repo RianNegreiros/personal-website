@@ -6,7 +6,7 @@ import { useState } from "react";
 import AuthLinks from "./AuthLinks";
 
 export default function Navbar() {
-  const [userLogged, setUserLogged] = useState(true);
+  const [userLogged, setUserLogged] = useState(false);
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
