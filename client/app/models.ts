@@ -1,7 +1,15 @@
 export interface Post {
   id: string
   title: string
-  body: string
+  summary: string
+  content: string
+}
+
+export interface PostData {
+  authorId: string
+  title: string
+  summary: string
+  content: string
 }
 
 export interface UserData {

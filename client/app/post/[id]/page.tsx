@@ -37,7 +37,7 @@ export default async function PostPage({
       <div className="divide-y divide-gray-200 pb-7 dark:divide-gray-700 xl:divide-y-0">
         <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
           <div className="prose max-w-none pb-8 pt-10 dark:prose-invert prose-lg">
-            <ReactMarkdown>{data.body}</ReactMarkdown>
+            <ReactMarkdown>{data.content}</ReactMarkdown>
           </div>
         </div>
       </div>

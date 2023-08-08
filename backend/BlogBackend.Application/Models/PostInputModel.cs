@@ -4,6 +4,7 @@ namespace BlogBackend.Application.Models;
 
 public class PostInputModel
 {
+  public string AuthorId { get; set; }
   [Required]
   [MinLength(4)]
   public string Title { get; set; }
