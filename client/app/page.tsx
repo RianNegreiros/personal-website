@@ -40,7 +40,7 @@ export default async function IndexPage() {
 
 
                 <p className="prose max-w-none text-gray-500 dark:text-gray-400 line-clamp-2">
-                  {post.body.split(" ").slice(0, 4).join(" ")}
+                  {post.summary}
                 </p>
               </Link>
             </article>

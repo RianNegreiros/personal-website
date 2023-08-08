@@ -12,9 +12,8 @@ export default function SignInPage() {
     password: "",
   })
 
-  const { setIsLoggedIn } = useAuth();
-
   const router = useRouter();
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
 
   const handleInputChange = (event: FormEvent<HTMLInputElement>) => {
     const { name, value } = event.currentTarget;
@@ -25,10 +24,15 @@ export default function SignInPage() {
     event.preventDefault();
 
     try {
-      await signInUser(formData);
+      const data = await signInUser(formData);
       console.log("Sign in successful!");
 
-      setIsLoggedIn(true)
+      console.log("data:", data.token);
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.id);
+
+      setIsAuthenticated(true)
 
       router.push("/");
     } catch (error) {

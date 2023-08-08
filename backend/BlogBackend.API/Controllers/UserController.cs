@@ -1,5 +1,4 @@
-﻿using BlogBackend.API.Extensions;
-using BlogBackend.Application.Models;
+﻿using BlogBackend.Application.Models;
 using BlogBackend.Application.Services;
 using BlogBackend.Core.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -92,6 +91,7 @@ public class UserController : BaseApiController
     });
   }
 
+
   [Authorize]
   [HttpPost("logout")]
   public async Task<IActionResult> Logout()
@@ -109,24 +109,11 @@ public class UserController : BaseApiController
   }
 
   [HttpGet("me")]
-  public async Task<ActionResult<UserViewModel>> GetCurrentUser()
+  public ActionResult<bool> GetCurrentUser()
   {
-    try
-    {
-      var user = await _userManager.FindByEmailFromClaimsPrinciple(HttpContext.User);
+    var isAuthenticated = User.Identity.IsAuthenticated;
 
-      return new UserViewModel
-      {
-        Id = user.Id,
-        Username = user.UserName,
-        Token = _tokenService.GenerateJwtToken(user),
-        Email = user.Email
-      };
-    }
-    catch (Exception)
-    {
-      return BadRequest(new { message = "Error getting current user." });
-    }
+    return Ok(isAuthenticated);
   }
 
   [HttpGet("emailexists")]
