@@ -1,7 +1,8 @@
 import { Post } from "@/app/models";
+import ReactMarkdown from "react-markdown";
 
 async function getData(id: string) {
-  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/posts/' + id);
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/post/' + id);
   const data = await response.json();
   return data;
 }
@@ -36,7 +37,7 @@ export default async function PostPage({
       <div className="divide-y divide-gray-200 pb-7 dark:divide-gray-700 xl:divide-y-0">
         <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
           <div className="prose max-w-none pb-8 pt-10 dark:prose-invert prose-lg">
-            {data.body}
+            <ReactMarkdown>{data.body}</ReactMarkdown>
           </div>
         </div>
       </div>
