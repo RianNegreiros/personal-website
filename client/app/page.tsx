@@ -3,14 +3,12 @@ export default function Home() {
     <div className="divide-y divide-gray-100 dark:divide-gray-700">
       <div className="space-y-2 pt-5 pb-8 md:space-x-5"></div>
 
-      <div className="items-center space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
-        <div className="flex flex-col items-center pt-8">
+      <div className="text-center xl:gap-x-8 xl:space-y-0">
+
+        <div className="prose max-w-none prose-lg pt-8 pb-7 dark:prose-invert xl:col-span-2">
           <h3 className="pt-4 pb-2 text-2xl font-bold leading-8 tracking-tight">
             Rian Negreiros
           </h3>
-        </div>
-
-        <div className="text-center prose max-w-none prose-lg pt-8 pb-7 dark:prose-invert xl:col-span-2">
           <p>
             Olá a todos, meu nome é Rian, sou um desenvolvedor Back-End do Rio de Janeiro
           </p>
