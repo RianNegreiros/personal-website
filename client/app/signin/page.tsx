@@ -27,8 +27,6 @@ export default function SignInPage() {
       const data = await signInUser(formData);
       console.log("Sign in successful!");
 
-      console.log("data:", data.token);
-
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.id);
 
@@ -43,7 +41,7 @@ export default function SignInPage() {
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 bg-white rounded-md shadow-md lg:max-w-xl">
-        <h1 className="text-3xl font-bold text-center text-gray-900">Login to your account</h1>
+        <h1 className="text-3xl font-bold text-center text-gray-900">Acesse sua conta</h1>
         <form className="mt-6" onSubmit={handleSignIn}>
           <div className="mb-4">
             <label
