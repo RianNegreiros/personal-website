@@ -11,11 +11,14 @@ export default function ThemeButton() {
     setMounted(true)
   }, [])
 
-  if (!mounted) return null
+  if (!mounted) {
+    return null
+  }
 
   return (
     <button
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      className="bg-teal-500/30 p-2 rounded-lg text-teal-500"
     >
       {resolvedTheme === "dark" ? (
         <svg
