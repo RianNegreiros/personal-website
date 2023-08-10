@@ -1,4 +1,4 @@
-using BlogBackend.Core.Inferfaces.Repositories;
+using BlogBackend.Core.Inferfaces;
 using BlogBackend.Core.Models;
 using MongoDB.Driver;
 
