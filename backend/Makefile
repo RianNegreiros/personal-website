@@ -5,7 +5,7 @@ REPO_NAME ?= BlogBackend
 .PHONY: migrations db
 
 migrations:
-	cd ./BlogBackend.Infrastructure/Data && dotnet ef --startup-project ../../BlogBackend.API/ migrations add $(name) && cd ..
+	dotnet ef migrations add $(name) --project ../BlogBackend.Infrastructure.csproj --startup-project ../../BlogBackend.API/BlogBackend.API.csproj
 
 db:
 	cd ./BlogBackend.Infrastructure/Data && dotnet ef --startup-project ../../BlogBackend.API/ database update && cd ..
