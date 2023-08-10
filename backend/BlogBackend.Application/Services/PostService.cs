@@ -1,22 +1,18 @@
 using BlogBackend.Application.Models;
 using BlogBackend.Core.Exceptions;
-using BlogBackend.Core.Inferfaces.CloudServices;
-using BlogBackend.Core.Inferfaces.Repositories;
+using BlogBackend.Core.Inferfaces;
 using BlogBackend.Core.Models;
-using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 
 namespace BlogBackend.Application.Services
 {
-  public class PostService : IPostService
+    public class PostService : IPostService
   {
     private readonly IPostRepository _postRepository;
-    private readonly ICloudinaryService _cloudinaryService;
 
-    public PostService(IPostRepository postRepository, ICloudinaryService cloudinaryService)
+    public PostService(IPostRepository postRepository)
     {
       _postRepository = postRepository;
-      _cloudinaryService = cloudinaryService;
     }
 
     public async Task<Post> CreatePost(PostInputModel model, User author)
@@ -42,7 +38,7 @@ namespace BlogBackend.Application.Services
       post.Title = model.Title;
       post.Summary = model.Summary;
       post.Content = model.Content;
-      post.UpdatedAt = DateTime.Now;
+      post.UpdatedAt = DateTime.UtcNow;
 
       return await _postRepository.Update(post);
     }
@@ -69,14 +65,6 @@ namespace BlogBackend.Application.Services
         Summary = post.Summary,
         Content = post.Content
       };
-    }
-
-    public async Task<string> UploadImageAsync(IFormFile coverImage)
-    {
-      if (coverImage == null || coverImage.Length <= 0)
-        throw new ImageUploadException("Image is required");
-
-      return await _cloudinaryService.UploadImageAsync(coverImage.OpenReadStream(), coverImage.FileName);
     }
   }
 }

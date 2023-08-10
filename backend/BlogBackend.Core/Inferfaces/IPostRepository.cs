@@ -1,6 +1,6 @@
 using BlogBackend.Core.Models;
 
-namespace BlogBackend.Core.Inferfaces.Repositories;
+namespace BlogBackend.Core.Inferfaces;
 
 public interface IPostRepository
 {

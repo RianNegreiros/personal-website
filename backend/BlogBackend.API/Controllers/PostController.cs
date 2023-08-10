@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using BlogBackend.API.Models;
 using BlogBackend.Application.Models;
 using BlogBackend.Application.Services;
@@ -14,13 +13,11 @@ namespace BlogBackend.API.Controllers;
 public class PostController : BaseApiController
 {
   private readonly IPostService _postService;
-  private readonly IUserService _userService;
   private readonly UserManager<User> _userManager;
 
-  public PostController(IPostService postService, IUserService userService, UserManager<User> userManager)
+  public PostController(IPostService postService, UserManager<User> userManager)
   {
     _postService = postService;
-    _userService = userService;
     _userManager = userManager;
   }
 
@@ -134,25 +131,6 @@ public class PostController : BaseApiController
       return NotFound();
 
     return Ok(post);
-  }
-
-  [Authorize]
-  [HttpPost("upload")]
-  public async Task<ActionResult<ApiResponse<string>>> UploadImage([FromForm] IFormFile image)
-  {
-    try
-    {
-      var imageUrl = await _postService.UploadImageAsync(image);
-      return Ok(imageUrl);
-    }
-    catch (ImageUploadException ex)
-    {
-      return BadRequest(ex.Message);
-    }
-    catch (Exception)
-    {
-      return BadRequest("An error occurred while processing the request.");
-    }
   }
 
   private FluentValidation.Results.ValidationResult ValidateModel(PostInputModel model)
