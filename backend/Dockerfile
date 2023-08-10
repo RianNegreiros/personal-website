@@ -8,15 +8,15 @@ RUN dotnet restore
 
 # Copy everything else and build the API
 COPY . ./
-RUN dotnet publish "./BlogBackend.API/BlogBackend.API.csproj" -c Release -o out
+RUN dotnet publish "./Backend.API/Backend.API.csproj" -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-COPY ./BlogBackend.API/appsettings.Development.json ./
+COPY ./Backend.API/appsettings.Development.json ./
 
 # Start the API
-ENTRYPOINT ["dotnet", "BlogBackend.API.dll"]
+ENTRYPOINT ["dotnet", "Backend.API.dll"]
 CMD ["dotnet", "ef", "database", "update"]

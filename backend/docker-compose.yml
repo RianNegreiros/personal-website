@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  blog-api:
+  api:
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
       - postgres
       - mongodb
     networks:
-      - blog_app_network
+      - app_network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
@@ -27,7 +27,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - blog_app_network
+      - app_network
 
   mongodb:
     image: mongo:latest
@@ -38,10 +38,10 @@ services:
     volumes:
       - mongodb_data:/data/db
     networks:
-      - blog_app_network
+      - app_network
 
 networks:
-  blog_app_network:
+  app_network:
 
 
 volumes:
