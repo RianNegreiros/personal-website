@@ -1,41 +1,41 @@
-using BlogBackend.Core.Inferfaces.Repositories;
+using BlogBackend.Core.Inferfaces;
 using BlogBackend.Core.Models;
 using MongoDB.Driver;
 
-namespace BlogBackend.Infrastructure.Repositories;
-
-public class ProjectsRepository : IProjectsRepository
+namespace BlogBackend.Infrastructure.Repositories
 {
-    private readonly IMongoCollection<Project> _projectsCollection;
-
-    public ProjectsRepository(IMongoDatabase database)
+    public class ProjectsRepository : IProjectsRepository
     {
-        _projectsCollection = database.GetCollection<Project>("projects");
-    }
+        private readonly IMongoCollection<Project> _projectsCollection;
 
-    public async Task<List<Project>> GetProjectsAsync()
-    {
-        return await _projectsCollection.Find(_ => true).ToListAsync();
-    }
+        public ProjectsRepository(IMongoDatabase database)
+        {
+            _projectsCollection = database.GetCollection<Project>("projects");
+        }
 
-    public async Task<Project> GetProjectAsync(string id)
-    {
-        return await _projectsCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
-    }
+        public async Task<List<Project>> GetAllProjectsAsync()
+        {
+            return await _projectsCollection.Find(_ => true).ToListAsync();
+        }
 
-    public async Task<Project> CreateProjectAsync(Project project)
-    {
-        await _projectsCollection.InsertOneAsync(project);
-        return project;
-    }
+        public async Task<Project> GetProjectByIdAsync(string id)
+        {
+            return await _projectsCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
+        }
 
-    public async Task UpdateProjectAsync(string id, Project project)
-    {
-        await _projectsCollection.ReplaceOneAsync(p => p.Id == id, project);
-    }
+        public async Task CreateProjectAsync(Project project)
+        {
+            await _projectsCollection.InsertOneAsync(project);
+        }
 
-    public async Task DeleteProjectAsync(string id)
-    {
-        await _projectsCollection.DeleteOneAsync(p => p.Id == id);
+        public async Task UpdateProjectAsync(string id, Project project)
+        {
+            await _projectsCollection.ReplaceOneAsync(p => p.Id == id, project);
+        }
+
+        public async Task DeleteProjectAsync(string id)
+        {
+            await _projectsCollection.DeleteOneAsync(p => p.Id == id);
+        }
     }
 }
