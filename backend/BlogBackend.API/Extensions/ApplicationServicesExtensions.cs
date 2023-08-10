@@ -1,6 +1,5 @@
 using BlogBackend.Application.Services;
-using BlogBackend.Core.Inferfaces.CloudServices;
-using BlogBackend.Core.Inferfaces.Repositories;
+using BlogBackend.Core.Inferfaces;
 using BlogBackend.Infrastructure.CloudServices;
 using BlogBackend.Infrastructure.Repositories;
 
@@ -16,6 +15,8 @@ public static class ApplicationServicesExtensions
     services.AddScoped<IUserService, UserService>();
     services.AddScoped<IPostService, PostService>();
     services.AddScoped<ICloudinaryService, CloudinaryService>();
+    services.AddScoped<IProjectsRepository, ProjectsRepository>();
+    services.AddScoped<IProjectsService, ProjectsService>();
 
     return services;
   }
