@@ -15,8 +15,8 @@ public class Post
   public User Author { get; set; }
 
   [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
-  public DateTime CreatedAt { get; } = DateTime.Now;
+  public DateTime CreatedAt { get; } = DateTime.UtcNow;
 
   [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
-  public DateTime UpdatedAt { get; set; } = DateTime.Now;
+  public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
