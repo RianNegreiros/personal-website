@@ -10,24 +10,34 @@ export default function SignInPage() {
   const [formData, setFormData] = useState<SignInData>({
     email: "",
     password: "",
+    token: "",
+    rememberMe: false,
+    isAdmin: false
   })
 
   const router = useRouter();
   const { isAdmin, setIsAdmin } = useAuth();
 
   const handleInputChange = (event: FormEvent<HTMLInputElement>) => {
-    const { name, value } = event.currentTarget;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type, checked } = event.currentTarget;
+    const inputValue = type === 'checkbox' ? checked : value;
+    setFormData({ ...formData, [name]: inputValue });
   };
 
   const handleSignIn = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      await signInUser(formData);
+      const data = await signInUser(formData);
       console.log("Sign in successful!");
 
-      setIsAdmin(true)
+      setIsAdmin(data.isAdmin)
+
+      if (formData.rememberMe) {
+        localStorage.setItem('token', data.token);
+      } else {
+        localStorage.removeItem('token');
+      }
 
       router.push("/");
     } catch (error) {
@@ -71,6 +81,24 @@ export default function SignInPage() {
             />
           </div>
           <div className="mt-2">
+            <div className="flex items-start mb-6">
+              <div className="flex items-center h-5">
+                <input
+                  id="remember"
+                  type="checkbox"
+                  name="rememberMe"
+                  checked={formData.rememberMe}
+                  onChange={handleInputChange}
+                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                />
+              </div>
+              <label
+                htmlFor="remember"
+                className="ml-2 text-sm font-semibold text-gray-900"
+              >
+                Remember me
+              </label>
+            </div>
             <button
               type="submit"
               className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-teal-500 rounded-md hover:bg-teal-600 focus:outline-none focus:bg-teal-600">

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { getIsAdmin } from '../utils/api';
+import { autoLoginUser, getIsAdmin } from '../utils/api';
 
 interface AuthContextType {
   isAdmin: boolean;
@@ -20,17 +20,23 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
+async function autoLogin(setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>) {
+  const storedToken = localStorage.getItem('token');
+  if (storedToken) {
+    try {
+      const data = await autoLoginUser(storedToken);
+      setIsAdmin(data.isAdmin);
+    } catch (error) {
+      console.error('Auto-login error:', error);
+    }
+  }
+}
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    getIsAdmin()
-      .then(data => {
-        setIsAdmin(data);
-      })
-      .catch(error => {
-        console.error('Error checking authorization:', error);
-      });
+    autoLogin(setIsAdmin);
   }, []);
 
   return (

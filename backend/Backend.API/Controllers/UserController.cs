@@ -71,24 +71,33 @@ public class UserController : BaseApiController
       return BadRequest("Invalid username or password.");
     }
 
-    var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, true);
+    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
 
     if (!result.Succeeded)
     {
       return BadRequest("Invalid username or password.");
     }
 
+    if (model.RememberMe)
+    {
+      user.PersistentToken = Guid.NewGuid().ToString();
+      await _userManager.UpdateAsync(user);
+    }
+
     var token = _tokenService.GenerateJwtToken(user);
+
+    var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
     return Ok(new UserViewModel
     {
       Id = user.Id,
       Username = user.UserName,
       Token = token,
-      Email = user.Email
+      Email = user.Email,
+      IsAdmin = isAdmin,
+      RememberMe = model.RememberMe
     });
   }
-
 
   [Authorize]
   [HttpPost("logout")]
@@ -123,5 +132,25 @@ public class UserController : BaseApiController
   {
     bool isAdmin = User.IsInRole("Admin");
     return Ok(isAdmin);
+  }
+
+  [HttpPost("autologin")]
+  public async Task<ActionResult<UserViewModel>> AutoLogin([FromBody] string token)
+  {
+    var user = await _tokenService.GetUserFromValidToken(token);
+    if (user == null)
+    {
+      return Unauthorized();
+    }
+
+    var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
+    return Ok(new UserViewModel
+    {
+      Id = user.Id,
+      Username = user.UserName,
+      Email = user.Email,
+      IsAdmin = isAdmin
+    });
   }
 }

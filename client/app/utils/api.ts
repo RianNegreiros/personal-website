@@ -55,4 +55,23 @@ async function createPost(formData: PostData) {
   }
 }
 
-export { signUpUser, signInUser, getIsAdmin, createPost };
+async function autoLoginUser(token: string) {
+  try {
+    const response = await axios.post(
+      `${API_URL}/user/autologin`,
+      JSON.stringify(token),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Auto-login failed. Please try again later.');
+  }
+}
+
+export { signUpUser, signInUser, getIsAdmin, createPost, autoLoginUser };
