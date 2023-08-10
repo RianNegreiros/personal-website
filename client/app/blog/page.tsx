@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Post } from "../models";
 
 async function getData() {
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`);
   const data = await response.json();
   return data;
 }

@@ -8,7 +8,7 @@ import { Disclosure } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  const { isAuthenticated } = useAuth();
+  const { isAdmin } = useAuth();
   let pathname = usePathname() || "/";
 
   return (
@@ -58,7 +58,7 @@ export default function Navbar() {
                     Projects
                   </Link>
 
-                  <AuthLinks userLogged={isAuthenticated} pathname={pathname} />
+                  <AuthLinks isAdmin={isAdmin} pathname={pathname} />
 
                   <ThemeButton />
                 </div>

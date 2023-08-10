@@ -31,12 +31,9 @@ async function signInUser(formData: SignInData) {
   }
 }
 
-async function getCurrentUser() {
+async function getIsAdmin() {
   try {
-    const response = await axios.get(`${API_URL}/user/me`, {});
-
-    console.log(response.data);
-
+    const response = await axios.get(`${API_URL}/user/isadmin`, {});
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch user. Please try again later.');
@@ -58,4 +55,4 @@ async function createPost(formData: PostData) {
   }
 }
 
-export { signUpUser, signInUser, getCurrentUser, createPost };
+export { signUpUser, signInUser, getIsAdmin, createPost };
