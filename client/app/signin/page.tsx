@@ -13,7 +13,7 @@ export default function SignInPage() {
   })
 
   const router = useRouter();
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const { isAdmin, setIsAdmin } = useAuth();
 
   const handleInputChange = (event: FormEvent<HTMLInputElement>) => {
     const { name, value } = event.currentTarget;
@@ -24,13 +24,10 @@ export default function SignInPage() {
     event.preventDefault();
 
     try {
-      const data = await signInUser(formData);
+      await signInUser(formData);
       console.log("Sign in successful!");
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("userId", data.id);
-
-      setIsAuthenticated(true)
+      setIsAdmin(true)
 
       router.push("/");
     } catch (error) {

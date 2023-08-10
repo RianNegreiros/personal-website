@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { getCurrentUser } from '../utils/api';
+import { getIsAdmin } from '../utils/api';
 
 interface AuthContextType {
-  isAuthenticated: boolean;
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  isAdmin: boolean;
+  setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,20 +21,20 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    getCurrentUser()
+    getIsAdmin()
       .then(data => {
-        setIsAuthenticated(data);
+        setIsAdmin(data);
       })
       .catch(error => {
-        console.error('Error checking authentication:', error);
+        console.error('Error checking authorization:', error);
       });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider value={{ isAdmin, setIsAdmin }}>
       {children}
     </AuthContext.Provider>
   );

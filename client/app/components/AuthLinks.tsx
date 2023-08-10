@@ -1,34 +1,27 @@
 import Link from "next/link"
 
-export default function AuthLinks({ userLogged, pathname }: { userLogged: boolean, pathname: string }) {
-  if (userLogged) {
-    return (
-      <>
+export default function AuthLinks({ isAdmin, pathname }: { isAdmin: boolean, pathname: string }) {
+  if (isAdmin) {
+    if (pathname === "/blog") {
+      return (
         <Link
           href="/post/new"
-          className={`${pathname === "/post/new"
-            ? "border-teal-500 dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-            : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-            }`}
+          className="text-sm px-4 py-2 rounded-lg bg-teal-500 text-white hover:bg-teal-600"
         >
           New Post
         </Link>
-      </>
-    )
-  } else {
-    return (
-      <>
+      );
+    } else if (pathname === "/projects") {
+      return (
         <Link
-          href="/signin"
-          prefetch
-          className={`${pathname === "/signin"
-            ? "border-teal-500 dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-            : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-            }`}
+          href="/projects/new"
+          className="text-sm px-4 py-2 rounded-lg bg-teal-500 text-white hover:bg-teal-600"
         >
-          Login
+          New Project
         </Link>
-      </>
-    )
+      );
+    }
   }
+
+  return null;
 }
