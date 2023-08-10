@@ -1,3 +1,4 @@
+using BlogBackend.Core.CloudServices;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Configuration;

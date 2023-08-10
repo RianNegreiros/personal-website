@@ -1,3 +1,4 @@
+using BlogBackend.Application.Models;
 using BlogBackend.Core.Models;
 
 namespace BlogBackend.Application.Services
@@ -6,7 +7,7 @@ namespace BlogBackend.Application.Services
     {
         Task<List<Project>> GetProjects();
         Task<Project> GetProject(string id);
-        Task<Project> CreateProject(Project project);
+        Task<Project> CreateProject(ProjectInputModel project);
         Task<Project> UpdateProject(string id, Project project);
         Task DeleteProject(string id);
     }
