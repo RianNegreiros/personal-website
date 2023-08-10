@@ -26,7 +26,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     getIsAdmin()
       .then(data => {
-        setIsAdmin(data);
+        setIsAdmin(data.isAdmin);
       })
       .catch(error => {
         console.error('Error checking authorization:', error);

@@ -12,4 +12,5 @@ public class LoginInputModel
   [DataType(DataType.Password)]
   [MinLength(12)]
   public string Password { get; set; }
+  public bool RememberMe { get; set; }
 }

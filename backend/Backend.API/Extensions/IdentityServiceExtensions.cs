@@ -49,7 +49,7 @@ public static class IdentityServiceExtensions
     {
       options.Cookie.Name = "token";
       options.Cookie.HttpOnly = true;
-      options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+      options.ExpireTimeSpan = TimeSpan.FromDays(7);
       options.SlidingExpiration = true;
     });
 

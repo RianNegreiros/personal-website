@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.API.Controllers;
 
@@ -71,24 +72,32 @@ public class UserController : BaseApiController
       return BadRequest("Invalid username or password.");
     }
 
-    var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, true);
+    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
 
     if (!result.Succeeded)
     {
       return BadRequest("Invalid username or password.");
     }
 
+    //     if (model.RememberMe)
+    // {
+    //     user.PersistentToken = Guid.NewGuid().ToString();
+    //     await _userManager.UpdateAsync(user);
+    // }
+
     var token = _tokenService.GenerateJwtToken(user);
+
+    var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
     return Ok(new UserViewModel
     {
       Id = user.Id,
       Username = user.UserName,
       Token = token,
-      Email = user.Email
+      Email = user.Email,
+      IsAdmin = isAdmin
     });
   }
-
 
   [Authorize]
   [HttpPost("logout")]
@@ -124,4 +133,25 @@ public class UserController : BaseApiController
     bool isAdmin = User.IsInRole("Admin");
     return Ok(isAdmin);
   }
+
+  //   [HttpPost("autologin")]
+  // public async Task<ActionResult<UserViewModel>> AutoLogin(string persistentToken)
+  // {
+  //     var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PersistentToken == persistentToken);
+
+  //     if (user == null)
+  //     {
+  //         return BadRequest("Invalid persistent token.");
+  //     }
+
+  //     var token = _tokenService.GenerateJwtToken(user);
+
+  //     return Ok(new UserViewModel
+  //     {
+  //         Id = user.Id,
+  //         Username = user.UserName,
+  //         Token = token,
+  //         Email = user.Email
+  //     });
+  // }
 }

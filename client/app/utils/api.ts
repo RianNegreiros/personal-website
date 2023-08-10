@@ -55,4 +55,16 @@ async function createPost(formData: PostData) {
   }
 }
 
-export { signUpUser, signInUser, getIsAdmin, createPost };
+async function autoLoginUser(persistentToken: string): Promise<SignInData> {
+  try {
+      const response = await axios.post<SignInData>('/api/autologin', {
+          persistentToken: persistentToken
+      });
+
+      return response.data;
+  } catch (error) {
+      throw new Error('Auto-login failed.');
+  }
+}
+
+export { signUpUser, signInUser, getIsAdmin, createPost, autoLoginUser };

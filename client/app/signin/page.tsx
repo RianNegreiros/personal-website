@@ -10,6 +10,8 @@ export default function SignInPage() {
   const [formData, setFormData] = useState<SignInData>({
     email: "",
     password: "",
+    rememberMe: false,
+    isAdmin: false
   })
 
   const router = useRouter();
@@ -24,10 +26,10 @@ export default function SignInPage() {
     event.preventDefault();
 
     try {
-      await signInUser(formData);
+      const data = await signInUser(formData);
       console.log("Sign in successful!");
 
-      setIsAdmin(true)
+      setIsAdmin(data.isAdmin)
 
       router.push("/");
     } catch (error) {
@@ -71,6 +73,23 @@ export default function SignInPage() {
             />
           </div>
           <div className="mt-2">
+            <div className="flex items-start mb-6">
+              <div className="flex items-center h-5">
+                <input
+                  id="remember"
+                  type="checkbox"
+                  value={formData.rememberMe.toString()}
+                  onChange={handleInputChange}
+                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                />
+              </div>
+              <label
+                htmlFor="remember"
+                className="ml-2 text-sm font-semibold text-gray-900"
+              >
+                Remember me
+              </label>
+            </div>
             <button
               type="submit"
               className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-teal-500 rounded-md hover:bg-teal-600 focus:outline-none focus:bg-teal-600">
