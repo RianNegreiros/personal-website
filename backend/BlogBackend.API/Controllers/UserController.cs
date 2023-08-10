@@ -13,14 +13,12 @@ public class UserController : BaseApiController
   private readonly UserManager<User> _userManager;
   private readonly SignInManager<User> _signInManager;
   private readonly ITokenService _tokenService;
-  private readonly IUserService _userService;
 
-  public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService, IUserService userService)
+  public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
   {
     _userManager = userManager;
     _signInManager = signInManager;
     _tokenService = tokenService;
-    _userService = userService;
   }
 
   [HttpPost("register")]
@@ -119,6 +117,6 @@ public class UserController : BaseApiController
   [HttpGet("emailexists")]
   public async Task<ActionResult<bool>> CheckEmailExists([FromQuery] string email)
   {
-    return await _userService.CheckEmailExists(email);
+    return await _userManager.FindByEmailAsync(email) != null;
   }
 }
