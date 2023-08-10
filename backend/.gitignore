@@ -450,3 +450,4 @@ $RECYCLE.BIN/
 .vscode/*
 
 appsettings.json
+appsettings.Development.json
