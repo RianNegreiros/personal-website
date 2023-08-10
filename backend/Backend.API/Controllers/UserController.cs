@@ -109,14 +109,19 @@ public class UserController : BaseApiController
   [HttpGet("me")]
   public ActionResult<bool> GetCurrentUser()
   {
-    var isAuthenticated = User.Identity.IsAuthenticated;
-
-    return Ok(isAuthenticated);
+    return Ok(User.Identity.IsAuthenticated);
   }
 
   [HttpGet("emailexists")]
   public async Task<ActionResult<bool>> CheckEmailExists([FromQuery] string email)
   {
     return await _userManager.FindByEmailAsync(email) != null;
+  }
+
+  [HttpGet("isadmin")]
+  public IActionResult IsAdmin()
+  {
+    bool isAdmin = User.IsInRole("Admin");
+    return Ok(isAdmin);
   }
 }
