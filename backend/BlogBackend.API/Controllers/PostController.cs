@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlogBackend.API.Controllers;
 
+[Authorize(Policy = "AdminPolicy")]
 public class PostController : BaseApiController
 {
   private readonly IPostService _postService;
@@ -21,7 +22,6 @@ public class PostController : BaseApiController
     _userManager = userManager;
   }
 
-  [Authorize]
   [HttpPost]
   public async Task<ActionResult<ApiResponse<PostViewModel>>> CreatePost([FromBody] PostInputModel model)
   {
@@ -69,7 +69,6 @@ public class PostController : BaseApiController
     }
   }
 
-  [Authorize]
   [HttpPut("{id}")]
   public async Task<ActionResult<ApiResponse<PostViewModel>>> UpdatePost(string id, [FromForm] PostInputModel model)
   {

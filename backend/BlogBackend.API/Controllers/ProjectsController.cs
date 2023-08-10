@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlogBackend.API.Controllers
 {
+    [Authorize(Policy = "AdminPolicy")]
     public class ProjectsController : BaseApiController
     {
         private readonly IProjectsService _projectsService;
@@ -35,7 +36,6 @@ namespace BlogBackend.API.Controllers
             return Ok(project);
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ApiResponse<Project>>> CreateProject([FromForm] ProjectInputModel model)
         {
@@ -45,7 +45,6 @@ namespace BlogBackend.API.Controllers
             return Ok(project);
         }
 
-        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<Project>> UpdateProject(string id, Project project)
         {
@@ -59,7 +58,6 @@ namespace BlogBackend.API.Controllers
             return NoContent();
         }
 
-        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Project>> DeleteProject(string id)
         {

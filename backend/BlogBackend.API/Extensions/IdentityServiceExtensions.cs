@@ -15,11 +15,13 @@ public static class IdentityServiceExtensions
     var builder = services.AddIdentityCore<User>();
 
     builder = new IdentityBuilder(builder.UserType, builder.Services);
+    builder.AddRoles<IdentityRole>();
     builder.AddEntityFrameworkStores<IdentityDbContext>();
     builder.AddSignInManager<SignInManager<User>>();
     builder.AddDefaultTokenProviders();
 
-    services.AddAuthentication(options => {
+    services.AddAuthentication(options =>
+    {
       options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
       options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     })
@@ -39,16 +41,21 @@ public static class IdentityServiceExtensions
 
     services.AddAuthentication(options =>
     {
-    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-    options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-    options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+      options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+      options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+      options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
     })
     .AddCookie(IdentityConstants.ApplicationScheme, options =>
     {
-    options.Cookie.Name = "token";
-    options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-    options.SlidingExpiration = true;
+      options.Cookie.Name = "token";
+      options.Cookie.HttpOnly = true;
+      options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+      options.SlidingExpiration = true;
+    });
+
+    services.AddAuthorization(options =>
+    {
+      options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
     });
 
     services.AddDbContext<IdentityDbContext>(opt =>

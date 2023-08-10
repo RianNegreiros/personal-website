@@ -1,4 +1,9 @@
 using BlogBackend.API.Extensions;
+using BlogBackend.Core.Models;
+using BlogBackend.Infrastructure.Data;
+using BlogBackend.Infrastructure.Data.SeedData;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +26,23 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    try
+    {
+        var context = services.GetRequiredService<IdentityDbContext>();
+        await context.Database.MigrateAsync();
+        await AdminUserSeed.SeedAsync(services.GetRequiredService<UserManager<User>>(), services.GetRequiredService<RoleManager<IdentityRole>>(), builder.Configuration);
+    }
+    catch (Exception ex)
+    {
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogError(ex, "An error occurred during migration");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) { }
