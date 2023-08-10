@@ -17,12 +17,14 @@ namespace Backend.API.Controllers
             _projectsService = projectsService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<Project>>> GetProjects()
         {
             return Ok(await _projectsService.GetProjects());
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Project>> GetProject(string id)
         {

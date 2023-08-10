@@ -115,6 +115,7 @@ public class PostController : BaseApiController
     }
   }
 
+  [AllowAnonymous]
   [HttpGet]
   public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts()
   {
@@ -122,6 +123,7 @@ public class PostController : BaseApiController
     return Ok(posts);
   }
 
+  [AllowAnonymous]
   [HttpGet("{id}")]
   public async Task<ActionResult<PostViewModel>> GetPost(string id)
   {
