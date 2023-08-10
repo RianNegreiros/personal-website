@@ -10,6 +10,7 @@ export default function SignInPage() {
   const [formData, setFormData] = useState<SignInData>({
     email: "",
     password: "",
+    token: "",
     rememberMe: false,
     isAdmin: false
   })
@@ -18,8 +19,9 @@ export default function SignInPage() {
   const { isAdmin, setIsAdmin } = useAuth();
 
   const handleInputChange = (event: FormEvent<HTMLInputElement>) => {
-    const { name, value } = event.currentTarget;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type, checked } = event.currentTarget;
+    const inputValue = type === 'checkbox' ? checked : value;
+    setFormData({ ...formData, [name]: inputValue });
   };
 
   const handleSignIn = async (event: FormEvent<HTMLFormElement>) => {
@@ -30,6 +32,12 @@ export default function SignInPage() {
       console.log("Sign in successful!");
 
       setIsAdmin(data.isAdmin)
+
+      if (formData.rememberMe) {
+        localStorage.setItem('token', data.token);
+      } else {
+        localStorage.removeItem('token');
+      }
 
       router.push("/");
     } catch (error) {
@@ -78,7 +86,8 @@ export default function SignInPage() {
                 <input
                   id="remember"
                   type="checkbox"
-                  value={formData.rememberMe.toString()}
+                  name="rememberMe"
+                  checked={formData.rememberMe}
                   onChange={handleInputChange}
                   className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                 />

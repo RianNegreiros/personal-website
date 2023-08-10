@@ -55,15 +55,22 @@ async function createPost(formData: PostData) {
   }
 }
 
-async function autoLoginUser(persistentToken: string): Promise<SignInData> {
+async function autoLoginUser(token: string) {
   try {
-      const response = await axios.post<SignInData>('/api/autologin', {
-          persistentToken: persistentToken
-      });
+    const response = await axios.post(
+      `${API_URL}/user/autologin`,
+      JSON.stringify(token),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
-      return response.data;
+    return response.data;
   } catch (error) {
-      throw new Error('Auto-login failed.');
+    console.log(error);
+    throw new Error('Auto-login failed. Please try again later.');
   }
 }
 

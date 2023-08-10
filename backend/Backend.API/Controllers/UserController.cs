@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Backend.API.Controllers;
 
@@ -79,11 +78,11 @@ public class UserController : BaseApiController
       return BadRequest("Invalid username or password.");
     }
 
-    //     if (model.RememberMe)
-    // {
-    //     user.PersistentToken = Guid.NewGuid().ToString();
-    //     await _userManager.UpdateAsync(user);
-    // }
+    if (model.RememberMe)
+    {
+      user.PersistentToken = Guid.NewGuid().ToString();
+      await _userManager.UpdateAsync(user);
+    }
 
     var token = _tokenService.GenerateJwtToken(user);
 
@@ -95,7 +94,8 @@ public class UserController : BaseApiController
       Username = user.UserName,
       Token = token,
       Email = user.Email,
-      IsAdmin = isAdmin
+      IsAdmin = isAdmin,
+      RememberMe = model.RememberMe
     });
   }
 
@@ -134,24 +134,23 @@ public class UserController : BaseApiController
     return Ok(isAdmin);
   }
 
-  //   [HttpPost("autologin")]
-  // public async Task<ActionResult<UserViewModel>> AutoLogin(string persistentToken)
-  // {
-  //     var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PersistentToken == persistentToken);
+  [HttpPost("autologin")]
+  public async Task<ActionResult<UserViewModel>> AutoLogin([FromBody] string token)
+  {
+    var user = await _tokenService.GetUserFromValidToken(token);
+    if (user == null)
+    {
+      return Unauthorized();
+    }
 
-  //     if (user == null)
-  //     {
-  //         return BadRequest("Invalid persistent token.");
-  //     }
+    var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
-  //     var token = _tokenService.GenerateJwtToken(user);
-
-  //     return Ok(new UserViewModel
-  //     {
-  //         Id = user.Id,
-  //         Username = user.UserName,
-  //         Token = token,
-  //         Email = user.Email
-  //     });
-  // }
+    return Ok(new UserViewModel
+    {
+      Id = user.Id,
+      Username = user.UserName,
+      Email = user.Email,
+      IsAdmin = isAdmin
+    });
+  }
 }
