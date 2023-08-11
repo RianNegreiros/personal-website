@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -16,6 +12,8 @@ public class Comment
     public string Content { get; set; }
     [BsonElement("author")]
     public string Author { get; set; }
+    [BsonElement("postId")]
+    public string PostId { get; set; }
     [BsonElement("createdAt")]
     public DateTime CreatedAt { get; set; }
 }

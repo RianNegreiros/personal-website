@@ -1,6 +1,6 @@
 using Backend.Core.Models;
 
-namespace Backend.Core.Inferfaces;
+namespace Backend.Core.Inferfaces.Repositories;
 public interface IProjectsRepository
 {
     Task<List<Project>> GetAllProjectsAsync();

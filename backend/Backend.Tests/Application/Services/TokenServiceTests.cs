@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
 using Backend.Application.Services;
 using Backend.Core.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
@@ -29,7 +25,9 @@ namespace Backend.Tests.Application.Services
             configurationMock.Setup(config => config["JwtConfig:Issuer"]).Returns("testissuer");
             configurationMock.Setup(config => config["JwtConfig:Audience"]).Returns("testaudience");
 
-            var tokenService = new TokenService(configurationMock.Object);
+            var userManagerMock = new Mock<UserManager<User>>();
+
+            var tokenService = new TokenService(configurationMock.Object, userManagerMock.Object);
 
             // Act
             var token = tokenService.GenerateJwtToken(user);
