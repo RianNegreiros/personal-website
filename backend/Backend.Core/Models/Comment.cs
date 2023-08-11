@@ -11,7 +11,7 @@ public class Comment
     [BsonElement("content")]
     public string Content { get; set; }
     [BsonElement("author")]
-    public string Author { get; set; }
+    public User Author { get; set; }
     [BsonElement("postId")]
     public string PostId { get; set; }
     [BsonElement("createdAt")]
