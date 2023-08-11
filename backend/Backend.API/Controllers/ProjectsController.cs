@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.API.Controllers
 {
-    [Authorize(Policy = "AdminPolicy")]
+    [Authorize(Roles = "Admin")]
     public class ProjectsController : BaseApiController
     {
         private readonly IProjectsService _projectsService;

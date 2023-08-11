@@ -46,11 +46,6 @@ public static class IdentityServiceExtensions
       options.SlidingExpiration = true;
     });
 
-    services.AddAuthorization(options =>
-    {
-      options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
-    });
-
     services.AddDbContext<IdentityDbContext>(opt =>
     {
       var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");

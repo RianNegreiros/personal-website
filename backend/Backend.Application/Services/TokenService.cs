@@ -18,14 +18,15 @@ public class TokenService : ITokenService
     _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtConfig:SecretKey"]));
   }
 
-  public string GenerateJwtToken(User user)
+  public string GenerateJwtToken(User user, bool isAdmin = false)
   {
     var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
 
     var claims = new List<Claim>
     {
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName)
+                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
+                new Claim(ClaimTypes.Role, isAdmin ? "Admin" : "User")
     };
 
     var token = new JwtSecurityToken(

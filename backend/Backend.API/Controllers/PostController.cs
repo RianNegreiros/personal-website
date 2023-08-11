@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.API.Controllers;
 
-[Authorize(Policy = "AdminPolicy")]
+[Authorize(Roles = "Admin")]
 public class PostController : BaseApiController
 {
   private readonly IPostService _postService;

@@ -8,19 +8,21 @@ namespace Backend.Infrastructure.Data.SeedData
     {
         public static async Task SeedAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
-            if (!roleManager.RoleExistsAsync("Admin").Result)
+            if (!await roleManager.RoleExistsAsync("Admin"))
             {
-                roleManager.CreateAsync(new IdentityRole("Admin")).Wait();
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
             }
-            if (userManager.FindByEmailAsync(configuration["AdminUser:Email"]).Result == null)
-            {
-                var adminUser = new User
-                {
-                    UserName = configuration["AdminUser:UserName"],
-                    Email = configuration["AdminUser:Email"],
-                    EmailConfirmed = true
-                };
 
+            User adminUser = new()
+            {
+                UserName = configuration["AdminUser:UserName"],
+                Email = configuration["AdminUser:Email"],
+                EmailConfirmed = true,
+                PersistentToken = Guid.NewGuid().ToString()
+            };
+
+            if (await userManager.FindByEmailAsync(configuration["AdminUser:Email"]) == null)
+            {
                 await userManager.CreateAsync(adminUser, configuration["AdminUser:Password"]);
                 await userManager.AddToRoleAsync(adminUser, "Admin");
             }
