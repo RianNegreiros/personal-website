@@ -1,3 +1,4 @@
+using Backend.API.Helpers;
 using Backend.API.Models;
 using Backend.Application.Models;
 using Backend.Application.Services;
@@ -13,11 +14,13 @@ public class CommentsController : BaseApiController
 {
     private readonly ICommentsService _commentsService;
     private readonly UserManager<User> _userManager;
+    private readonly IConfiguration _config;
 
-    public CommentsController(ICommentsService commentsService, UserManager<User> userManager)
+    public CommentsController(ICommentsService commentsService, UserManager<User> userManager, IConfiguration config)
     {
         _commentsService = commentsService;
         _userManager = userManager;
+        _config = config;
     }
 
     [Authorize]
@@ -33,7 +36,18 @@ public class CommentsController : BaseApiController
                 Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
             });
 
-        var user = await _userManager.GetUserAsync(User);
+        var email = AutoLoginHelper.GetEmailFromValidToken(_config, comment.token);
+        if (email == null)
+        {
+            return Unauthorized();
+        }
+
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+
         Comment addedComment = await _commentsService.AddCommentToPost(postId, comment, user);
 
         var commentViewModel = new CommentViewModel

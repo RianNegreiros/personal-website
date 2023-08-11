@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { autoLoginUser, getIsAdmin } from '../utils/api';
+import { autoLoginUser } from '../utils/api';
 
 interface AuthContextType {
   isAdmin: boolean;
@@ -27,7 +27,6 @@ async function autoLogin(setIsAdmin: React.Dispatch<React.SetStateAction<boolean
       const data = await autoLoginUser(storedToken);
       setIsAdmin(data.isAdmin);
     } catch (error) {
-      console.error('Auto-login error:', error);
     }
   }
 }

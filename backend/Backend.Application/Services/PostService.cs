@@ -49,7 +49,8 @@ namespace Backend.Application.Services
           Id = post.Id,
           Title = post.Title,
           Summary = post.Summary,
-          Content = post.Content
+          Content = post.Content,
+          CreatedAt = post.CreatedAt
         }).ToList();
 
     public async Task<PostViewModel> GetPost(string id)
@@ -63,7 +64,8 @@ namespace Backend.Application.Services
         Id = post.Id,
         Title = post.Title,
         Summary = post.Summary,
-        Content = post.Content
+        Content = post.Content,
+        CreatedAt = post.CreatedAt
       };
     }
   }
