@@ -22,28 +22,21 @@ public static class IdentityServiceExtensions
 
     services.AddAuthentication(options =>
     {
+      options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
       options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
       options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     })
-      .AddJwtBearer(opt =>
-      {
-        opt.SaveToken = true;
-        opt.TokenValidationParameters = new TokenValidationParameters
-        {
-          ValidateIssuerSigningKey = true,
-          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtConfig:SecretKey"])),
-          ValidIssuer = config["JwtConfig:Issuer"],
-          ValidateIssuer = true,
-          ValidateAudience = false
-        };
-      });
-
-
-    services.AddAuthentication(options =>
+    .AddJwtBearer(opt =>
     {
-      options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-      options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-      options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+      opt.SaveToken = true;
+      opt.TokenValidationParameters = new TokenValidationParameters
+      {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtConfig:SecretKey"])),
+        ValidIssuer = config["JwtConfig:Issuer"],
+        ValidateIssuer = true,
+        ValidateAudience = false
+      };
     })
     .AddCookie(IdentityConstants.ApplicationScheme, options =>
     {
@@ -61,17 +54,9 @@ public static class IdentityServiceExtensions
     services.AddDbContext<IdentityDbContext>(opt =>
     {
       var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-      string connStr;
-
-      if (env == "Development")
-      {
-        connStr = config.GetConnectionString("DefaultConnection");
-      }
-      else
-      {
-        connStr = config.GetConnectionString("IdentityConnection");
-      }
+      string connStr = env == "Development"
+              ? config.GetConnectionString("DefaultConnection")
+              : config.GetConnectionString("IdentityConnection");
 
       opt.UseNpgsql(connStr);
     });
