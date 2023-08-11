@@ -1,6 +1,6 @@
 using Backend.Application.Models;
 using Backend.Core.CloudServices;
-using Backend.Core.Inferfaces;
+using Backend.Core.Inferfaces.Repositories;
 using Backend.Core.Models;
 
 namespace Backend.Application.Services

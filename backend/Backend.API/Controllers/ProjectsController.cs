@@ -1,6 +1,7 @@
 using Backend.API.Models;
 using Backend.Application.Models;
 using Backend.Application.Services;
+using Backend.Application.Validators;
 using Backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,14 @@ namespace Backend.API.Controllers
         [HttpPost]
         public async Task<ActionResult<ApiResponse<Project>>> CreateProject([FromForm] ProjectInputModel model)
         {
+            var validationResult = ValidateModel<ProjectInputModelValidator, ProjectInputModel>(model);
+
+            if (!validationResult.IsValid)
+                return BadRequest(new ApiResponse<Project>
+                {
+                    Success = false,
+                    Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
+                });
 
             var project = await _projectsService.CreateProject(model);
 

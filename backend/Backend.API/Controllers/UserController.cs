@@ -1,5 +1,8 @@
-﻿using Backend.Application.Models;
+﻿using Backend.API.Helpers;
+using Backend.API.Models;
+using Backend.Application.Models;
 using Backend.Application.Services;
+using Backend.Application.Validators;
 using Backend.Core.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -13,12 +16,14 @@ public class UserController : BaseApiController
   private readonly UserManager<User> _userManager;
   private readonly SignInManager<User> _signInManager;
   private readonly ITokenService _tokenService;
+  private readonly IConfiguration _config;
 
-  public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
+  public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService, IConfiguration config)
   {
     _userManager = userManager;
     _signInManager = signInManager;
     _tokenService = tokenService;
+    _config = config;
   }
 
   [HttpPost("register")]
@@ -59,9 +64,15 @@ public class UserController : BaseApiController
   [HttpPost("login")]
   public async Task<ActionResult<UserViewModel>> Login(LoginInputModel model)
   {
-    if (!ModelState.IsValid)
+    var validationResult = ValidateModel<LoginInputModelValidator, LoginInputModel>(model);
+
+    if (!validationResult.IsValid)
     {
-      return BadRequest(ModelState);
+      return BadRequest(new ApiResponse<UserViewModel>
+      {
+        Success = false,
+        Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
+      });
     }
 
     var user = await _userManager.FindByEmailAsync(model.Email);
@@ -137,10 +148,16 @@ public class UserController : BaseApiController
   [HttpPost("autologin")]
   public async Task<ActionResult<UserViewModel>> AutoLogin([FromBody] string token)
   {
-    var user = await _tokenService.GetUserFromValidToken(token);
+    var email = AutoLoginHelper.GetEmailFromValidToken(_config, token);
+    if (email == null)
+    {
+        return Unauthorized();
+    }
+
+    var user = await _userManager.FindByEmailAsync(email);
     if (user == null)
     {
-      return Unauthorized();
+        return Unauthorized();
     }
 
     var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");

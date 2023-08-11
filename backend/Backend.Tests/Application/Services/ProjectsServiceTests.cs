@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Backend.Application.Models;
 using Backend.Application.Services;
 using Backend.Core.CloudServices;
-using Backend.Core.Inferfaces;
+using Backend.Core.Inferfaces.Repositories;
 using Backend.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Moq;
