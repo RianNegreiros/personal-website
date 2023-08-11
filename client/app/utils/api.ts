@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PostData, SignInData, SignUpData } from '../models';
+import { CommentData, PostData, SignInData, SignUpData } from '../models';
 
 const API_URL = "http://localhost:5000/api"
 
@@ -56,22 +56,91 @@ async function createPost(formData: PostData) {
 }
 
 async function autoLoginUser(token: string) {
-  try {
-    const response = await axios.post(
-      `${API_URL}/user/autologin`,
-      JSON.stringify(token),
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+  const response = await axios.post(
+    `${API_URL}/user/autologin`,
+    JSON.stringify(token),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
 
+  return response.data;
+}
+
+async function getPosts() {
+  try {
+    const response = await axios.get(`${API_URL}/post`);
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw new Error('Auto-login failed. Please try again later.');
+    throw new Error('Failed to fetch posts. Please try again later.');
   }
 }
 
-export { signUpUser, signInUser, getIsAdmin, createPost, autoLoginUser };
+async function getPost(postId: string) {
+  try {
+    const response = await axios.get(`${API_URL}/post/${postId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch post. Please try again later.');
+  }
+}
+
+async function getCommentsForPost(postId: string) {
+  try {
+    const response = await axios.get(`${API_URL}/comments/${postId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch comments. Please try again later.');
+  }
+}
+
+async function addCommentToPost(commentData: CommentData) {
+  try {
+    const token = localStorage.getItem('token');
+    commentData.token = token as string;
+
+    if (!token) {
+      throw new Error('User token not found.');
+    }
+
+    const response = await axios.post(`${API_URL}/comments/${commentData.postId}`, commentData, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to add comment. Please try again later.');
+  }
+}
+
+async function getIsUserLoggedIn() {
+  try {
+    const response = await axios.get(`${API_URL}/user/me`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch user. Please try again later.');
+  }
+}
+
+export {
+  signUpUser,
+  signInUser,
+  getIsAdmin,
+  createPost,
+  autoLoginUser,
+  getCommentsForPost,
+  addCommentToPost,
+  getPosts,
+  getPost,
+  getIsUserLoggedIn
+};
