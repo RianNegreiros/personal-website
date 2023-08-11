@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Backend.Application.Models;
 
 public class PostInputModel
