@@ -47,7 +47,7 @@ export default function SignInPage() {
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
-      <div className="w-full p-6 bg-white rounded-md shadow-md lg:max-w-xl">
+      <div className="w-full p-6 bg-white dark:bg-gray-50 rounded-md shadow-md lg:max-w-xl">
         <h1 className="text-3xl font-bold text-center text-gray-900">Acesse sua conta</h1>
         <form className="mt-6" onSubmit={handleSignIn}>
           <div className="mb-4">
@@ -62,7 +62,8 @@ export default function SignInPage() {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="block w-full px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="name@mail.com"
             />
           </div>
           <div className="mb-2">
@@ -77,7 +78,7 @@ export default function SignInPage() {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="block w-full px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
           <div className="mt-2">
@@ -106,6 +107,7 @@ export default function SignInPage() {
             </button>
           </div>
         </form>
+
       </div>
     </div>
   )

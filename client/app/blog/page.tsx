@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { Post } from "../models";
+import { getPosts } from "../utils/api";
 
 async function getData() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`);
-  const data = await response.json();
-  return data;
+  return await getPosts();
 }
 
 export default async function BlogPage() {
@@ -24,7 +23,7 @@ export default async function BlogPage() {
             <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
               <div>
                 <p className="text-base font-medium leading-6 text-teal-500">
-                  {new Date().toISOString().split("T")[0]}
+                  {new Date(post.createdAt.split('.')[0]).toLocaleDateString()}
                 </p>
               </div>
 

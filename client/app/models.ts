@@ -3,6 +3,7 @@ export interface Post {
   title: string
   summary: string
   content: string
+  createdAt: string
 }
 
 export interface PostData {
@@ -32,4 +33,17 @@ export interface SignInData {
   rememberMe: boolean;
   token: string;
   isAdmin: boolean;
+}
+
+export interface Comment {
+  id: string;
+  author: { id: string, userName: string };
+  content: string;
+  createdAt: string;
+}
+
+export interface CommentData {
+  postId: string;
+  content: string;
+  token: string;
 }
