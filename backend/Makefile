@@ -8,4 +8,4 @@ migrations:
 	cd ./Backend.Infrastructure/Data && dotnet ef migrations add $(name) --project ../Backend.Infrastructure.csproj --startup-project ../../Backend.API/Backend.API.csproj && cd ../..
 
 db:
-	cd ./Backend.Infrastructure/Data && dotnet ef --startup-project ../../Backend.API/ database update && cd ..
+	cd ./Backend.Infrastructure/Data && dotnet ef database update --project ../Backend.Infrastructure.csproj --startup-project ../../Backend.API/Backend.API.csproj && cd ../..
