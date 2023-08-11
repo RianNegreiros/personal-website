@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CommentData, PostData, SignInData, SignUpData } from '../models';
+import { CommentData, PostData, ProjectData, SignInData, SignUpData } from '../models';
 
 const API_URL = "http://localhost:5000/api"
 
@@ -33,7 +33,12 @@ async function signInUser(formData: SignInData) {
 
 async function getIsAdmin() {
   try {
-    const response = await axios.get(`${API_URL}/user/isadmin`, {});
+    const response = await axios.get(`${API_URL}/user/isadmin`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch user. Please try again later.');
@@ -132,6 +137,21 @@ async function getIsUserLoggedIn() {
   }
 }
 
+async function createProject(projectData: ProjectData) {
+  try {
+    const response = await axios.post(`${API_URL}/projects`, projectData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to create project. Please try again later.');
+  }
+}
+
 export {
   signUpUser,
   signInUser,
@@ -142,5 +162,6 @@ export {
   addCommentToPost,
   getPosts,
   getPost,
-  getIsUserLoggedIn
+  getIsUserLoggedIn,
+  createProject
 };

@@ -47,3 +47,10 @@ export interface CommentData {
   content: string;
   token: string;
 }
+
+export interface ProjectData {
+  title: string;
+  overview: string;
+  url: string;
+  image: File | null;
+}
