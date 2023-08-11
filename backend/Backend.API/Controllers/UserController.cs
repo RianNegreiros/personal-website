@@ -1,5 +1,7 @@
-﻿using Backend.Application.Models;
+﻿using Backend.API.Models;
+using Backend.Application.Models;
 using Backend.Application.Services;
+using Backend.Application.Validators;
 using Backend.Core.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -59,9 +61,15 @@ public class UserController : BaseApiController
   [HttpPost("login")]
   public async Task<ActionResult<UserViewModel>> Login(LoginInputModel model)
   {
-    if (!ModelState.IsValid)
+    var validationResult = ValidateModel<LoginInputModelValidator, LoginInputModel>(model);
+
+    if (!validationResult.IsValid)
     {
-      return BadRequest(ModelState);
+      return BadRequest(new ApiResponse<UserViewModel>
+      {
+        Success = false,
+        Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
+      });
     }
 
     var user = await _userManager.FindByEmailAsync(model.Email);

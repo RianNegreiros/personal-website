@@ -25,7 +25,7 @@ public class PostController : BaseApiController
   [HttpPost]
   public async Task<ActionResult<ApiResponse<PostViewModel>>> CreatePost([FromBody] PostInputModel model)
   {
-    var validationResult = ValidateModel(model);
+    var validationResult = ValidateModel<PostInputModelValidator, PostInputModel>(model);
 
     if (!validationResult.IsValid)
       return BadRequest(new ApiResponse<PostViewModel>
@@ -72,7 +72,7 @@ public class PostController : BaseApiController
   [HttpPut("{id}")]
   public async Task<ActionResult<ApiResponse<PostViewModel>>> UpdatePost(string id, [FromForm] PostInputModel model)
   {
-    var validationResult = ValidateModel(model);
+    var validationResult = ValidateModel<PostInputModelValidator, PostInputModel>(model);
 
     if (!validationResult.IsValid)
       return BadRequest(new ApiResponse<PostViewModel>
@@ -132,11 +132,5 @@ public class PostController : BaseApiController
       return NotFound();
 
     return Ok(post);
-  }
-
-  private FluentValidation.Results.ValidationResult ValidateModel(PostInputModel model)
-  {
-    var validator = new PostInputModelValidator();
-    return validator.Validate(model);
   }
 }
