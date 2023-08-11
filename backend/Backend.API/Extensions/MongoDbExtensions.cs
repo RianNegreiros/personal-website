@@ -23,6 +23,11 @@ public static class MongoDbExtensions
       database.CreateCollection("posts");
     }
 
+    if (!CollectionExists(database, "comments"))
+    {
+      database.CreateCollection("comments");
+    }
+
     services.AddSingleton(database);
 
     return services;
