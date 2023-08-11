@@ -1,3 +1,4 @@
+using Backend.Application.Models;
 using Backend.Core.Inferfaces.Repositories;
 using Backend.Core.Models;
 
@@ -12,10 +13,17 @@ public class CommentsService : ICommentsService
         _commentsRepository = commentsRepository;
     }
 
-    public async Task AddCommentToPost(string postId, Comment comment)
+    public async Task<Comment> AddCommentToPost(string postId, CommentInputModel comment, User author)
     {
-        comment.PostId = postId;
-        await _commentsRepository.AddComment(comment);
+        var newComment = new Comment
+        {
+            Content = comment.Content,
+            Author = author,
+            PostId = postId,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        return await _commentsRepository.AddComment(newComment);
     }
 
     public async Task<List<Comment>> GetCommentsForPost(string postId)

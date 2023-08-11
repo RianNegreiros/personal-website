@@ -12,11 +12,13 @@ public static class ApplicationServicesExtensions
   {
     services.AddScoped<IPostRepository, PostRepository>();
     services.AddScoped<IProjectsRepository, ProjectsRepository>();
+    services.AddScoped<ICommentsRepository, CommentsRepository>();
 
     services.AddScoped<ITokenService, TokenService>();
     services.AddScoped<IPostService, PostService>();
     services.AddScoped<ICloudinaryService, CloudinaryService>();
     services.AddScoped<IProjectsService, ProjectsService>();
+    services.AddScoped<ICommentsService, CommentsService>();
 
     return services;
   }

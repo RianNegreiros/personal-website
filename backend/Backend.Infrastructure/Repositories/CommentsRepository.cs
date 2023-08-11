@@ -13,9 +13,10 @@ public class CommentsRepository : ICommentsRepository
         _comments = database.GetCollection<Comment>("comments");
     }
 
-    public async Task AddComment(Comment comment)
+    public async Task<Comment> AddComment(Comment comment)
     {
         await _comments.InsertOneAsync(comment);
+        return comment;
     }
 
     public async Task<List<Comment>> GetCommentsForPost(string postId)
