@@ -26,7 +26,7 @@ export default async function Projects() {
             <div className="h-56 w-full relative">
               <Image
                 fill
-                sizes="100vw"
+                sizes="100%"
                 priority
                 src={project.imageUrl}
                 alt="Image of the project"
