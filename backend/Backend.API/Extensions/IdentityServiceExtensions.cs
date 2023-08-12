@@ -49,9 +49,7 @@ public static class IdentityServiceExtensions
     services.AddDbContext<IdentityDbContext>(opt =>
     {
       var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-      string connStr = env == "Development"
-              ? config.GetConnectionString("DefaultConnection")
-              : config.GetConnectionString("IdentityConnection");
+      string connStr = config.GetConnectionString("IdentityConnection");
 
       opt.UseNpgsql(connStr);
     });
