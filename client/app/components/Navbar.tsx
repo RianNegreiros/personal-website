@@ -18,15 +18,12 @@ export default function Navbar() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justfiy-between h-16">
               <div className="flex justify-between w-full">
-                <div className="flex items-center">
+                <div className="flex items-center hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
                   <Link href="/">
                     <h1 className="text-2xl font-medium">
                       Rian <span className="text-teal-500">Negreiros</span>
                     </h1>
                   </Link>
-                </div>
-
-                <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
                   <Link
                     href="/"
                     prefetch
@@ -57,8 +54,11 @@ export default function Navbar() {
                   >
                     Projects
                   </Link>
+                </div>
 
-                  <AuthLinks isAdmin={isAdmin} pathname={pathname} />
+                <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
+
+                  <AuthLinks pathname={pathname} />
 
                   <ThemeButton />
                 </div>

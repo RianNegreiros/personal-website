@@ -3,7 +3,9 @@ import { autoLoginUser } from '../utils/api';
 
 interface AuthContextType {
   isAdmin: boolean;
+  isLogged: boolean;
   setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,26 +22,32 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-async function autoLogin(setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>) {
+async function autoLogin(
+  setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>
+  ) {
   const storedToken = localStorage.getItem('token');
   if (storedToken) {
     try {
       const data = await autoLoginUser(storedToken);
       setIsAdmin(data.isAdmin);
+      setIsLogged(true);
     } catch (error) {
     }
+    setIsLogged(true);
   }
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
-    autoLogin(setIsAdmin);
+    autoLogin(setIsAdmin, setIsLogged);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAdmin, setIsAdmin }}>
+    <AuthContext.Provider value={{ isAdmin, isLogged, setIsAdmin, setIsLogged }}>
       {children}
     </AuthContext.Provider>
   );

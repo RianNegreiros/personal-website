@@ -146,6 +146,20 @@ async function getIsUserLoggedIn() {
   }
 }
 
+async function logoutUser() {
+  try {
+    const response = await axios.post(`${API_URL}/user/logout`, null, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error('Logout failed. Please try again later.');
+  }
+}
+
 async function createProject(projectData: ProjectData) {
   try {
     const formData = new FormData();
@@ -182,5 +196,6 @@ export {
   getPost,
   getIsUserLoggedIn,
   createProject,
-  getProjects
+  getProjects,
+  logoutUser
 };
