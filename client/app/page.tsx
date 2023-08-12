@@ -13,12 +13,11 @@ export default function Home() {
             Olá a todos, meu nome é Rian, sou um desenvolvedor Back-End do Rio de Janeiro
           </p>
           <p>
-            Meu objetivo é tornar a tecnologia mais acessível para todos.
-            Neste espaço, pretendo compartilhar artigos que podem ajudar tanto desenvolvedores iniciantes a aprimorar suas habilidades e se manter atualizados com as evoluções do setor.
+            Meu objetivo é tornar a tecnologia mais acessível para todos,
+            neste espaço, pretendo compartilhar artigos que podem ajudar tanto desenvolvedores iniciantes a aprimorar suas habilidades e se manter atualizados com as evoluções do setor.
           </p>
           <p>
             Obrigado por visitar meu site, espero que você goste!
-            vamos explorar o mundo do desenvolvimento back-end, criar soluções, e contribuir para a incrível comunidade de código aberto!
             Fique à vontade para entrar em contato comigo abaixo.
           </p>
         </div>
