@@ -48,6 +48,14 @@ export interface CommentData {
   token: string;
 }
 
+export interface Project {
+  id: string;
+  title: string;
+  overview: string;
+  url: string;
+  imageUrl: string;
+}
+
 export interface ProjectData {
   title: string;
   overview: string;

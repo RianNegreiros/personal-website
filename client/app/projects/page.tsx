@@ -1,22 +1,13 @@
 import Image from "next/image"
+import { getProjects } from "../utils/api";
+import { Project } from "../models";
 
-interface Data {
-  id: string;
-  title: string;
-  overview: string;
-  url: string;
-  imageUrl: string;
-}
-
-async function getProjects() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects`);
-  const data = await response.json();
-
-  return data;
+async function fetchData() {
+  return await getProjects();
 }
 
 export default async function Projects() {
-  const data: Data[] = await getProjects();
+  const data = (await fetchData()) as Project[];
 
   return (
     <div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -35,6 +26,8 @@ export default async function Projects() {
             <div className="h-56 w-full relative">
               <Image
                 fill
+                sizes="100vw"
+                priority
                 src={project.imageUrl}
                 alt="Image of the project"
                 className="w-full h-full object-cover"
