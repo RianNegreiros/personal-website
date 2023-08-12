@@ -29,7 +29,12 @@ export default function NewProjectPage() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  
+    if (name === "image" && e.target instanceof HTMLInputElement && e.target.files && e.target.files.length > 0) {
+      setFormData({ ...formData, [name]: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   return (
@@ -51,11 +56,11 @@ export default function NewProjectPage() {
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="Overview" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Overview</label>
+              <label htmlFor="overview" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Overview</label>
               <input
                 type="text"
-                name="Overview"
-                id="Overview"
+                name="overview"
+                id="overview"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Type project overview"
                 required
@@ -64,24 +69,24 @@ export default function NewProjectPage() {
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="Url" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Url</label>
+              <label htmlFor="url" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Url</label>
               <input
                 type="text"
-                name="Url"
-                id="Url"
+                name="url"
+                id="url"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Type project Url"
+                placeholder="Type project url"
                 required
                 onChange={handleChange}
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="project-image">Upload file</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="image">Upload file</label>
               <input
                 className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 aria-describedby="project-image-description"
-                id="project-image"
+                id="image"
                 type="file"
                 required
                 name="image"

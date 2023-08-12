@@ -92,6 +92,15 @@ async function getPost(postId: string) {
   }
 }
 
+async function getProjects() {
+  try {
+    const response = await axios.get(`${API_URL}/projects`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch projects. Please try again later.');
+  }
+}
+
 async function getCommentsForPost(postId: string) {
   try {
     const response = await axios.get(`${API_URL}/comments/${postId}`);
@@ -139,7 +148,16 @@ async function getIsUserLoggedIn() {
 
 async function createProject(projectData: ProjectData) {
   try {
-    const response = await axios.post(`${API_URL}/projects`, projectData, {
+    const formData = new FormData();
+    formData.append('title', projectData.title);
+    formData.append('url', projectData.url);
+    formData.append('overview', projectData.overview);
+
+    if (projectData.image !== null) {
+      formData.append('image', projectData.image);
+    }
+
+    const response = await axios.post(`${API_URL}/projects`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -163,5 +181,6 @@ export {
   getPosts,
   getPost,
   getIsUserLoggedIn,
-  createProject
+  createProject,
+  getProjects
 };
