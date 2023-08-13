@@ -7,14 +7,14 @@ COPY . .
 RUN dotnet restore
 
 # Copy everything else and build the API
-RUN dotnet publish "./Backend.API/Backend.API.csproj" -c Release -o /app/out
+COPY . ./
+RUN dotnet publish "./Backend.API/Backend.API.csproj" -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-
-# Copy published output and appsettings
 COPY --from=build-env /app/out .
+
 COPY ./Backend.API/appsettings.Development.json ./
 
 # Start the API
