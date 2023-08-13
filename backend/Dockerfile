@@ -3,7 +3,16 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 WORKDIR /app
 
 # Copy the .csproj and restore as distinct layers
-COPY . .
+COPY ./backend/Backend.API/*.csproj ./Backend.API/
+RUN dotnet restore
+
+COPY ./backend/Backend.Core/*.csproj ./Backend.Core/
+RUN dotnet restore
+
+COPY ./backend/Backend.Infrastructure/*.csproj ./Backend.Infrastructure/
+RUN dotnet restore
+
+COPY ./backend/Backend.Application/*.csproj ./Backend.Application/
 RUN dotnet restore
 
 # Copy everything else and build the API
