@@ -10,6 +10,7 @@ import { useAuth } from "../contexts/AuthContext";
 export default function SignUpPage() {
   const { setIsLogged } = useAuth();
   const [formData, setFormData] = useState<SignUpData>({
+    Id: "",
     email: "",
     username: "",
     password: "",
@@ -27,8 +28,10 @@ export default function SignUpPage() {
     event.preventDefault();
 
     try {
-      await signUpUser(formData);
+      const data = await signUpUser(formData);
       setIsLogged(true);
+      localStorage.setItem("userId", data.id);
+      localStorage.setItem("token", data.token);
       console.log("Sign up successful!");
 
       router.push("/");

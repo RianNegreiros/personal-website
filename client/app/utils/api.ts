@@ -44,6 +44,7 @@ async function getIsAdmin() {
 }
 
 async function createPost(formData: PostData) {
+  formData.authorId = localStorage.getItem('userId') as string;
   try {
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, {
       headers: {

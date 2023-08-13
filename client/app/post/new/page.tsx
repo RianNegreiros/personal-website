@@ -18,7 +18,6 @@ export default function NewPostPage() {
     e.preventDefault();
 
     try {
-      formData.authorId = localStorage.getItem('userId') as string;
       const response = await createPost(formData);
       if (response) {
         router.push('/');

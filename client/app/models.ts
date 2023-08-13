@@ -21,6 +21,7 @@ export interface UserData {
 }
 
 export interface SignUpData {
+  Id: string;
   email: string;
   username: string;
   password: string;
@@ -28,6 +29,7 @@ export interface SignUpData {
 }
 
 export interface SignInData {
+  Id: string;
   email: string;
   password: string;
   rememberMe: boolean;

@@ -13,6 +13,7 @@ export default function AuthLinks({ pathname }: { pathname: string }) {
       setIsAdmin(false);
       setIsLogged(false);
       localStorage.removeItem('token');
+      localStorage.removeItem('userId');
       router.push('/');
     } catch (error) {
       console.error('Logout failed:', error);

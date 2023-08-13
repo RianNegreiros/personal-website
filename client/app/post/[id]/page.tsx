@@ -46,7 +46,6 @@ export default function PostPage({ params }: { params: { id: string } }) {
         setIsLogged(false);
       }
     }
-    
     checkUserLoggedIn();
   }, []);
 

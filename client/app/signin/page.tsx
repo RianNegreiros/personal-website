@@ -9,6 +9,7 @@ import Link from "next/link";
 
 export default function SignInPage() {
   const [formData, setFormData] = useState<SignInData>({
+    Id: "",
     email: "",
     password: "",
     token: "",
@@ -35,6 +36,7 @@ export default function SignInPage() {
       setIsAdmin(data.isAdmin)
       setIsLogged(true);
 
+      localStorage.setItem("userId", data.id);
       if (formData.rememberMe) {
         localStorage.setItem('token', data.token);
       } else {
