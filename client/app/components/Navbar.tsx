@@ -32,16 +32,6 @@ export default function Navbar() {
                       : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                       }`}
                   >
-                    Home
-                  </Link>
-                  <Link
-                    href="/blog"
-                    prefetch
-                    className={`${pathname === "/blog"
-                      ? "border-teal-500 dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                      : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                      }`}
-                  >
                     Blog
                   </Link>
                   <Link
@@ -53,6 +43,17 @@ export default function Navbar() {
                       }`}
                   >
                     Projects
+                  </Link>
+
+                  <Link
+                    href="/about"
+                    prefetch
+                    className={`${pathname === "/about"
+                      ? "border-teal-500 dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                      : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                      }`}
+                  >
+                    Sobre mim
                   </Link>
                 </div>
 
@@ -113,22 +114,13 @@ export default function Navbar() {
                 href="/"
                 prefetch
                 className={`${pathname == "/"
-                  ? "bg-teal-50  border-teal-500 text-teal-500 block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
-                  : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-teal-500 block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
-                  } `}
-              >
-                Home
-              </Link>
-              <Link
-                href="/guestbook"
-                prefetch
-                className={`${pathname == "/blog"
                   ? "bg-teal-50 border-teal-500 text-teal-500 block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
                   : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-teal-500 block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
                   } `}
               >
                 Blog
               </Link>
+
               <Link
                 href="/projects"
                 prefetch
@@ -137,7 +129,18 @@ export default function Navbar() {
                   : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-teal-500 block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
                   } `}
               >
-                Projects
+                Projetos
+              </Link>
+
+              <Link
+                href="/about"
+                prefetch
+                className={`${pathname == "/about"
+                  ? "bg-teal-50  border-teal-500 text-teal-500 block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
+                  : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-teal-500 block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
+                  } `}
+              >
+                Sobre mim
               </Link>
             </div>
           </Disclosure.Panel>

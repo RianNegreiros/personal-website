@@ -48,7 +48,7 @@ export default function AuthLinks({ pathname }: { pathname: string }) {
       onClick={handleLogout}
       className="ml-4 text-sm px-4 py-2 rounded-lg bg-teal-500 text-white hover:bg-teal-600"
     >
-      Logout
+      Sair
     </button>
   );
 
