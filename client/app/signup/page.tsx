@@ -64,6 +64,7 @@ export default function SignUpPage() {
                   onChange={handleInputChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@mail.com"
+                  required
                 />
               </div>
               <div>
@@ -79,6 +80,7 @@ export default function SignUpPage() {
                   name="username"
                   value={formData.username}
                   onChange={handleInputChange}
+                  required
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Nome de usuário"
                 />
@@ -97,6 +99,7 @@ export default function SignUpPage() {
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="••••••••"
+                  required
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
@@ -113,8 +116,27 @@ export default function SignUpPage() {
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   placeholder="••••••••"
+                  required
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
+              </div>
+              <div className="flex items-start mb-6">
+                <div className="flex items-center h-5">
+                  <input id="terms" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+                </div>
+                <label
+                  htmlFor="terms"
+                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  Eu concordo com os
+                  <a href="/terms/service" target="_blank" className="m-1 text-teal-600 hover:underline dark:text-teal-500"
+                  >
+                    Termos de Serviço
+                  </a>
+                  e
+                  <a href="/terms/privacy" target="_blank" className="m-1 text-teal-600 hover:underline dark:text-teal-500">
+                    Política de Privacidade
+                  </a>
+                </label>
               </div>
               <button
                 type="submit"
