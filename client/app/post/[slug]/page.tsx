@@ -4,6 +4,7 @@ import { Post, Comment, CommentData } from "@/app/models";
 import { addCommentToPost, getCommentsForPost, getIsUserLoggedIn, getPostBySlug } from "@/app/utils/api";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 
 async function fetchData(slug: string) {
   const postData = await getPostBySlug(slug);
@@ -91,7 +92,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       <div className="divide-y divide-gray-200 pb-7 dark:divide-gray-700 xl:divide-y-0">
         <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
           <div className="prose max-w-none pb-8 pt-10 dark:prose-invert prose-lg">
-            <ReactMarkdown>{data.content}</ReactMarkdown>
+            <ReactMarkdown rehypePlugins={[rehypeRaw]}>{data.content}</ReactMarkdown>
           </div>
         </div>
       </div>
