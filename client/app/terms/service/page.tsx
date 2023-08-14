@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+
 export default function TermsOfService() {
   return (
     <div>
@@ -14,7 +16,7 @@ export default function TermsOfService() {
         <li><span style={{ color: 'rgb(68, 68, 68)' }}>usar os materiais para qualquer finalidade comercial ou para exibição pública (comercial ou não comercial);</span></li>
         <li><span style={{ color: 'rgb(68, 68, 68)' }}>tentar descompilar ou fazer engenharia reversa de qualquer software contido no site Rian Negreiros Dos Santos website;</span></li>
         <li><span style={{ color: 'rgb(68, 68, 68)' }}>remover quaisquer direitos autorais ou outras notações de propriedade dos materiais; ou</span></li>
-        <li><span style={{ color: 'rgb(68, 68, 68)' }}>transferir os materiais para outra pessoa ou 'espelhe' os materiais em qualquer outro servidor.</span></li>
+        <li><span style={{ color: 'rgb(68, 68, 68)' }}>transferir os materiais para outra pessoa ou &apos;espelhe&apos; os materiais em qualquer outro servidor.</span></li>
       </ol>
       <p style={{ color: 'rgb(68, 68, 68)' }}>
         Esta licença será automaticamente rescindida se você violar alguma dessas restrições e poderá ser rescindida por Rian Negreiros Dos Santos website a qualquer momento. Ao encerrar a visualização desses materiais ou após o término desta licença, você deve apagar todos os materiais baixados em sua posse, seja em formato eletrônico ou impresso.
