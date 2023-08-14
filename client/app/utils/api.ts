@@ -82,15 +82,6 @@ async function getPosts() {
   }
 }
 
-async function getPost(postId: string) {
-  try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${postId}`);
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to fetch post. Please try again later.');
-  }
-}
-
 async function getProjects() {
   try {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/projects`);
@@ -118,7 +109,7 @@ async function addCommentToPost(commentData: CommentData) {
       throw new Error('User token not found.');
     }
 
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/comments/${commentData.postId}`, commentData, {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/comments/${commentData.postSlug}`, commentData, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -183,6 +174,15 @@ async function createProject(projectData: ProjectData) {
   }
 }
 
+async function getPostBySlug(slug: string) {
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${slug}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch post by slug. Please try again later.');
+  }
+}
+
 export {
   signUpUser,
   signInUser,
@@ -192,9 +192,9 @@ export {
   getCommentsForPost,
   addCommentToPost,
   getPosts,
-  getPost,
   getIsUserLoggedIn,
   createProject,
   getProjects,
-  logoutUser
+  logoutUser,
+  getPostBySlug
 };

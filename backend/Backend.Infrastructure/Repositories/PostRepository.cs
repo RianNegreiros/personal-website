@@ -30,6 +30,11 @@ public class PostRepository : IPostRepository
         return await _postCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
     }
 
+    public async Task<Post> GetBySlug(string slug)
+    {
+        return await _postCollection.Find(p => p.Slug == slug).FirstOrDefaultAsync();
+    }
+
     public async Task<List<Post>> GetAll()
     {
         return await _postCollection.Find(_ => true).ToListAsync();

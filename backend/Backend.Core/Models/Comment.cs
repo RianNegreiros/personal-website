@@ -14,6 +14,8 @@ public class Comment
     public User Author { get; set; }
     [BsonElement("postId")]
     public string PostId { get; set; }
+    [BsonElement("postSlug")]
+    public string PostSlug { get; set; }
     [BsonElement("createdAt")]
     public DateTime CreatedAt { get; set; }
 }

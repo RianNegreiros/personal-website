@@ -13,7 +13,7 @@ public class CommentsService : ICommentsService
         _commentsRepository = commentsRepository;
     }
 
-    public async Task<Comment> AddCommentToPost(string postId, CommentInputModel comment, User author)
+    public async Task<Comment> AddCommentToPostById(string postId, CommentInputModel comment, User author)
     {
         var newComment = new Comment
         {
@@ -26,8 +26,26 @@ public class CommentsService : ICommentsService
         return await _commentsRepository.AddComment(newComment);
     }
 
-    public async Task<List<Comment>> GetCommentsForPost(string postId)
+    public async Task<Comment> AddCommentToPostBySlug(string postSlug, CommentInputModel comment, User author)
     {
-        return await _commentsRepository.GetCommentsForPost(postId);
+        var newComment = new Comment
+        {
+            Content = comment.Content,
+            Author = author,
+            PostSlug = postSlug,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        return await _commentsRepository.AddComment(newComment);
+    }
+
+    public async Task<List<Comment>> GetCommentsForPostById(string postId)
+    {
+        return await _commentsRepository.GetCommentsForPostById(postId);
+    }
+
+    public async Task<List<Comment>> GetCommentsForPostBySlug(string postSlug)
+    {
+        return await _commentsRepository.GetCommentsForPostBySlug(postSlug);
     }
 }

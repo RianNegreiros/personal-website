@@ -24,8 +24,8 @@ public class CommentsController : BaseApiController
     }
 
     [Authorize]
-    [HttpPost("{postId}")]
-    public async Task<IActionResult> AddCommentToPost(string postId, [FromBody] CommentInputModel comment)
+    [HttpPost("{identifier}")]
+    public async Task<IActionResult> AddCommentToPost(string identifier, [FromBody] CommentInputModel comment)
     {
         var validationResult = ValidateModel<CommentInputModelValidator, CommentInputModel>(comment);
 
@@ -48,7 +48,18 @@ public class CommentsController : BaseApiController
             return Unauthorized();
         }
 
-        Comment addedComment = await _commentsService.AddCommentToPost(postId, comment, user);
+        Comment addedComment;
+
+        if (Guid.TryParse(identifier, out _))
+        {
+            // If identifier is a valid Guid, assume it's an ID
+            addedComment = await _commentsService.AddCommentToPostById(identifier, comment, user);
+        }
+        else
+        {
+            // If identifier is not a valid Guid, assume it's a slug
+            addedComment = await _commentsService.AddCommentToPostBySlug(identifier, comment, user);
+        }
 
         var commentViewModel = new CommentViewModel
         {
@@ -60,10 +71,21 @@ public class CommentsController : BaseApiController
         return Ok(commentViewModel);
     }
 
-    [HttpGet("{postId}")]
-    public async Task<IActionResult> GetCommentsForPost(string postId)
+    [HttpGet("{identifier}")]
+    public async Task<IActionResult> GetCommentsForPost(string identifier)
     {
-        var comments = await _commentsService.GetCommentsForPost(postId);
+        IEnumerable<Comment> comments;
+
+        if (Guid.TryParse(identifier, out _))
+        {
+            // If identifier is a valid Guid, assume it's an ID
+            comments = await _commentsService.GetCommentsForPostById(identifier);
+        }
+        else
+        {
+            // If identifier is not a valid Guid, assume it's a slug
+            comments = await _commentsService.GetCommentsForPostBySlug(identifier);
+        }
 
         List<CommentViewModel> commentsViewModel = comments.Select(c => new CommentViewModel
         {
