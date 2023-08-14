@@ -19,8 +19,13 @@ public class CommentsRepository : ICommentsRepository
         return comment;
     }
 
-    public async Task<List<Comment>> GetCommentsForPost(string postId)
+    public async Task<List<Comment>> GetCommentsForPostById(string postId)
     {
         return await _comments.Find(c => c.PostId == postId).ToListAsync();
+    }
+
+    public async Task<List<Comment>> GetCommentsForPostBySlug(string postSlug)
+    {
+        return await _comments.Find(c => c.PostSlug == postSlug).ToListAsync();
     }
 }
