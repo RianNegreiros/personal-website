@@ -31,7 +31,7 @@ jobs:
       with:
         push: true
         tags: websitedockerbackend.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_1efd4d5f0a2f4e38991344573bd40b91 }}/website-backend:${{ github.sha }}
-        file: ./Dockerfile
+        file: ./backend/Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
