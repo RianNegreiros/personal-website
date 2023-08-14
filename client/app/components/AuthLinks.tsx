@@ -53,7 +53,7 @@ export default function AuthLinks({ pathname }: { pathname: string }) {
   );
 
   if (isAdmin) {
-    if (pathname === "/blog") {
+    if (pathname === "/") {
       return (
         <div>
           <Link
