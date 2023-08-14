@@ -124,7 +124,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
               onChange={handleChange}
               rows={4}
               className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-              placeholder={isLogged ? 'Escreva um comentário...' : 'Faça o login para postar um comentário'}
+              placeholder={isLogged ? 'Escreva um comentário...' : 'Faça login para postar um comentário'}
               required
             ></textarea>
           </div>
