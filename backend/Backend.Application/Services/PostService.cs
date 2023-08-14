@@ -57,7 +57,7 @@ namespace Backend.Application.Services
           CreatedAt = post.CreatedAt
         }).ToList();
 
-    public async Task<PostViewModel> GetPostById(string id)
+    public async Task<PostViewModel?> GetPostById(string id)
     {
       var post = await _postRepository.GetById(id);
       if (post == null)
@@ -74,7 +74,7 @@ namespace Backend.Application.Services
       };
     }
 
-    public async Task<PostViewModel> GetPostBySlug(string slug)
+    public async Task<PostViewModel?> GetPostBySlug(string slug)
     {
       var post = await _postRepository.GetBySlug(slug);
       if (post == null)

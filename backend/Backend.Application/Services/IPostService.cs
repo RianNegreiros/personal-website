@@ -8,6 +8,6 @@ public interface IPostService
   Task<Post> CreatePost(PostInputModel inputModel, User author);
   Task<Post> UpdatePost(string id, PostInputModel inputModel, User author);
   Task<List<PostViewModel>> GetPosts();
-  Task<PostViewModel> GetPostById(string id);
-  Task<PostViewModel> GetPostBySlug(string slug);
+  Task<PostViewModel?> GetPostById(string id);
+  Task<PostViewModel?> GetPostBySlug(string slug);
 }
