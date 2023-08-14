@@ -7,6 +7,7 @@ using Backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace Backend.API.Controllers;
 
@@ -46,6 +47,7 @@ public class PostController : BaseApiController
         Id = post.Id,
         Title = post.Title,
         Summary = post.Summary,
+        Slug = post.Slug,
         Content = post.Content
       };
 
@@ -92,6 +94,7 @@ public class PostController : BaseApiController
         Id = post.Id,
         Title = post.Title,
         Summary = post.Summary,
+        Slug = post.Slug,
         Content = post.Content
       };
 
@@ -124,13 +127,24 @@ public class PostController : BaseApiController
   }
 
   [AllowAnonymous]
-  [HttpGet("{id}")]
-  public async Task<ActionResult<PostViewModel>> GetPost(string id)
+  [HttpGet("{identifier}")]
+  public async Task<ActionResult<PostViewModel>> GetPost(string identifier)
   {
-    var post = await _postService.GetPost(id);
-    if (post == null)
-      return NotFound();
+    if (ObjectId.TryParse(identifier, out ObjectId objectId)) // Check if it's a valid ObjectId (ID)
+    {
+      var post = await _postService.GetPostById(objectId.ToString());
+      if (post == null)
+        return NotFound();
 
-    return Ok(post);
+      return Ok(post);
+    }
+    else // If not a valid ObjectId, treat it as a slug
+    {
+      var post = await _postService.GetPostBySlug(identifier);
+      if (post == null)
+        return NotFound();
+
+      return Ok(post);
+    }
   }
 }
