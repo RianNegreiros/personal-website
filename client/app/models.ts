@@ -3,6 +3,7 @@ export interface Post {
   title: string
   summary: string
   content: string
+  slug: string
   createdAt: string
 }
 
@@ -45,7 +46,7 @@ export interface Comment {
 }
 
 export interface CommentData {
-  postId: string;
+  postSlug: string;
   content: string;
   token: string;
 }

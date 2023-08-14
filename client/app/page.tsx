@@ -24,7 +24,7 @@ export default async function BlogPage() {
                 </p>
               </div>
 
-              <Link href={`/post/${post.id}`}
+              <Link href={`/post/${post.slug}`}
                 prefetch
                 className="space-y-3 xl:col-span-3"
               >

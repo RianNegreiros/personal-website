@@ -1,27 +1,28 @@
 "use client"
 
 import { Post, Comment, CommentData } from "@/app/models";
-import { addCommentToPost, getCommentsForPost, getIsUserLoggedIn, getPost } from "@/app/utils/api";
+import { addCommentToPost, getCommentsForPost, getIsUserLoggedIn, getPostBySlug } from "@/app/utils/api";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
-async function fetchData(id: string) {
-  const postData = await getPost(id);
-  const commentsData = await getCommentsForPost(id);
+async function fetchData(slug: string) {
+  const postData = await getPostBySlug(slug);
+  const commentsData = await getCommentsForPost(slug);
   return { postData, commentsData };
 }
 
-export default function PostPage({ params }: { params: { id: string } }) {
+export default function PostPage({ params }: { params: { slug: string } }) {
   const [data, setData] = useState<Post>({
     id: '',
     title: '',
-    content: '',
-    createdAt: '',
     summary: '',
+    content: '',
+    slug: '',
+    createdAt: ''
   });
   const [comments, setComments] = useState<Comment[]>([]);
   const [formData, setFormData] = useState<CommentData>({
-    postId: params.id,
+    postSlug: params.slug,
     content: '',
     token: '',
   });
@@ -30,12 +31,12 @@ export default function PostPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     async function fetchDataAndComments() {
-      const { postData, commentsData } = await fetchData(params.id);
+      const { postData, commentsData } = await fetchData(params.slug);
       setData(postData);
       setComments(commentsData);
     }
     fetchDataAndComments();
-  }, [params.id]);
+  }, [params.slug]);
 
   useEffect(() => {
     async function checkUserLoggedIn() {
@@ -54,7 +55,7 @@ export default function PostPage({ params }: { params: { id: string } }) {
 
     try {
       await addCommentToPost(formData);
-      const commentsData = await getCommentsForPost(params.id);
+      const commentsData = await getCommentsForPost(params.slug);
       setComments(commentsData);
       setFormData((prevData) => ({ ...prevData, content: '' }));
     } catch (error) {
