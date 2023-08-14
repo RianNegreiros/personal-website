@@ -26,7 +26,7 @@ async function autoLogin(
   setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>,
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>
   ) {
-  const storedToken = localStorage.getItem('token');
+  const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token');
   if (storedToken) {
     try {
       const data = await autoLoginUser(storedToken);

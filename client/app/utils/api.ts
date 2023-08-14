@@ -34,7 +34,7 @@ async function getIsAdmin() {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/isadmin`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
       },
     });
     return response.data;
@@ -44,12 +44,12 @@ async function getIsAdmin() {
 }
 
 async function createPost(formData: PostData) {
-  formData.authorId = localStorage.getItem('userId') as string;
+  formData.authorId = localStorage.getItem('userId') || sessionStorage.getItem('userId') as string;
   try {
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
       },
     });
 
@@ -127,7 +127,7 @@ async function getIsUserLoggedIn() {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/me`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
       },
     });
     return response.data;
@@ -140,7 +140,7 @@ async function logoutUser() {
   try {
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/logout`, null, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
       },
     });
 
@@ -164,7 +164,7 @@ async function createProject(projectData: ProjectData) {
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/projects`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
       },
     });
 

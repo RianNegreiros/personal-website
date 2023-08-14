@@ -14,6 +14,8 @@ export default function AuthLinks({ pathname }: { pathname: string }) {
       setIsLogged(false);
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('userId');
       router.push('/');
     } catch (error) {
       console.error('Logout failed:', error);
