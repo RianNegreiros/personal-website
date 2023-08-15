@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CommentData, PostData, ProjectData, SignInData, SignUpData } from '../models';
+import { CommentData, Post, PostData, ProjectData, SignInData, SignUpData } from '../models';
 
 async function signUpUser(formData: SignUpData) {
   try {
@@ -45,6 +45,8 @@ async function getIsAdmin() {
 
 async function createPost(formData: PostData) {
   formData.authorId = localStorage.getItem('userId') || sessionStorage.getItem('userId') as string;
+  formData.content = JSON.stringify(formData.content);
+  console.log(formData);
   try {
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, {
       headers: {
@@ -177,6 +179,7 @@ async function createProject(projectData: ProjectData) {
 async function getPostBySlug(slug: string) {
   try {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${slug}`);
+    response.data.content = JSON.parse(response.data.content);
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch post by slug. Please try again later.');

@@ -73,7 +73,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
       <header className="pt-6 xl:pb-6">
         <div className="space-y-1 text-center">
-          <div className="space-y-10">
+          <div className="space-y-10 mb-3">
             <div>
               <p className="text-base font-medium leading-6 text-teal-500">
                 {new Date(data.createdAt.split('.')[0]).toLocaleDateString()}
