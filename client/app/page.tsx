@@ -59,7 +59,7 @@ export default function BlogPage() {
             <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
               <div>
                 <p className="text-base font-medium leading-6 text-teal-500">
-                  {new Date(post.createdAt.split('.')[0]).toLocaleDateString()}
+                  {new Date(post.createdAt).toLocaleDateString()}
                 </p>
               </div>
 

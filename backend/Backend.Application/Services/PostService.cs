@@ -24,6 +24,7 @@ namespace Backend.Application.Services
         Summary = model.Summary,
         Content = model.Content,
         Slug = SlugHelper.Slugify(model.Title),
+        CreatedAt = DateTime.UtcNow,
         Author = author
       };
 
