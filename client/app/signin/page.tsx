@@ -8,6 +8,7 @@ import { useAuth } from "../contexts/AuthContext";
 import Link from "next/link";
 
 export default function SignInPage() {
+  const [loggingIn, setLoggingIn] = useState(false);
   const [formData, setFormData] = useState<SignInData>({
     Id: "",
     email: "",
@@ -30,6 +31,7 @@ export default function SignInPage() {
     event.preventDefault();
 
     try {
+      setLoggingIn(true);
       const data = await signInUser(formData);
       console.log("Sign in successful!");
 
@@ -45,8 +47,10 @@ export default function SignInPage() {
         localStorage.removeItem('token');
       }
 
+      setLoggingIn(false);
       router.push("/");
     } catch (error) {
+      setLoggingIn(false);
       console.error("Sign in error:", error);
     }
   }
@@ -119,9 +123,11 @@ export default function SignInPage() {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-teal-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className={`w-full text-white bg-teal-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 ${loggingIn ? "opacity-70 cursor-not-allowed" : ""
+                  }`}
+                disabled={loggingIn}
               >
-                Login
+                {loggingIn ? "Logando..." : "Login"}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Ainda não tem uma conta ? <Link href="/signup" className="font-medium text-teal-600 hover:underline dark:text-primary-500">Registre-se</Link>

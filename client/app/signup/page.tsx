@@ -9,6 +9,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 export default function SignUpPage() {
   const { setIsLogged } = useAuth();
+  const [signingUp, setSigningUp] = useState(false);
   const [formData, setFormData] = useState<SignUpData>({
     Id: "",
     email: "",
@@ -28,14 +29,17 @@ export default function SignUpPage() {
     event.preventDefault();
 
     try {
+      setSigningUp(true);
       const data = await signUpUser(formData);
       setIsLogged(true);
       localStorage.setItem("userId", data.id);
       localStorage.setItem("token", data.token);
       console.log("Sign up successful!");
 
+      setSigningUp(false);
       router.push("/");
     } catch (error) {
+      setSigningUp(false);
       console.error("Sign up error:", error);
     }
   };
@@ -140,9 +144,11 @@ export default function SignUpPage() {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-teal-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className={`w-full text-white bg-teal-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 ${signingUp ? "opacity-70 cursor-not-allowed" : ""
+                  }`}
+                disabled={signingUp}
               >
-                Criar conta
+                {signingUp ? "Criando..." : "Criar conta"}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Já possui uma conta? <Link href="/signin" className="font-medium text-teal-500 hover:underline dark:text-primary-500">Entre aqui</Link>
