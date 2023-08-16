@@ -52,7 +52,6 @@ async function getIsAdmin() {
 async function createPost(formData: PostData) {
   formData.authorId = localStorage.getItem('userId') || sessionStorage.getItem('userId') as string;
   formData.content = JSON.stringify(formData.content);
-  console.log(formData);
   try {
     const response = await axios.post(`${API_URL}/post`, formData, {
       headers: {
@@ -165,8 +164,6 @@ async function createProject(projectData: ProjectData): Promise<any> {
     if (projectData.image !== null) {
       formData.append('image', projectData.image);
     }
-
-    console.log(formData);
 
     const response = await axios.post(`${API_URL}/projects`, formData, {
       headers: {

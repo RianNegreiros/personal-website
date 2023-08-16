@@ -34,7 +34,6 @@ export default function SignUpPage() {
       setIsLogged(true);
       localStorage.setItem("userId", data.id);
       localStorage.setItem("token", data.token);
-      console.log("Sign up successful!");
 
       setSigningUp(false);
       router.push("/");

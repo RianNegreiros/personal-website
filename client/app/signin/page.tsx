@@ -33,7 +33,6 @@ export default function SignInPage() {
     try {
       setLoggingIn(true);
       const data = await signInUser(formData);
-      console.log("Sign in successful!");
 
       setIsAdmin(data.isAdmin)
       setIsLogged(true);
