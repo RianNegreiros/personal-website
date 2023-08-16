@@ -7,6 +7,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function NewProjectPage() {
   const router = useRouter();
+  const [isPublishing, setIsPublishing] = useState(false);
   const [formData, setFormData] = useState<ProjectData>({
     title: '',
     overview: '',
@@ -18,11 +19,14 @@ export default function NewProjectPage() {
     e.preventDefault();
 
     try {
+      setIsPublishing(true);
       const response = await createProject(formData);
       if (response) {
+        setIsPublishing(false);
         router.push('/projects');
       }
     } catch (error) {
+      setIsPublishing(false);
       console.error('Failed to create post:', error);
     }
   };
@@ -95,8 +99,13 @@ export default function NewProjectPage() {
             </div>
 
           </div>
-          <button type="submit" className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600">
-            Publish
+          <button
+            type="submit"
+            className={`inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600 ${isPublishing ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            disabled={isPublishing}
+          >
+            {isPublishing ? 'Publishing...' : 'Publish'}
           </button>
         </form>
       </div>
