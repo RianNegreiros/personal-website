@@ -1,14 +1,21 @@
 import axios from 'axios';
-import { CommentData, Post, PostData, ProjectData, SignInData, SignUpData } from '../models';
+import { CommentData, PostData, ProjectData, SignInData, SignUpData } from '../models';
 
-async function signUpUser(formData: SignUpData) {
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+function getAuthorizationHeader(): Record<string, string> {
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  return {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
+}
+
+async function signUpUser(formData: SignUpData): Promise<any> {
   try {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/register`, formData, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const response = await axios.post(`${API_URL}/user/register`, formData, {
+      headers: getAuthorizationHeader(),
     });
-
     return response.data;
   } catch (error) {
     throw new Error('Sign up failed. Please try again later.');
@@ -17,7 +24,7 @@ async function signUpUser(formData: SignUpData) {
 
 async function signInUser(formData: SignInData) {
   try {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, formData, {
+    const response = await axios.post(`${API_URL}/user/login`, formData, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -31,10 +38,9 @@ async function signInUser(formData: SignInData) {
 
 async function getIsAdmin() {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/isadmin`, {
+    const response = await axios.get(`${API_URL}/user/isadmin`, {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
+        ...getAuthorizationHeader(),
       },
     });
     return response.data;
@@ -48,10 +54,10 @@ async function createPost(formData: PostData) {
   formData.content = JSON.stringify(formData.content);
   console.log(formData);
   try {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, {
+    const response = await axios.post(`${API_URL}/post`, formData, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
+        ...getAuthorizationHeader(),
       },
     });
 
@@ -63,7 +69,7 @@ async function createPost(formData: PostData) {
 
 async function autoLoginUser(token: string) {
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/autologin`,
+    `${API_URL}/user/autologin`,
     JSON.stringify(token),
     {
       headers: {
@@ -77,7 +83,7 @@ async function autoLoginUser(token: string) {
 
 async function getPosts() {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post`);
+    const response = await axios.get(`${API_URL}/post`);
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch posts. Please try again later.');
@@ -86,7 +92,7 @@ async function getPosts() {
 
 async function getProjects() {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/projects`);
+    const response = await axios.get(`${API_URL}/projects`);
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch projects. Please try again later.');
@@ -95,7 +101,7 @@ async function getProjects() {
 
 async function getCommentsForPost(postId: string) {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/${postId}`);
+    const response = await axios.get(`${API_URL}/comments/${postId}`);
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch comments. Please try again later.');
@@ -111,10 +117,9 @@ async function addCommentToPost(commentData: CommentData) {
       throw new Error('User token not found.');
     }
 
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/comments/${commentData.postSlug}`, commentData, {
+    const response = await axios.post(`${API_URL}/comments/${commentData.postSlug}`, commentData, {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        ...getAuthorizationHeader(),
       },
     });
 
@@ -126,10 +131,9 @@ async function addCommentToPost(commentData: CommentData) {
 
 async function getIsUserLoggedIn() {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/me`, {
+    const response = await axios.get(`${API_URL}/user/me`, {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
+        ...getAuthorizationHeader(),
       },
     });
     return response.data;
@@ -138,21 +142,20 @@ async function getIsUserLoggedIn() {
   }
 }
 
-async function logoutUser() {
+async function logoutUser(): Promise<any> {
   try {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/logout`, null, {
+    const response = await axios.post(`${API_URL}/user/logout`, null, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
+        ...getAuthorizationHeader(),
       },
     });
-
     return response.data;
   } catch (error) {
     throw new Error('Logout failed. Please try again later.');
   }
 }
 
-async function createProject(projectData: ProjectData) {
+async function createProject(projectData: ProjectData): Promise<any> {
   try {
     const formData = new FormData();
     formData.append('title', projectData.title);
@@ -163,7 +166,9 @@ async function createProject(projectData: ProjectData) {
       formData.append('image', projectData.image);
     }
 
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/projects`, formData, {
+    console.log(formData);
+
+    const response = await axios.post(`${API_URL}/projects`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
@@ -178,7 +183,7 @@ async function createProject(projectData: ProjectData) {
 
 async function getPostBySlug(slug: string) {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${slug}`);
+    const response = await axios.get(`${API_URL}/post/${slug}`);
     response.data.content = JSON.parse(response.data.content);
     return response.data;
   } catch (error) {
@@ -189,15 +194,15 @@ async function getPostBySlug(slug: string) {
 export {
   signUpUser,
   signInUser,
-  getIsAdmin,
-  createPost,
   autoLoginUser,
+  getIsAdmin,
+  logoutUser,
+  getIsUserLoggedIn,
+  createPost,
+  getPostBySlug,
+  getPosts,
   getCommentsForPost,
   addCommentToPost,
-  getPosts,
-  getIsUserLoggedIn,
   createProject,
-  getProjects,
-  logoutUser,
-  getPostBySlug
+  getProjects
 };
