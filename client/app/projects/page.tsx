@@ -1,13 +1,24 @@
+"use client"
+
 import Image from "next/image"
 import { getProjects } from "../utils/api";
 import { Project } from "../models";
+import { useEffect, useState } from "react";
 
-async function fetchData() {
+async function getData() {
   return await getProjects();
 }
 
-export default async function Projects() {
-  const data = (await fetchData()) as Project[];
+export default function Projects() {
+  const [data, setData] = useState<Project[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const projects = await getData();
+      setData(projects);
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="divide-y divide-gray-200 dark:divide-gray-700">
