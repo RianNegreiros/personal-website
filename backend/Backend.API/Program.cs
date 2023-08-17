@@ -22,7 +22,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("CorsPolicy", policy =>
     {
         policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://riannegreiros.is-a.dev");
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://www.riannegreiros.dev");
     });
 });
 
