@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js app to Azure Web App - websitedockerclient
+name: Build and deploy Next.js app to Azure Web App
 
 on:
   push:
@@ -17,20 +14,26 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set up Node.js version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: '18.x'
+          node-version: '14' # Adjust the Node.js version as needed
 
-      - name: npm install, build, and test
+      - name: Build Backend
+        working-directory: ./backend # Path to your backend folder
         run: |
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm run build
+
+      - name: Build Client
+        working-directory: ./client # Path to your client folder
+        run: |
+          npm install
+          npm run build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: node-app
+          name: app
           path: .
 
   deploy:
@@ -44,7 +47,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: node-app
+          name: app
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
