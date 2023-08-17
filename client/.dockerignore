@@ -9,4 +9,3 @@ out
 *.swp
 *.swo
 .vscode
-.env.local

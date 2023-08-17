@@ -10,4 +10,4 @@ run-backend:
 	cd ./backend && docker-compose up --build
 
 run-client:
-	cd ./client && docker build -t nextjs-client-image . && docker run -e NEXT_PUBLIC_API_URL=http://localhost:5000/api -p 3000:3000 nextjs-client-image
+	cd ./client && docker build -t nextjs-client-image . --no-cache && docker run -p 3000:3000 nextjs-client-image
