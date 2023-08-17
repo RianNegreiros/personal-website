@@ -16,18 +16,16 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v2
         with:
-          node-version: '14' # Adjust the Node.js version as needed
-
-      - name: Build Backend
-        working-directory: ./backend # Path to your backend folder
-        run: |
-          npm install
-          npm run build
+          node-version: '18'
 
       - name: Build Client
-        working-directory: ./client # Path to your client folder
+        working-directory: ./client
         run: |
           npm install
+
+      - name: Build Client
+        working-directory: ./client
+        run: |
           npm run build
 
       - name: Upload artifact for deployment job
