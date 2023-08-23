@@ -37,8 +37,7 @@ public class PostController : BaseApiController
 
     try
     {
-
-      var currentUser = await _userManager.GetUserAsync(User);
+      var currentUser = await _userManager.FindByIdAsync(model.AuthorId);
 
       var post = await _postService.CreatePost(model, currentUser);
 
