@@ -6,7 +6,7 @@ This is a protfolio website that i built to post my articles and projects
 
 Can see it live on [riannegreiros.dev](https://www.riannegreiros.dev)
 
-![Homepage screenshot](./docs/images/homepage.png)
+![Homepage screenshot](./_docs/images/homepage.png)
 
 ## Features
 
