@@ -3,8 +3,8 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 WORKDIR /app
 
 # Copy the .csproj and restore as distinct layers
-COPY ./Backend.API/Backend.API.csproj ./Backend.API/
-RUN dotnet restore ./Backend.API/Backend.API.csproj
+COPY . .
+RUN dotnet restore
 
 # Copy everything else and build the API
 COPY . ./
@@ -13,8 +13,6 @@ RUN dotnet publish "./Backend.API/Backend.API.csproj" -c Release -o out
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-
-# Copy the published output
 COPY --from=build-env /app/out .
 
 # Start the API
