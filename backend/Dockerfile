@@ -14,6 +14,7 @@ RUN dotnet publish "./Backend.API/Backend.API.csproj" -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build-env /app/out .
+COPY ./Backend.API/appsettings.Development.json .
 
 # Start the API
 ENTRYPOINT ["dotnet", "Backend.API.dll"]
