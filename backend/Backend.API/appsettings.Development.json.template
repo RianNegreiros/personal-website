@@ -18,6 +18,7 @@
     "UserName": "",
     "Password": ""
   },
+  "ClientUrl": "http://localhost:3000",
   "Logging": {
     "LogLevel": {
       "Default": "Information",

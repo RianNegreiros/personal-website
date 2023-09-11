@@ -21,9 +21,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://www.riannegreiros.dev");
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://website-kigkalwyt-riannegreiros.vercel.app");
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(builder.Configuration["ClientUrl"]);
     });
 });
 
