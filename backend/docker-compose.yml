@@ -14,6 +14,17 @@ services:
       - app_network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__IdentityConnection=Host=postgres;Port=5432;Database=postgres;Username=postgres;Password=postgres
+      - ConnectionStrings__MongoConnection=mongodb://mongodb:27017
+      - JwtConfig__SecretKey=12371329023228305673002688665587
+      - JwtConfig__Issuer=issuer
+      - JwtConfig__Audience=audience
+      - AdminUser__Email=admin@mail.com
+      - AdminUser__UserName=admin
+      - AdminUser__Password=1234adminPASS@
+      - Clodinary__CloudName=
+      - Clodinary__ApiKey=
+      - Clodinary__ApiSecret=
 
   postgres:
     image: postgres:latest
