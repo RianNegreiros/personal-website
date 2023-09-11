@@ -1,41 +1,22 @@
-# Use the official ASP.NET Core SDK image as a build environment.
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-
-# Set the working directory to /app.
+# Use the official .NET SDK image as the build environment
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 WORKDIR /app
 
-# Copy the project file and restore dependencies.
-COPY *.sln .
-COPY Backend.API/Backend.API.csproj ./Backend.API/
-COPY Backend.Application/Backend.Application.csproj ./Backend.Application/
-COPY Backend.Core/Backend.Core.csproj ./Backend.Core/
-COPY Backend.Infrastructure/Backend.Infrastructure.csproj ./Backend.Infrastructure/
-COPY Backend.Tests/Backend.Tests.csproj ./Backend.Tests/
-# Repeat the above line for any other project references.
-
-# Restore NuGet packages.
+# Copy the .csproj and restore as distinct layers
+COPY . .
 RUN dotnet restore
 
-# Copy the rest of the application code.
-COPY . .
+# Copy everything else and build the API
+COPY . ./
+RUN dotnet publish "./Backend.API/Backend.API.csproj" -c Release -o out
 
-# Build the application with Release configuration.
-RUN dotnet build -c Release --no-restore
-
-# Publish the application for deployment.
-RUN dotnet publish ./Backend.API/Backend.API.csproj -c Release -o /app/publish
-
-# Build the final runtime image.
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
-
-# Set the working directory to /app.
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
+COPY --from=build-env /app/out .
 
-# Copy the published application from the build environment.
-COPY --from=build /app/publish .
+COPY ./Backend.API/appsettings.Development.json ./
 
-# Expose the port that the application will run on.
-EXPOSE 80
-
+# Start the API
 ENTRYPOINT ["dotnet", "Backend.API.dll"]
 CMD ["dotnet", "ef", "database", "update"]
