@@ -21,9 +21,6 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
-
-    - name: List Files in Working Directory
-      run: ls -R
   
     - name: 'Docker Login'
       uses: azure/docker-login@v1
