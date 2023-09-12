@@ -32,4 +32,4 @@ jobs:
         working-directory: ./backend
         push: true
         tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/website-backend:${{ github.sha }}
-        file: ./Dockerfile
+        file: ./backend/Dockerfile
