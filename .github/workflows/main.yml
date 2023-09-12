@@ -12,6 +12,7 @@ jobs:
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
+        working-directory: ./backend
         shell: bash
   
     steps:
@@ -31,4 +32,4 @@ jobs:
       with:
         push: true
         tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/website-backend:${{ github.sha }}
-        file: backend/Dockerfile
+        file: Dockerfile
