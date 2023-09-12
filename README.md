@@ -1,3 +1,5 @@
+[![Push to Azure Container Registry](https://github.com/RianNegreiros/portfolio/actions/workflows/main.yml/badge.svg)](https://github.com/RianNegreiros/portfolio/actions/workflows/main.yml)
+
 # Portfolio website
 
 This is a protfolio website that i built to post my articles and projects
