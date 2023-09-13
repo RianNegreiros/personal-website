@@ -1,6 +1,3 @@
-_docs
-.github
-backend
-Dockerfile
-Makefile
-README.md
+# Ignore everything (folders and files) on root only
+/*
+!client
