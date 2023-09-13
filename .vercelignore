@@ -1,0 +1,6 @@
+_docs
+.github
+backend
+Dockerfile
+Makefile
+README.md
