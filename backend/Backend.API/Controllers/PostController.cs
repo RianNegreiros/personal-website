@@ -2,7 +2,6 @@ using Backend.API.Models;
 using Backend.Application.Models;
 using Backend.Application.Services;
 using Backend.Application.Validators;
-using Backend.Core.Exceptions;
 using Backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -35,8 +34,6 @@ public class PostController : BaseApiController
         Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
       });
 
-    try
-    {
       var currentUser = await _userManager.FindByIdAsync(model.AuthorId);
 
       var post = await _postService.CreatePost(model, currentUser);
@@ -51,23 +48,6 @@ public class PostController : BaseApiController
       };
 
       return Ok(postViewModel);
-    }
-    catch (PostNotFoundException ex)
-    {
-      return NotFound(ex.Message);
-    }
-    catch (AuthorizationException ex)
-    {
-      return Unauthorized(ex.Message);
-    }
-    catch (ImageUploadException ex)
-    {
-      return BadRequest(ex.Message);
-    }
-    catch (Exception)
-    {
-      return BadRequest("An error occurred while processing the request.");
-    }
   }
 
   [HttpPut("{id}")]
@@ -82,8 +62,6 @@ public class PostController : BaseApiController
         Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
       });
 
-    try
-    {
       var currentUser = await _userManager.GetUserAsync(User);
 
       var post = await _postService.UpdatePost(id, model, currentUser);
@@ -98,23 +76,6 @@ public class PostController : BaseApiController
       };
 
       return Ok(postViewModel);
-    }
-    catch (PostNotFoundException ex)
-    {
-      return NotFound(ex.Message);
-    }
-    catch (AuthorizationException ex)
-    {
-      return Unauthorized(ex.Message);
-    }
-    catch (ImageUploadException ex)
-    {
-      return BadRequest(ex.Message);
-    }
-    catch (Exception)
-    {
-      return BadRequest("An error occurred while processing the request.");
-    }
   }
 
   [AllowAnonymous]
