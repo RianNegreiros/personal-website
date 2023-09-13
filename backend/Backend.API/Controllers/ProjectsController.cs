@@ -6,82 +6,81 @@ using Backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.API.Controllers
+namespace Backend.API.Controllers;
+
+[Authorize(Roles = "Admin")]
+public class ProjectsController : BaseApiController
 {
-    [Authorize(Roles = "Admin")]
-    public class ProjectsController : BaseApiController
+    private readonly IProjectsService _projectsService;
+
+    public ProjectsController(IProjectsService projectsService)
     {
-        private readonly IProjectsService _projectsService;
+        _projectsService = projectsService;
+    }
 
-        public ProjectsController(IProjectsService projectsService)
+    [AllowAnonymous]
+    [HttpGet]
+    public async Task<ActionResult<List<Project>>> GetProjects()
+    {
+        return Ok(await _projectsService.GetProjects());
+    }
+
+    [AllowAnonymous]
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Project>> GetProject(string id)
+    {
+        var project = await _projectsService.GetProject(id);
+
+        if (project == null)
         {
-            _projectsService = projectsService;
+            return NotFound();
         }
 
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<ActionResult<List<Project>>> GetProjects()
-        {
-            return Ok(await _projectsService.GetProjects());
-        }
+        return Ok(project);
+    }
 
-        [AllowAnonymous]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Project>> GetProject(string id)
-        {
-            var project = await _projectsService.GetProject(id);
+    [HttpPost]
+    public async Task<ActionResult<ApiResponse<Project>>> CreateProject([FromForm] ProjectInputModel model)
+    {
+        var validationResult = ValidateModel<ProjectInputModelValidator, ProjectInputModel>(model);
 
-            if (project == null)
+        if (!validationResult.IsValid)
+            return BadRequest(new ApiResponse<Project>
             {
-                return NotFound();
-            }
+                Success = false,
+                Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
+            });
 
-            return Ok(project);
-        }
+        var project = await _projectsService.CreateProject(model);
 
-        [HttpPost]
-        public async Task<ActionResult<ApiResponse<Project>>> CreateProject([FromForm] ProjectInputModel model)
+        return Ok(project);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<Project>> UpdateProject(string id, Project project)
+    {
+        if (id != project.Id)
         {
-            var validationResult = ValidateModel<ProjectInputModelValidator, ProjectInputModel>(model);
-
-            if (!validationResult.IsValid)
-                return BadRequest(new ApiResponse<Project>
-                {
-                    Success = false,
-                    Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
-                });
-
-            var project = await _projectsService.CreateProject(model);
-
-            return Ok(project);
+            return BadRequest();
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Project>> UpdateProject(string id, Project project)
+        await _projectsService.UpdateProject(id, project);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Project>> DeleteProject(string id)
+    {
+        var project = await _projectsService.GetProject(id);
+
+        if (project == null)
         {
-            if (id != project.Id)
-            {
-                return BadRequest();
-            }
-
-            await _projectsService.UpdateProject(id, project);
-
-            return NoContent();
+            return NotFound();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Project>> DeleteProject(string id)
-        {
-            var project = await _projectsService.GetProject(id);
+        await _projectsService.DeleteProject(id);
 
-            if (project == null)
-            {
-                return NotFound();
-            }
-
-            await _projectsService.DeleteProject(id);
-
-            return NoContent();
-        }
+        return NoContent();
     }
 }
