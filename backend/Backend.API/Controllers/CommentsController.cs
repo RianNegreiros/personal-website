@@ -7,6 +7,7 @@ using Backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
 
@@ -25,6 +26,7 @@ public class CommentsController : BaseApiController
 
     [Authorize]
     [HttpPost("{identifier}")]
+    [SwaggerOperation(Summary = "Add a comment to a post.")]
     [ProducesResponseType(typeof(CommentViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -76,6 +78,7 @@ public class CommentsController : BaseApiController
     }
 
     [HttpGet("{identifier}")]
+    [SwaggerOperation(Summary = "Get all comments for a post.")]
     [ProducesResponseType(typeof(List<CommentViewModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetCommentsForPost(string identifier)
