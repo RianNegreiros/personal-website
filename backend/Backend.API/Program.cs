@@ -1,4 +1,5 @@
 using Backend.API.Extensions;
+using Backend.API.Middlewares;
 using Backend.Core.Models;
 using Backend.Infrastructure.Data;
 using Backend.Infrastructure.Data.SeedData;
@@ -46,6 +47,8 @@ using (var scope = app.Services.CreateScope())
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) { }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors("CorsPolicy");
 
