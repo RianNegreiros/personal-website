@@ -5,7 +5,12 @@ on:
   push:
     branches:
       - main
-
+    paths-ignore:
+      - '.gitignore'
+      - '_docs'
+      - 'client'
+      - 'Makefile'
+      
 jobs:
   docker_build_push_acr:
     name: 'Docker Build and Push to ACR'
