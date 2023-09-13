@@ -27,6 +27,8 @@ public class CommentsController : BaseApiController
     [Authorize]
     [HttpPost("{identifier}")]
     [SwaggerOperation(Summary = "Add a comment to a post.")]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [ProducesResponseType(typeof(CommentViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -78,6 +80,8 @@ public class CommentsController : BaseApiController
     }
 
     [HttpGet("{identifier}")]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [SwaggerOperation(Summary = "Get all comments for a post.")]
     [ProducesResponseType(typeof(List<CommentViewModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

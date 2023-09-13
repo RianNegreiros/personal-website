@@ -22,6 +22,7 @@ public class ProjectsController : BaseApiController
     [AllowAnonymous]
     [HttpGet]
     [SwaggerOperation(Summary = "Get all projects.")]
+    [Produces("application/json")]
     [ProducesResponseType(typeof(List<Project>), StatusCodes.Status200OK)]
     public async Task<ActionResult<List<Project>>> GetProjects()
     {
@@ -31,6 +32,7 @@ public class ProjectsController : BaseApiController
     [AllowAnonymous]
     [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Get a project by id.")]
+    [Produces("application/json")]
     [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -48,6 +50,8 @@ public class ProjectsController : BaseApiController
 
     [HttpPost]
     [SwaggerOperation(Summary = "Create a new project.")]
+    [Consumes("multipart/form-data")]
+    [Produces("application/json")]
     [ProducesResponseType(typeof(ApiResponse<Project>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ApiResponse<Project>>> CreateProject([FromForm] ProjectInputModel model)
@@ -68,6 +72,8 @@ public class ProjectsController : BaseApiController
 
     [HttpPut("{id}")]
     [SwaggerOperation(Summary = "Update a project.")]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Project>> UpdateProject(string id, Project project)
@@ -84,6 +90,8 @@ public class ProjectsController : BaseApiController
 
     [HttpDelete("{id}")]
     [SwaggerOperation(Summary = "Delete a project.")]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Project>> DeleteProject(string id)

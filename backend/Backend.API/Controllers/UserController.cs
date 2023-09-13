@@ -30,6 +30,8 @@ public class UserController : BaseApiController
 
   [HttpPost("register")]
   [SwaggerOperation(Summary = "Register a new user.")]
+  [Consumes("application/json")]
+  [Produces("application/json")]
   [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -70,6 +72,8 @@ public class UserController : BaseApiController
 
   [HttpPost("login")]
   [SwaggerOperation(Summary = "Login a user.")]
+  [Consumes("application/json")]
+  [Produces("application/json")]
   [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -125,6 +129,7 @@ public class UserController : BaseApiController
   [Authorize]
   [HttpPost("logout")]
   [SwaggerOperation(Summary = "Logout a user.")]
+  [Produces("application/json")]
   [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -145,6 +150,7 @@ public class UserController : BaseApiController
 
   [HttpGet("me")]
   [SwaggerOperation(Summary = "Check if user is logged in.")]
+  [Produces("application/json")]
   [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public ActionResult<bool> GetCurrentUser()
@@ -154,6 +160,7 @@ public class UserController : BaseApiController
 
   [HttpGet("emailexists")]
   [SwaggerOperation(Summary = "Check if email exists.")]
+  [Produces("application/json")]
   [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<bool>> CheckEmailExists([FromQuery] string email)
@@ -164,6 +171,7 @@ public class UserController : BaseApiController
   [Authorize]
   [HttpGet("isadmin")]
   [SwaggerOperation(Summary = "Check if user is admin.")]
+  [Produces("application/json")]
   [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status401Unauthorized)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -184,6 +192,8 @@ public class UserController : BaseApiController
 
   [HttpPost("autologin")]
   [SwaggerOperation(Summary = "Auto login a user.")]
+  [Consumes("application/json")]
+  [Produces("application/json")]
   [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
