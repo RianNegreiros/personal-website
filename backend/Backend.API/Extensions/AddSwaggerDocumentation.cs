@@ -1,3 +1,4 @@
+using System.Reflection;
 using Backend.API.Filters;
 using Microsoft.OpenApi.Models;
 
@@ -8,7 +9,18 @@ public static class SwaggerServiceExtensions
   {
     services.AddSwaggerGen(c =>
     {
-      c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+      c.SwaggerDoc("v1", new OpenApiInfo
+      {
+        Title = "API",
+        Version = "v1",
+        Description = "API for my portfolio website",
+        Contact = new OpenApiContact
+        {
+          Name = "Rian negreiros Dos Santos",
+          Email = "riannegreiros@gmail.com",
+          Url = new Uri("https://github.com/RianNegreiros"),
+        }
+      });
 
       var securitySchema = new OpenApiSecurityScheme
       {
