@@ -25,6 +25,10 @@ public class CommentsController : BaseApiController
 
     [Authorize]
     [HttpPost("{identifier}")]
+    [ProducesResponseType(typeof(CommentViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> AddCommentToPost(string identifier, [FromBody] CommentInputModel comment)
     {
         var validationResult = ValidateModel<CommentInputModelValidator, CommentInputModel>(comment);
@@ -72,6 +76,8 @@ public class CommentsController : BaseApiController
     }
 
     [HttpGet("{identifier}")]
+    [ProducesResponseType(typeof(List<CommentViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetCommentsForPost(string identifier)
     {
         IEnumerable<Comment> comments;

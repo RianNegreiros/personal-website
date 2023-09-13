@@ -20,6 +20,7 @@ public class ProjectsController : BaseApiController
 
     [AllowAnonymous]
     [HttpGet]
+    [ProducesResponseType(typeof(List<Project>), StatusCodes.Status200OK)]
     public async Task<ActionResult<List<Project>>> GetProjects()
     {
         return Ok(await _projectsService.GetProjects());
@@ -27,6 +28,9 @@ public class ProjectsController : BaseApiController
 
     [AllowAnonymous]
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Project>> GetProject(string id)
     {
         var project = await _projectsService.GetProject(id);
@@ -40,6 +44,8 @@ public class ProjectsController : BaseApiController
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(ApiResponse<Project>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ApiResponse<Project>>> CreateProject([FromForm] ProjectInputModel model)
     {
         var validationResult = ValidateModel<ProjectInputModelValidator, ProjectInputModel>(model);
@@ -57,6 +63,8 @@ public class ProjectsController : BaseApiController
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Project>> UpdateProject(string id, Project project)
     {
         if (id != project.Id)
@@ -70,6 +78,8 @@ public class ProjectsController : BaseApiController
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Project>> DeleteProject(string id)
     {
         var project = await _projectsService.GetProject(id);
