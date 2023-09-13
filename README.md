@@ -2,7 +2,7 @@
 
 # Portfolio website
 
-This is a protfolio website that i built to post my articles and projects
+Portfolio website to post articles and projects
 
 <br />
 
@@ -21,9 +21,33 @@ Can see it live on [riannegreiros.dev](https://www.riannegreiros.dev)
   - Create posts
   - Create projects
 
-You can check the API endpoints [here](https://personalwebsitebackend.azurewebsites.net/swagger/index.html)
+You can checkout the API endpoints [here](https://personalwebsitebackend.azurewebsites.net/swagger/index.html)
 
-## Tecnologies
+## How to run
+
+### Prerequisites
+
+- [Docker Engine](https://docs.docker.com/engine/install)
+- Make
+  - [Linux](https://www.gnu.org/software/make/)
+  - [Windows](https://gnuwin32.sourceforge.net/packages/make.htm)
+  - [macOS](https://formulae.brew.sh/formula/make)
+
+1. Clone the repository
+```bash
+git clone https://github.com/RianNegreiros/portfolio.git
+```
+3. Set up the project environment variables in the [docker compose file](https://github.com/RianNegreiros/portfolio/blob/main/backend/docker-compose.yml) or create `appsettings.json`/`appsettings.Development.json` using [appsettings.Development.json.example](https://github.com/RianNegreiros/portfolio/blob/main/backend/Backend.API/appsettings.Development.json.example) as reference
+4. Run the backend `localhost:5000` with the command:
+```bash
+make run-backend
+```
+5. Run the client on `localhost:3000` with the command:
+```bash
+make run-client
+```
+
+## Technologies used
 
 - [ASP.NET Core 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 - [ASP.NET Core Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-7.0&tabs=visual-studio)
@@ -35,20 +59,12 @@ You can check the API endpoints [here](https://personalwebsitebackend.azurewebsi
 - [Docker compose](https://docs.docker.com/compose/gettingstarted)
 - [PostgreSQL](https://www.postgresql.org/about)
 - [MongoDB](https://www.mongodb.com/atlas/database)
+- [Swagger](https://learn.microsoft.com/pt-br/aspnet/core/tutorials/web-api-help-pages-using-swagger?view=aspnetcore-6.0)
 
-## Prerequisites
+## Author
 
-- [Docker Engine](https://docs.docker.com/engine/install)
-- Make
-  - [Linux](https://www.gnu.org/software/make/)
-  - [Windows](https://gnuwin32.sourceforge.net/packages/make.htm)
-  - [macOS](https://formulae.brew.sh/formula/make)
+<sub id="author"><b>Rian Negreiros Dos Santos</b></sub></a>
 
-## Setup
+[![Linkedin Badge](https://img.shields.io/badge/-RianNegreiros-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/tgmarinho/)](https://www.linkedin.com/in/riannegreiros/) 
 
-1. Clone the repository
-2. Set up the project environment variables in [appsettings.Development.json](https://github.com/RianNegreiros/website/blob/main/backend/Backend.API/appsettings.Development.json) or create appsettings.json for production environment
-3. Run the backend with the command: `make run-backend`
-4. The API can be accessed at [localhost:5000/swagger/index.html](http://localhost:5000/swagger/index.html)
-5. Run the client with the command: `make run-client`
-6. The client can be accessed at [localhost:3000](http://localhost:3000)
+[![Gmail Badge](https://img.shields.io/badge/-riannegreiros@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:tgmarinho@gmail.com)](mailto:riannegreiros@gmail.com)
