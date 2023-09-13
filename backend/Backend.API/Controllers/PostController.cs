@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
 
@@ -23,6 +24,12 @@ public class PostController : BaseApiController
   }
 
   [HttpPost]
+  [SwaggerOperation(Summary = "Create a new post.")]
+  [Consumes("application/json")]
+  [Produces("application/json")]
+  [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<ApiResponse<PostViewModel>>> CreatePost([FromBody] PostInputModel model)
   {
     var validationResult = ValidateModel<PostInputModelValidator, PostInputModel>(model);
@@ -51,6 +58,12 @@ public class PostController : BaseApiController
   }
 
   [HttpPut("{id}")]
+  [SwaggerOperation(Summary = "Update a post.")]
+  [Consumes("application/json")]
+  [Produces("application/json")]
+  [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<ApiResponse<PostViewModel>>> UpdatePost(string id, [FromForm] PostInputModel model)
   {
     var validationResult = ValidateModel<PostInputModelValidator, PostInputModel>(model);
@@ -80,6 +93,11 @@ public class PostController : BaseApiController
 
   [AllowAnonymous]
   [HttpGet]
+  [SwaggerOperation(Summary = "Get all posts.")]
+  [Consumes("application/json")]
+  [Produces("application/json")]
+  [ProducesResponseType(typeof(List<PostViewModel>), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts()
   {
     var posts = await _postService.GetPosts();
@@ -88,6 +106,12 @@ public class PostController : BaseApiController
 
   [AllowAnonymous]
   [HttpGet("{identifier}")]
+  [SwaggerOperation(Summary = "Get a post by ID or slug.")]
+  [Consumes("application/json")]
+  [Produces("application/json")]
+  [ProducesResponseType(typeof(PostViewModel), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status404NotFound)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<PostViewModel>> GetPost(string identifier)
   {
     if (ObjectId.TryParse(identifier, out ObjectId objectId)) // Check if it's a valid ObjectId (ID)

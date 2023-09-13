@@ -7,6 +7,7 @@ using Backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
 
@@ -25,6 +26,13 @@ public class CommentsController : BaseApiController
 
     [Authorize]
     [HttpPost("{identifier}")]
+    [SwaggerOperation(Summary = "Add a comment to a post.")]
+    [Consumes("application/json")]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(CommentViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> AddCommentToPost(string identifier, [FromBody] CommentInputModel comment)
     {
         var validationResult = ValidateModel<CommentInputModelValidator, CommentInputModel>(comment);
@@ -72,6 +80,11 @@ public class CommentsController : BaseApiController
     }
 
     [HttpGet("{identifier}")]
+    [Consumes("application/json")]
+    [Produces("application/json")]
+    [SwaggerOperation(Summary = "Get all comments for a post.")]
+    [ProducesResponseType(typeof(List<CommentViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetCommentsForPost(string identifier)
     {
         IEnumerable<Comment> comments;

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
 
@@ -28,6 +29,12 @@ public class UserController : BaseApiController
   }
 
   [HttpPost("register")]
+  [SwaggerOperation(Summary = "Register a new user.")]
+  [Consumes("application/json")]
+  [Produces("application/json")]
+  [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<UserViewModel>> Register(RegisterInputModel model)
   {
     if (!ModelState.IsValid)
@@ -64,6 +71,12 @@ public class UserController : BaseApiController
   }
 
   [HttpPost("login")]
+  [SwaggerOperation(Summary = "Login a user.")]
+  [Consumes("application/json")]
+  [Produces("application/json")]
+  [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<UserViewModel>> Login(LoginInputModel model)
   {
     var validationResult = ValidateModel<LoginInputModelValidator, LoginInputModel>(model);
@@ -83,7 +96,7 @@ public class UserController : BaseApiController
     {
       return BadRequest("Invalid username or password.");
     }
-    
+
 
     var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
 
@@ -115,6 +128,12 @@ public class UserController : BaseApiController
 
   [Authorize]
   [HttpPost("logout")]
+  [SwaggerOperation(Summary = "Logout a user.")]
+  [Produces("application/json")]
+  [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<IActionResult> Logout()
   {
     try
@@ -130,12 +149,20 @@ public class UserController : BaseApiController
   }
 
   [HttpGet("me")]
+  [SwaggerOperation(Summary = "Check if user is logged in.")]
+  [Produces("application/json")]
+  [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public ActionResult<bool> GetCurrentUser()
   {
     return Ok(User.Identity.IsAuthenticated);
   }
 
   [HttpGet("emailexists")]
+  [SwaggerOperation(Summary = "Check if email exists.")]
+  [Produces("application/json")]
+  [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<bool>> CheckEmailExists([FromQuery] string email)
   {
     return await _userManager.FindByEmailAsync(email) != null;
@@ -143,6 +170,11 @@ public class UserController : BaseApiController
 
   [Authorize]
   [HttpGet("isadmin")]
+  [SwaggerOperation(Summary = "Check if user is admin.")]
+  [Produces("application/json")]
+  [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<IActionResult> IsAdmin()
   {
     var userEmail = User.FindFirstValue(ClaimTypes.Email);
@@ -159,6 +191,12 @@ public class UserController : BaseApiController
   }
 
   [HttpPost("autologin")]
+  [SwaggerOperation(Summary = "Auto login a user.")]
+  [Consumes("application/json")]
+  [Produces("application/json")]
+  [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<UserViewModel>> AutoLogin([FromBody] string token)
   {
     var email = AutoLoginHelper.GetEmailFromValidToken(_config, token);
