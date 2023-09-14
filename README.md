@@ -1,4 +1,4 @@
-[![Push to Azure Container Registry](https://github.com/RianNegreiros/portfolio/actions/workflows/main.yml/badge.svg)](https://github.com/RianNegreiros/portfolio/actions/workflows/main.yml)
+[![Build and deploy container app to Azure Web App](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml/badge.svg)](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml)
 
 # Portfolio website
 
