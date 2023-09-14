@@ -18,12 +18,16 @@ namespace Backend.Application.Services
 
     public async Task<Post> CreatePost(PostInputModel model, User author)
     {
-      var post = new Post
+      string slug = SlugHelper.Slugify(model.Title);
+      if (await _postRepository.GetBySlug(slug) != null)
+        throw new PostAlreadyExistsException("Post with this title already exists");
+
+      Post post = new()
       {
         Title = model.Title,
         Summary = model.Summary,
         Content = model.Content,
-        Slug = SlugHelper.Slugify(model.Title),
+        Slug = slug,
         CreatedAt = DateTime.UtcNow,
         Author = author
       };
