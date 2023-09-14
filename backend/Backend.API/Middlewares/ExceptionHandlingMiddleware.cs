@@ -44,6 +44,11 @@ public class ExceptionHandlingMiddleware
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             response.Message = exception.Message;
         }
+        else if (exception is PostAlreadyExistsException)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            response.Message = exception.Message;
+        }
         else
         {
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
