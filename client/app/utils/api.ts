@@ -51,7 +51,6 @@ async function getIsAdmin() {
 
 async function createPost(formData: PostData) {
   formData.authorId = localStorage.getItem('userId') || sessionStorage.getItem('userId') as string;
-  formData.content = JSON.stringify(formData.content);
   try {
     const response = await axios.post(`${API_URL}/post`, formData, {
       headers: {
@@ -182,7 +181,7 @@ async function getPostBySlug(slug: string) {
   try {
     const response = await axios.get(`${API_URL}/post/${slug}`);
     const data = response.data;
-    data.content = JSON.parse(data.content);
+    JSON.stringify(data.content);
     return data;
   } catch (error) {
     throw new Error('Failed to fetch post by slug. Please try again later.');
