@@ -30,10 +30,10 @@ export default function SignUpPage() {
 
     try {
       setSigningUp(true);
-      const data = await signUpUser(formData);
+      const response = await signUpUser(formData);
       setIsLogged(true);
-      localStorage.setItem("userId", data.id);
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", response.data.id);
+      localStorage.setItem("token", response.data.token);
 
       setSigningUp(false);
       router.push("/");

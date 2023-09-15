@@ -32,17 +32,17 @@ export default function SignInPage() {
 
     try {
       setLoggingIn(true);
-      const data = await signInUser(formData);
+      const response = await signInUser(formData);
 
-      setIsAdmin(data.isAdmin)
+      setIsAdmin(response.data.isAdmin)
       setIsLogged(true);
 
       if (formData.rememberMe) {
-        localStorage.setItem("userId", data.id);
-        localStorage.setItem('token', data.token);
+        localStorage.setItem("userId", response.data.id);
+        localStorage.setItem('token', response.data.token);
       } else {
-        sessionStorage.setItem("userId", data.id);
-        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem("userId", response.data.id);
+        sessionStorage.setItem('token', response.data.token);
         localStorage.removeItem('token');
       }
 

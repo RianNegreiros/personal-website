@@ -29,8 +29,8 @@ async function autoLogin(
   const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token');
   if (storedToken) {
     try {
-      const data = await autoLoginUser(storedToken);
-      setIsAdmin(data.isAdmin);
+      const response = await autoLoginUser(storedToken);
+      setIsAdmin(response.data.isAdmin);
       setIsLogged(true);
     } catch (error) {
     }

@@ -15,7 +15,7 @@ export default function Projects() {
   useEffect(() => {
     async function fetchData() {
       const projects = await getData();
-      setData(projects);
+      setData(projects.data);
     }
     fetchData();
   }, []);

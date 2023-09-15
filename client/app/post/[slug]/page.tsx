@@ -34,8 +34,8 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   useEffect(() => {
     async function fetchDataAndComments() {
       const { postData, commentsData } = await fetchData(params.slug);
-      setData(postData);
-      setComments(commentsData);
+      setData(postData.data);
+      setComments(commentsData.data);
     }
     fetchDataAndComments();
   }, [params.slug]);
@@ -56,9 +56,10 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     e.preventDefault();
 
     try {
+      console.log(formData);
       await addCommentToPost(formData);
-      const commentsData = await getCommentsForPost(params.slug);
-      setComments(commentsData);
+      const response = await getCommentsForPost(params.slug);
+      setComments(response.data);
       setFormData((prevData) => ({ ...prevData, content: '' }));
     } catch (error) {
       console.error('Failed to create comment:', error);

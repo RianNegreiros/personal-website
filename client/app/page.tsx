@@ -16,7 +16,7 @@ export default function BlogPage() {
   useEffect(() => {
     async function fetchData() {
       const fetchedData = await getData();
-      setData(fetchedData);
+      setData(fetchedData.data);
     }
     fetchData();
   }, []);
