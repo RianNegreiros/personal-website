@@ -1,10 +1,22 @@
 # Portfolio website
 
-[![Build and deploy container app to Azure Web App](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml/badge.svg)](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml)
-
 Portfolio website to post articles and projects
 
-Can see it live on [riannegreiros.dev](https://www.riannegreiros.dev)
+## Deployment on Azure with Azure Docker Registry
+
+[![Build and deploy container app to Azure Web App](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml/badge.svg)](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml)
+
+## Usage
+
+You can access the application, hosted at `riannegreiros.dev`, using the following URL:
+
+[https://riannegreiros.dev](https://riannegreiros.dev)
+
+Here are some key endpoints you may want to explore:
+
+- [Blog/Home Page](https://riannegreiros.dev/)
+- [Projects Page](https://riannegreiros.dev/projects)
+- [API Endpoints](https://personalwebsitebackend.azurewebsites.net/swagger/index.html)
 
 ![Homepage screenshot](./_docs/images/homepage.png)
 
@@ -18,8 +30,6 @@ Can see it live on [riannegreiros.dev](https://www.riannegreiros.dev)
 - Admins can
   - Create posts
   - Create projects
-
-You can checkout the API endpoints [here](https://personalwebsitebackend.azurewebsites.net/swagger/index.html)
 
 ## How to run
 
