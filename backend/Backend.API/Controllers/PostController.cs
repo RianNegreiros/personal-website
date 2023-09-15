@@ -100,7 +100,7 @@ public class PostController : BaseApiController
   [SwaggerOperation(Summary = "Get all posts.")]
   [Consumes("application/json")]
   [Produces("application/json")]
-  [ProducesResponseType(typeof(List<PostViewModel>), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(ApiResponse<List<PostViewModel>>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts()
   {
@@ -117,7 +117,7 @@ public class PostController : BaseApiController
   [SwaggerOperation(Summary = "Get a post by ID or slug.")]
   [Consumes("application/json")]
   [Produces("application/json")]
-  [ProducesResponseType(typeof(PostViewModel), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status404NotFound)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<PostViewModel>> GetPost(string identifier)

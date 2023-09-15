@@ -32,7 +32,7 @@ public class UserController : BaseApiController
   [SwaggerOperation(Summary = "Register a new user.")]
   [Consumes("application/json")]
   [Produces("application/json")]
-  [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(ApiResponse<UserViewModel>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<UserViewModel>> Register(RegisterInputModel model)
@@ -80,7 +80,7 @@ public class UserController : BaseApiController
   [SwaggerOperation(Summary = "Login a user.")]
   [Consumes("application/json")]
   [Produces("application/json")]
-  [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(ApiResponse<UserViewModel>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<UserViewModel>> Login(LoginInputModel model)
@@ -139,7 +139,7 @@ public class UserController : BaseApiController
   [SwaggerOperation(Summary = "Logout a user.")]
   [Produces("application/json")]
   [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
-  [ProducesResponseType(StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status401Unauthorized)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<IActionResult> Logout()
@@ -150,10 +150,18 @@ public class UserController : BaseApiController
     }
     catch (Exception)
     {
-      return BadRequest(new { message = "Error logging out." });
+      return BadRequest(new ApiResponse<string>
+      {
+        Success = false,
+        Errors = new List<string> { "Error logging out." }
+      });
     }
 
-    return Ok(new { message = "User logged out successfully." });
+    return Ok(new ApiResponse<string>
+    {
+      Success = true,
+      Data = "Logged out."
+    });
   }
 
   [HttpGet("me")]
@@ -163,7 +171,8 @@ public class UserController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public ActionResult<bool> GetCurrentUser()
   {
-    return Ok(User.Identity.IsAuthenticated);
+    bool? isAuthenticated = User?.Identity?.IsAuthenticated;
+    return Ok(isAuthenticated ?? false);
   }
 
   [HttpGet("emailexists")]
@@ -202,12 +211,13 @@ public class UserController : BaseApiController
   [SwaggerOperation(Summary = "Auto login a user.")]
   [Consumes("application/json")]
   [Produces("application/json")]
-  [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(ApiResponse<UserViewModel>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<UserViewModel>> AutoLogin([FromBody] string token)
   {
-    string email = AutoLoginHelper.GetEmailFromValidToken(_config, token);
+    string? email = AutoLoginHelper.GetEmailFromValidToken(_config, token);
     if (email == null)
     {
       return Unauthorized();
