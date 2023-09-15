@@ -2,7 +2,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.Application.Models;
 
-public class PostViewModel
+public class PostViewModel : BasePostModel
 {
   [SwaggerSchema(Description = "The post's id")]
   public string Id { get; set; }
