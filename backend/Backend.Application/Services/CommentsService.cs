@@ -15,7 +15,7 @@ public class CommentsService : ICommentsService
 
     public async Task<Comment> AddCommentToPostById(string postId, CommentInputModel comment, User author)
     {
-        var newComment = new Comment
+        Comment newComment = new()
         {
             Content = comment.Content,
             Author = author,
@@ -28,7 +28,7 @@ public class CommentsService : ICommentsService
 
     public async Task<Comment> AddCommentToPostBySlug(string postSlug, CommentInputModel comment, User author)
     {
-        var newComment = new Comment
+        Comment newComment = new()
         {
             Content = comment.Content,
             Author = author,

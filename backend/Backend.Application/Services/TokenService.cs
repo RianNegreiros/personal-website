@@ -20,16 +20,16 @@ public class TokenService : ITokenService
 
   public string GenerateJwtToken(User user, bool isAdmin = false)
   {
-    var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
+    SigningCredentials credentials = new(_key, SecurityAlgorithms.HmacSha256);
 
-    var claims = new List<Claim>
+    List<Claim> claims = new()
     {
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
                 new Claim(ClaimTypes.Role, isAdmin ? "Admin" : "User")
     };
 
-    var token = new JwtSecurityToken(
+    JwtSecurityToken token = new(
         issuer: _config["JwtConfig:Issuer"],
         audience: _config["JwtConfig:Audience"],
         claims,

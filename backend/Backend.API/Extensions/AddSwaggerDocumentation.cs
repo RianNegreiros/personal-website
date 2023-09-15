@@ -23,7 +23,7 @@ public static class SwaggerServiceExtensions
         }
       });
 
-      var securitySchema = new OpenApiSecurityScheme
+      OpenApiSecurityScheme securitySchema = new()
       {
         Description = "JWT Auth Bearer Scheme",
         Name = "Authorization",
@@ -37,7 +37,7 @@ public static class SwaggerServiceExtensions
         }
       };
       c.AddSecurityDefinition("Bearer", securitySchema);
-      var securityRequirement = new OpenApiSecurityRequirement { { securitySchema, new[] { "Bearer" } } };
+      OpenApiSecurityRequirement securityRequirement = new() { { securitySchema, new[] { "Bearer" } } };
       c.AddSecurityRequirement(securityRequirement);
 
       c.OperationFilter<SwaggerLogoutOperationFilter>();

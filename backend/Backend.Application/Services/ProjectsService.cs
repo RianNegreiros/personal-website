@@ -28,9 +28,9 @@ namespace Backend.Application.Services
 
         public async Task<Project> CreateProject(ProjectInputModel model)
         {
-            var imageUrl = await _cloudinaryService.UploadImageAsync(model.Image.OpenReadStream(), model.Image.FileName);
+            string imageUrl = await _cloudinaryService.UploadImageAsync(model.Image.OpenReadStream(), model.Image.FileName);
 
-            var newProject = new Project
+            Project newProject = new()
             {
                 Title = model.Title,
                 Overview = model.Overview,

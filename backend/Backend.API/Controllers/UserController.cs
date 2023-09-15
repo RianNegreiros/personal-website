@@ -47,27 +47,33 @@ public class UserController : BaseApiController
       return BadRequest("Email address is in use.");
     }
 
-    var user = new User
+    User user = new()
     {
       Email = model.Email,
       UserName = model.Username,
       PersistentToken = ""
     };
 
-    var result = await _userManager.CreateAsync(user, model.Password);
+    IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
     if (!result.Succeeded)
     {
       return BadRequest(result.Errors);
     }
 
-    return new UserViewModel
+    string token = _tokenService.GenerateJwtToken(user);
+
+    return Ok(new ApiResponse<UserViewModel>
     {
-      Id = user.Id,
-      Username = user.UserName,
-      Token = _tokenService.GenerateJwtToken(user),
-      Email = user.Email
-    };
+      Success = true,
+      Data = new UserViewModel
+      {
+        Id = user.Id,
+        Username = user.UserName,
+        Email = user.Email,
+        Token = token
+      }
+    });
   }
 
   [HttpPost("login")]
@@ -79,7 +85,7 @@ public class UserController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<UserViewModel>> Login(LoginInputModel model)
   {
-    var validationResult = ValidateModel<LoginInputModelValidator, LoginInputModel>(model);
+    FluentValidation.Results.ValidationResult validationResult = ValidateModel<LoginInputModelValidator, LoginInputModel>(model);
 
     if (!validationResult.IsValid)
     {
@@ -90,15 +96,14 @@ public class UserController : BaseApiController
       });
     }
 
-    var user = await _userManager.FindByEmailAsync(model.Email);
+    User user = await _userManager.FindByEmailAsync(model.Email);
 
     if (user == null)
     {
       return BadRequest("Invalid username or password.");
     }
 
-
-    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
 
     if (!result.Succeeded)
     {
@@ -110,19 +115,22 @@ public class UserController : BaseApiController
       user.PersistentToken = Guid.NewGuid().ToString();
       await _userManager.UpdateAsync(user);
     }
-    var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
-    var token = _tokenService.GenerateJwtToken(user, isAdmin);
+    bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
+    string token = _tokenService.GenerateJwtToken(user, isAdmin);
 
-    return Ok(new UserViewModel
+    return Ok(new ApiResponse<UserViewModel>
     {
-      Id = user.Id,
-      Username = user.UserName,
-      Token = token,
-      Email = user.Email,
-      IsAdmin = isAdmin,
-      RememberMe = model.RememberMe
+      Success = true,
+      Data = new UserViewModel
+      {
+        Id = user.Id,
+        Username = user.UserName,
+        Email = user.Email,
+        Token = token,
+        IsAdmin = isAdmin
+      }
     });
   }
 
@@ -177,15 +185,15 @@ public class UserController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<IActionResult> IsAdmin()
   {
-    var userEmail = User.FindFirstValue(ClaimTypes.Email);
+    string userEmail = User.FindFirstValue(ClaimTypes.Email);
     if (userEmail == null)
     {
       return Unauthorized();
     }
 
-    var user = await _userManager.FindByEmailAsync(userEmail);
+    User user = await _userManager.FindByEmailAsync(userEmail);
 
-    var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+    bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
     return Ok(isAdmin);
   }
@@ -199,26 +207,31 @@ public class UserController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<UserViewModel>> AutoLogin([FromBody] string token)
   {
-    var email = AutoLoginHelper.GetEmailFromValidToken(_config, token);
+    string email = AutoLoginHelper.GetEmailFromValidToken(_config, token);
     if (email == null)
     {
       return Unauthorized();
     }
 
-    var user = await _userManager.FindByEmailAsync(email);
+    User user = await _userManager.FindByEmailAsync(email);
     if (user == null)
     {
       return Unauthorized();
     }
 
-    var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+    bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
-    return Ok(new UserViewModel
+    return Ok(new ApiResponse<UserViewModel>
     {
-      Id = user.Id,
-      Username = user.UserName,
-      Email = user.Email,
-      IsAdmin = isAdmin
+      Success = true,
+      Data = new UserViewModel
+      {
+        Id = user.Id,
+        Username = user.UserName,
+        Email = user.Email,
+        Token = token,
+        IsAdmin = isAdmin
+      }
     });
   }
 }
