@@ -1,16 +1,9 @@
-using System.ComponentModel.DataAnnotations;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.Application.Models;
 
-public class LoginInputModel
+public class LoginInputModel : AuthBaseModel
 {
-  [Required]
-  [EmailAddress]
-  public string Email { get; set; }
-
-  [Required]
-  [DataType(DataType.Password)]
-  [MinLength(12)]
-  public string Password { get; set; }
+  [SwaggerSchema(Description = "Set to true to remember the user")]
   public bool RememberMe { get; set; }
 }
