@@ -35,7 +35,7 @@ public class CommentsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> AddCommentToPost(string identifier, [FromBody] CommentInputModel comment)
     {
-        var validationResult = ValidateModel<CommentInputModelValidator, CommentInputModel>(comment);
+        FluentValidation.Results.ValidationResult validationResult = ValidateModel<CommentInputModelValidator, CommentInputModel>(comment);
 
         if (!validationResult.IsValid)
             return BadRequest(new ApiResponse<CommentViewModel>

@@ -7,11 +7,11 @@ public static class MongoDbExtensions
 {
   public static IServiceCollection AddMongoDb(this IServiceCollection services, IConfiguration config)
   {
-    var connectionString = config.GetConnectionString("MongoConnection");
-    var databaseName = "BlogDB";
+    string connectionString = config.GetConnectionString("MongoConnection");
+    string databaseName = "BlogDB";
 
-    var client = new MongoClient(connectionString);
-    var database = client.GetDatabase(databaseName);
+    MongoClient client = new(connectionString);
+    IMongoDatabase database = client.GetDatabase(databaseName);
 
     if (!CollectionExists(database, "projects"))
     {
@@ -35,8 +35,8 @@ public static class MongoDbExtensions
 
   private static bool CollectionExists(IMongoDatabase database, string collectionName)
   {
-    var filter = new BsonDocument("name", collectionName);
-    var collections = database.ListCollectionNames(new ListCollectionNamesOptions { Filter = filter });
+    BsonDocument filter = new("name", collectionName);
+    IAsyncCursor<string> collections = database.ListCollectionNames(new ListCollectionNamesOptions { Filter = filter });
     return collections.Any();
   }
 }

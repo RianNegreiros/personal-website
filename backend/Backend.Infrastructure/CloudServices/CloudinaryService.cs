@@ -11,7 +11,7 @@ public class CloudinaryService : ICloudinaryService
 
   public CloudinaryService(IConfiguration configuration)
   {
-    var account = new Account(
+    Account account = new(
         configuration["Cloudinary:CloudName"],
         configuration["Cloudinary:ApiKey"],
         configuration["Cloudinary:ApiSecret"]
@@ -22,13 +22,13 @@ public class CloudinaryService : ICloudinaryService
 
   public async Task<string> UploadImageAsync(Stream stream, string fileName)
   {
-    var uploadParams = new ImageUploadParams
+    ImageUploadParams uploadParams = new()
     {
       File = new FileDescription(fileName, stream),
       Folder = "blog"
     };
 
-    var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+    ImageUploadResult uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
     return uploadResult.SecureUrl.ToString();
   }

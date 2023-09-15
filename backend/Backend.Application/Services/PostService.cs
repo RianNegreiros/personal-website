@@ -37,7 +37,7 @@ namespace Backend.Application.Services
 
     public async Task<Post> UpdatePost(string id, PostInputModel model, User author)
     {
-      var post = await _postRepository.GetById(id) ?? throw new PostNotFoundException("Post not found");
+      Post post = await _postRepository.GetById(id) ?? throw new PostNotFoundException("Post not found");
 
       if (post.Author.Id != author.Id)
         throw new AuthorizationException("You are not the author of this post");
@@ -64,7 +64,7 @@ namespace Backend.Application.Services
 
     public async Task<PostViewModel?> GetPostById(string id)
     {
-      var post = await _postRepository.GetById(id);
+      Post post = await _postRepository.GetById(id);
       if (post == null)
         return null;
 
@@ -81,7 +81,7 @@ namespace Backend.Application.Services
 
     public async Task<PostViewModel?> GetPostBySlug(string slug)
     {
-      var post = await _postRepository.GetBySlug(slug);
+      Post post = await _postRepository.GetBySlug(slug);
       if (post == null)
         return null;
 

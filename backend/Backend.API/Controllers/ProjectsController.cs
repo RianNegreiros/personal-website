@@ -65,7 +65,7 @@ public class ProjectsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ApiResponse<Project>>> CreateProject([FromForm] ProjectInputModel model)
     {
-        var validationResult = ValidateModel<ProjectInputModelValidator, ProjectInputModel>(model);
+        FluentValidation.Results.ValidationResult validationResult = ValidateModel<ProjectInputModelValidator, ProjectInputModel>(model);
 
         if (!validationResult.IsValid)
             return BadRequest(new ApiResponse<Project>

@@ -12,7 +12,7 @@ public static class IdentityServiceExtensions
 {
   public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
   {
-    var builder = services.AddIdentityCore<User>();
+    IdentityBuilder builder = services.AddIdentityCore<User>();
 
     builder = new IdentityBuilder(builder.UserType, builder.Services);
     builder.AddRoles<IdentityRole>();
@@ -48,7 +48,7 @@ public static class IdentityServiceExtensions
 
     services.AddDbContext<IdentityDbContext>(opt =>
     {
-      var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+      string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
       string connStr = config.GetConnectionString("IdentityConnection");
 
       opt.UseNpgsql(connStr);

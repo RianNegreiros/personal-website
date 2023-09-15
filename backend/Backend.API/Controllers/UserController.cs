@@ -54,7 +54,7 @@ public class UserController : BaseApiController
       PersistentToken = ""
     };
 
-    var result = await _userManager.CreateAsync(user, model.Password);
+    IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
     if (!result.Succeeded)
     {
@@ -85,7 +85,7 @@ public class UserController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<UserViewModel>> Login(LoginInputModel model)
   {
-    var validationResult = ValidateModel<LoginInputModelValidator, LoginInputModel>(model);
+    FluentValidation.Results.ValidationResult validationResult = ValidateModel<LoginInputModelValidator, LoginInputModel>(model);
 
     if (!validationResult.IsValid)
     {
@@ -103,7 +103,7 @@ public class UserController : BaseApiController
       return BadRequest("Invalid username or password.");
     }
 
-    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
 
     if (!result.Succeeded)
     {
@@ -185,7 +185,7 @@ public class UserController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<IActionResult> IsAdmin()
   {
-    var userEmail = User.FindFirstValue(ClaimTypes.Email);
+    string userEmail = User.FindFirstValue(ClaimTypes.Email);
     if (userEmail == null)
     {
       return Unauthorized();

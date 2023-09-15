@@ -8,9 +8,9 @@ public class SwaggerLogoutOperationFilter : IOperationFilter
 {
   public void Apply(OpenApiOperation operation, OperationFilterContext context)
   {
-    var controllerActionDescriptor = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
-    var controllerName = controllerActionDescriptor?.ControllerName;
-    var actionName = controllerActionDescriptor?.ActionName;
+    ControllerActionDescriptor? controllerActionDescriptor = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
+    string? controllerName = controllerActionDescriptor?.ControllerName;
+    string? actionName = controllerActionDescriptor?.ActionName;
 
     if (controllerName == "UserController" && actionName == "Logout")
     {

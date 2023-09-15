@@ -10,7 +10,7 @@ public class BaseApiController : ControllerBase
   protected FluentValidation.Results.ValidationResult ValidateModel<TValidator, TModel>(TModel model)
     where TValidator : AbstractValidator<TModel>, new()
   {
-    var validator = new TValidator();
+    TValidator validator = new();
     return validator.Validate(model);
   }
 }

@@ -27,7 +27,7 @@ public class ExceptionHandlingMiddleware
 
     private static Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        var response = new ErrorResponse { Message = "An error occurred while processing the request." };
+        ErrorResponse response = new() { Message = "An error occurred while processing the request." };
 
         if (exception is PostNotFoundException)
         {
@@ -55,7 +55,7 @@ public class ExceptionHandlingMiddleware
         }
 
         context.Response.ContentType = "application/json";
-        var result = JsonSerializer.Serialize(response);
+        string? result = JsonSerializer.Serialize(response);
 
         return context.Response.WriteAsync(result);
     }
@@ -63,5 +63,5 @@ public class ExceptionHandlingMiddleware
 
 public class ErrorResponse
 {
-    public string Message { get; set; }
+    public string? Message { get; set; }
 }

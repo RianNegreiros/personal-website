@@ -8,10 +8,10 @@ namespace Backend.API.Helpers;
 
 public static class AutoLoginHelper
 {
-    public static string GetEmailFromValidToken(IConfiguration config, string token)
+    public static string? GetEmailFromValidToken(IConfiguration config, string token)
     {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtConfig:SecretKey"]));
-        var tokenHandler = new JwtSecurityTokenHandler();
+        SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(config["JwtConfig:SecretKey"]));
+        JwtSecurityTokenHandler tokenHandler = new();
 
         try
         {
@@ -28,19 +28,18 @@ public static class AutoLoginHelper
 
             if (validatedToken is JwtSecurityToken jwtToken)
             {
-                var emailClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value;
+                string? emailClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value;
                 return emailClaim;
             }
         }
         catch (Exception)
         {
-            // Invalid token or other exception handling
+            throw new SecurityTokenException("Invalid token");
         }
 
         return null;
     }
 
-    // Add a method to retrieve configuration values if needed
     public static string GetJwtConfigValue(IConfiguration config, string key)
     {
         return config["JwtConfig:" + key];

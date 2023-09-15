@@ -32,7 +32,7 @@ public class PostController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<ApiResponse<PostViewModel>>> CreatePost([FromBody] PostInputModel model)
   {
-    var validationResult = ValidateModel<PostInputModelValidator, PostInputModel>(model);
+    FluentValidation.Results.ValidationResult validationResult = ValidateModel<PostInputModelValidator, PostInputModel>(model);
 
     if (!validationResult.IsValid)
       return BadRequest(new ApiResponse<PostViewModel>
@@ -68,7 +68,7 @@ public class PostController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<ApiResponse<PostViewModel>>> UpdatePost(string id, [FromForm] PostInputModel model)
   {
-    var validationResult = ValidateModel<PostInputModelValidator, PostInputModel>(model);
+    FluentValidation.Results.ValidationResult validationResult = ValidateModel<PostInputModelValidator, PostInputModel>(model);
 
     if (!validationResult.IsValid)
       return BadRequest(new ApiResponse<PostViewModel>
