@@ -57,7 +57,7 @@ make run-backend
 make run-client
 ```
 
-## Technologies used
+## Libraries and Tools
 
 - [ASP.NET Core 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 - [ASP.NET Core Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-7.0&tabs=visual-studio)
@@ -70,6 +70,30 @@ make run-client
 - [PostgreSQL](https://www.postgresql.org/about)
 - [MongoDB](https://www.mongodb.com/atlas/database)
 - [Swagger](https://learn.microsoft.com/pt-br/aspnet/core/tutorials/web-api-help-pages-using-swagger?view=aspnetcore-6.0)
+
+## Principles
+
+- SOLID
+- Don't Repeat Yourself
+- You Aren't Gonna Need It
+- Keep It Simple
+- Small Commits
+
+## Methodologies
+
+- Clean Architecture
+- GitFlow
+- Conventional Commits
+- Modular Design
+- Refactoring
+- Continuous Integration
+- Continuous Delivery
+- Continuous Deployment
+
+## Tests Features
+
+- Unit Tests
+- Mocks
 
 ## Author
 
