@@ -1,7 +1,9 @@
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace Backend.Application.Models;
 
-public class CommentInputModel
+public class CommentInputModel : BaseCommentModel
 {
-    public string Content { get; set; }
+    [SwaggerSchema(Description = "The user's token")]
     public string token { get; set; }
 }
