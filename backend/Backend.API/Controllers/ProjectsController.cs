@@ -23,7 +23,7 @@ public class ProjectsController : BaseApiController
     [HttpGet]
     [SwaggerOperation(Summary = "Get all projects.")]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(List<Project>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<List<Project>>), StatusCodes.Status200OK)]
     public async Task<ActionResult<List<Project>>> GetProjects()
     {
         List<Project> projects = await _projectsService.GetProjects();
@@ -38,7 +38,7 @@ public class ProjectsController : BaseApiController
     [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Get a project by id.")]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<Project>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Project>> GetProject(string id)

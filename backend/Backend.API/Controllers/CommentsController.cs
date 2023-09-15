@@ -29,7 +29,7 @@ public class CommentsController : BaseApiController
     [SwaggerOperation(Summary = "Add a comment to a post.")]
     [Consumes("application/json")]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(CommentViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<CommentViewModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -44,7 +44,7 @@ public class CommentsController : BaseApiController
                 Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
             });
 
-        string email = AutoLoginHelper.GetEmailFromValidToken(_config, comment.token);
+        string? email = AutoLoginHelper.GetEmailFromValidToken(_config, comment.token);
         if (email == null)
         {
             return Unauthorized();
@@ -86,7 +86,7 @@ public class CommentsController : BaseApiController
     [Consumes("application/json")]
     [Produces("application/json")]
     [SwaggerOperation(Summary = "Get all comments for a post.")]
-    [ProducesResponseType(typeof(List<CommentViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<List<CommentViewModel>>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetCommentsForPost(string identifier)
     {
