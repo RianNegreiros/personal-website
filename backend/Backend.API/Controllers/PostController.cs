@@ -41,20 +41,22 @@ public class PostController : BaseApiController
         Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
       });
 
-      var currentUser = await _userManager.FindByIdAsync(model.AuthorId);
+    User currentUser = await _userManager.FindByIdAsync(model.AuthorId);
 
-      var post = await _postService.CreatePost(model, currentUser);
+    Post post = await _postService.CreatePost(model, currentUser);
 
-      var postViewModel = new PostViewModel
+    return Ok(new ApiResponse<PostViewModel>
+    {
+      Success = true,
+      Data = new PostViewModel
       {
         Id = post.Id,
         Title = post.Title,
         Summary = post.Summary,
         Slug = post.Slug,
         Content = post.Content
-      };
-
-      return Ok(postViewModel);
+      }
+    });
   }
 
   [HttpPut("{id}")]
@@ -75,20 +77,22 @@ public class PostController : BaseApiController
         Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
       });
 
-      var currentUser = await _userManager.GetUserAsync(User);
+    User currentUser = await _userManager.GetUserAsync(User);
 
-      var post = await _postService.UpdatePost(id, model, currentUser);
+    Post post = await _postService.UpdatePost(id, model, currentUser);
 
-      var postViewModel = new PostViewModel
+    return Ok(new ApiResponse<PostViewModel>
+    {
+      Success = true,
+      Data = new PostViewModel
       {
         Id = post.Id,
         Title = post.Title,
         Summary = post.Summary,
         Slug = post.Slug,
         Content = post.Content
-      };
-
-      return Ok(postViewModel);
+      }
+    });
   }
 
   [AllowAnonymous]
@@ -100,8 +104,12 @@ public class PostController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts()
   {
-    var posts = await _postService.GetPosts();
-    return Ok(posts);
+    List<PostViewModel> posts = await _postService.GetPosts();
+    return Ok(new ApiResponse<List<PostViewModel>>
+    {
+      Success = true,
+      Data = posts
+    });
   }
 
   [AllowAnonymous]
@@ -116,7 +124,7 @@ public class PostController : BaseApiController
   {
     if (ObjectId.TryParse(identifier, out ObjectId objectId)) // Check if it's a valid ObjectId (ID)
     {
-      var post = await _postService.GetPostById(objectId.ToString());
+      PostViewModel? post = await _postService.GetPostById(objectId.ToString());
       if (post == null)
         return NotFound();
 
@@ -124,11 +132,15 @@ public class PostController : BaseApiController
     }
     else // If not a valid ObjectId, treat it as a slug
     {
-      var post = await _postService.GetPostBySlug(identifier);
+      PostViewModel? post = await _postService.GetPostBySlug(identifier);
       if (post == null)
         return NotFound();
 
-      return Ok(post);
+      return Ok(new ApiResponse<PostViewModel>
+      {
+        Success = true,
+        Data = post
+      });
     }
   }
 }

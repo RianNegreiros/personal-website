@@ -44,13 +44,13 @@ public class CommentsController : BaseApiController
                 Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
             });
 
-        var email = AutoLoginHelper.GetEmailFromValidToken(_config, comment.token);
+        string email = AutoLoginHelper.GetEmailFromValidToken(_config, comment.token);
         if (email == null)
         {
             return Unauthorized();
         }
 
-        var user = await _userManager.FindByEmailAsync(email);
+        User user = await _userManager.FindByEmailAsync(email);
         if (user == null)
         {
             return Unauthorized();
@@ -69,14 +69,17 @@ public class CommentsController : BaseApiController
             addedComment = await _commentsService.AddCommentToPostBySlug(identifier, comment, user);
         }
 
-        var commentViewModel = new CommentViewModel
+        return Ok(new ApiResponse<CommentViewModel>
         {
-            Id = addedComment.Id,
-            Content = addedComment.Content,
-            Author = addedComment.Author,
-            CreatedAt = addedComment.CreatedAt
-        };
-        return Ok(commentViewModel);
+            Success = true,
+            Data = new CommentViewModel
+            {
+                Id = addedComment.Id,
+                Content = addedComment.Content,
+                Author = addedComment.Author,
+                CreatedAt = addedComment.CreatedAt
+            }
+        });
     }
 
     [HttpGet("{identifier}")]
@@ -108,6 +111,10 @@ public class CommentsController : BaseApiController
             CreatedAt = c.CreatedAt
         }).ToList();
 
-        return Ok(commentsViewModel);
+        return Ok(new ApiResponse<List<CommentViewModel>>
+        {
+            Success = true,
+            Data = commentsViewModel
+        });
     }
 }
