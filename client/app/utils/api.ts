@@ -108,7 +108,7 @@ async function getCommentsForPost(postId: string) {
 
 async function addCommentToPost(commentData: CommentData) {
   try {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     commentData.token = token as string;
 
     if (!token) {
