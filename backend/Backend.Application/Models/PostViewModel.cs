@@ -1,11 +1,15 @@
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace Backend.Application.Models;
 
 public class PostViewModel
 {
+  [SwaggerSchema(Description = "The post's id")]
   public string Id { get; set; }
-  public string Title { get; set; }
-  public string Summary { get; set; }
-  public string Content { get; set; }
+
+  [SwaggerSchema(Description = "The post's slug")]
   public string Slug { get; set; }
+
+  [SwaggerSchema(Description = "The post's date of creation")]
   public DateTime CreatedAt { get; set; }
 }
