@@ -3,7 +3,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.Application.Models;
 
-public class AuthBaseModel
+public class BaseAuthModel
 {
     [Required]
     [EmailAddress]

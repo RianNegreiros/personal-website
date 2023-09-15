@@ -3,7 +3,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.Application.Models;
 
-public class RegisterInputModel : AuthBaseModel
+public class RegisterInputModel : BaseAuthModel
 {
   [Required]
   [MinLength(4)]
