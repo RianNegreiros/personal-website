@@ -1,10 +1,8 @@
-[![Build and deploy container app to Azure Web App](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml/badge.svg)](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml)
-
 # Portfolio website
 
-Portfolio website to post articles and projects
+[![Build and deploy container app to Azure Web App](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml/badge.svg)](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml)
 
-<br />
+Portfolio website to post articles and projects
 
 Can see it live on [riannegreiros.dev](https://www.riannegreiros.dev)
 
@@ -33,16 +31,28 @@ You can checkout the API endpoints [here](https://personalwebsitebackend.azurewe
   - [Windows](https://gnuwin32.sourceforge.net/packages/make.htm)
   - [macOS](https://formulae.brew.sh/formula/make)
 
-1. Clone the repository
+1- Clone the repository
+
 ```bash
 git clone https://github.com/RianNegreiros/portfolio.git
 ```
-3. Set up the project environment variables in the [docker compose file](https://github.com/RianNegreiros/portfolio/blob/main/backend/docker-compose.yml) or create `appsettings.json`/`appsettings.Development.json` using [appsettings.Development.json.example](https://github.com/RianNegreiros/portfolio/blob/main/backend/Backend.API/appsettings.Development.json.example) as reference
-4. Run the backend `localhost:5000` with the command:
+
+2- Set up the project environment variables in the [docker compose file](https://github.com/RianNegreiros/portfolio/blob/main/backend/docker-compose.yml) or create `appsettings.json`/`appsettings.Development.json` using [appsettings.Development.json.example](https://github.com/RianNegreiros/portfolio/blob/main/backend/Backend.API/appsettings.Development.json.example) as reference
+
+3- Run the tests with the command:
+
+```bash
+make run-tests
+```
+
+4- Run the backend on `localhost:5000` with the command:
+
 ```bash
 make run-backend
 ```
-5. Run the client on `localhost:3000` with the command:
+
+5- Run the client on `localhost:3000` with the command:
+
 ```bash
 make run-client
 ```
@@ -63,8 +73,8 @@ make run-client
 
 ## Author
 
-<sub id="author"><b>Rian Negreiros Dos Santos</b></sub></a>
+Rian Negreiros Dos Santos
 
-[![Linkedin Badge](https://img.shields.io/badge/-RianNegreiros-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/tgmarinho/)](https://www.linkedin.com/in/riannegreiros/) 
+[![Linkedin Badge](https://img.shields.io/badge/-RianNegreiros-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/tgmarinho/)](https://www.linkedin.com/in/riannegreiros/)
 
 [![Gmail Badge](https://img.shields.io/badge/-riannegreiros@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:tgmarinho@gmail.com)](mailto:riannegreiros@gmail.com)
