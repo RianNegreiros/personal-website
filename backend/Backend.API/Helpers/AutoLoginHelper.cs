@@ -1,7 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using Backend.Core.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Backend.API.Helpers;
@@ -28,8 +26,7 @@ public static class AutoLoginHelper
 
             if (validatedToken is JwtSecurityToken jwtToken)
             {
-                string? emailClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value;
-                return emailClaim;
+                return jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value;
             }
         }
         catch (Exception)

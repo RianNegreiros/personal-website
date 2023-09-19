@@ -25,37 +25,33 @@ public class ExceptionHandlingMiddleware
         }
     }
 
+    private static readonly Dictionary<Type, HttpStatusCode> ExceptionStatusCodes = new()
+    {
+        { typeof(PostNotFoundException), HttpStatusCode.NotFound },
+        { typeof(AuthorizationException), HttpStatusCode.Unauthorized },
+        { typeof(ImageUploadException), HttpStatusCode.BadRequest },
+        { typeof(PostAlreadyExistsException), HttpStatusCode.BadRequest }
+    };
+
+    private static HttpStatusCode GetStatusCodeForException(Exception exception)
+    {
+        return ExceptionStatusCodes.TryGetValue(exception.GetType(), out HttpStatusCode statusCode)
+            ? statusCode
+            : HttpStatusCode.InternalServerError;
+    }
+
     private static Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        ErrorResponse response = new() { Message = "An error occurred while processing the request." };
+        ErrorResponse response = new()
+        {
+            Message = exception.Message
+        };
 
-        if (exception is PostNotFoundException)
-        {
-            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-            response.Message = exception.Message;
-        }
-        else if (exception is AuthorizationException)
-        {
-            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            response.Message = exception.Message;
-        }
-        else if (exception is ImageUploadException)
-        {
-            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            response.Message = exception.Message;
-        }
-        else if (exception is PostAlreadyExistsException)
-        {
-            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            response.Message = exception.Message;
-        }
-        else
-        {
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-        }
+        context.Response.StatusCode = (int)GetStatusCodeForException(exception);
+        response.Message = exception.Message;
 
         context.Response.ContentType = "application/json";
-        string? result = JsonSerializer.Serialize(response);
+        string result = JsonSerializer.Serialize(response);
 
         return context.Response.WriteAsync(result);
     }
@@ -63,5 +59,5 @@ public class ExceptionHandlingMiddleware
 
 public class ErrorResponse
 {
-    public string? Message { get; set; }
+    public string Message { get; set; } = "An error occurred while processing the request.";
 }
