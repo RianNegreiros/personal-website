@@ -91,6 +91,7 @@ public class PostController : BaseApiController
     });
   }
 
+  [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
   [AllowAnonymous]
   [HttpGet]
   [SwaggerOperation(Summary = "Get all posts.")]

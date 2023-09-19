@@ -19,6 +19,7 @@ public class ProjectsController : BaseApiController
         _projectsService = projectsService;
     }
 
+    [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
     [AllowAnonymous]
     [HttpGet]
     [SwaggerOperation(Summary = "Get all projects.")]
