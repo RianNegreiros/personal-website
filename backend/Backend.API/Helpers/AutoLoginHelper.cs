@@ -26,8 +26,7 @@ public static class AutoLoginHelper
 
             if (validatedToken is JwtSecurityToken jwtToken)
             {
-                string? emailClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value;
-                return emailClaim;
+                return jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value;
             }
         }
         catch (Exception)
