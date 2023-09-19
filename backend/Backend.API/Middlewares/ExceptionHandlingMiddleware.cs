@@ -27,7 +27,7 @@ public class ExceptionHandlingMiddleware
 
     private static Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        ErrorResponse response = new() { Message = "An error occurred while processing the request." };
+        ErrorResponse response = new();
 
         if (exception is PostNotFoundException)
         {
@@ -63,5 +63,5 @@ public class ExceptionHandlingMiddleware
 
 public class ErrorResponse
 {
-    public string? Message { get; set; }
+    public string Message { get; set; } = "An error occurred while processing the request.";
 }
