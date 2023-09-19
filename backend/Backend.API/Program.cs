@@ -26,6 +26,8 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddResponseCaching();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -51,6 +53,8 @@ if (app.Environment.IsDevelopment()) { }
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors("CorsPolicy");
+
+app.UseResponseCaching();
 
 app.UseSwaggerDocumentation();
 
