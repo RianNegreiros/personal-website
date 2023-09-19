@@ -25,8 +25,6 @@ public class PostController : BaseApiController
 
   [HttpPost]
   [SwaggerOperation(Summary = "Create a new post.")]
-  [Consumes("application/json")]
-  [Produces("application/json")]
   [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -61,8 +59,6 @@ public class PostController : BaseApiController
 
   [HttpPut("{id}")]
   [SwaggerOperation(Summary = "Update a post.")]
-  [Consumes("application/json")]
-  [Produces("application/json")]
   [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -98,8 +94,6 @@ public class PostController : BaseApiController
   [AllowAnonymous]
   [HttpGet]
   [SwaggerOperation(Summary = "Get all posts.")]
-  [Consumes("application/json")]
-  [Produces("application/json")]
   [ProducesResponseType(typeof(ApiResponse<List<PostViewModel>>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts()
@@ -115,8 +109,6 @@ public class PostController : BaseApiController
   [AllowAnonymous]
   [HttpGet("{identifier}")]
   [SwaggerOperation(Summary = "Get a post by ID or slug.")]
-  [Consumes("application/json")]
-  [Produces("application/json")]
   [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status404NotFound)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
