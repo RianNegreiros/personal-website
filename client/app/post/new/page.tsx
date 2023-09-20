@@ -86,7 +86,7 @@ export default function NewPostPage() {
               }`}
             disabled={isPublishing}
           >
-            {isPublishing ? 'Publishing...' : 'Publish'}
+            {isPublishing ? 'Publicando...' : 'Publicar'}
           </button>
         </form>
       </div>
