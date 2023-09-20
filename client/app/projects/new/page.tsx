@@ -47,7 +47,7 @@ export default function NewProjectPage() {
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
             <div className="sm:col-span-2">
-              <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+              <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titulo</label>
               <input
                 type="text"
                 name="title"
@@ -60,7 +60,7 @@ export default function NewProjectPage() {
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="overview" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Overview</label>
+              <label htmlFor="overview" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Resumo</label>
               <input
                 type="text"
                 name="overview"
@@ -86,7 +86,7 @@ export default function NewProjectPage() {
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="image">Upload file</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="image">Fazer Upload de arquivo</label>
               <input
                 className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 aria-describedby="project-image-description"
@@ -105,7 +105,7 @@ export default function NewProjectPage() {
               }`}
             disabled={isPublishing}
           >
-            {isPublishing ? 'Publishing...' : 'Publish'}
+            {isPublishing ? 'Publicando...' : 'Publicar'}
           </button>
         </form>
       </div>

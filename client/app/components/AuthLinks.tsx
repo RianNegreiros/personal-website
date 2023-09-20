@@ -62,7 +62,7 @@ export default function AuthLinks({ pathname }: { pathname: string }) {
             href="/post/new"
             className="text-sm px-4 py-2 rounded-lg border-2 border-teal-500 text-gray-500 hover:text-white hover:border-teal-600"
           >
-            New Post
+            Criar Post
           </Link>
           {logoutLink}
         </div>
@@ -74,7 +74,7 @@ export default function AuthLinks({ pathname }: { pathname: string }) {
             href="/projects/new"
             className="text-sm px-4 py-2 rounded-lg border-2 border-teal-500 text-gray-500 hover:text-white hover:border-teal-600"
           >
-            New Project
+            Criar Projeto
           </Link>
           {logoutLink}
         </div>
