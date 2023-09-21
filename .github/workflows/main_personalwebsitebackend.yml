@@ -9,8 +9,8 @@ on:
       - main
     paths-ignore:
       - '.gitignore'
-      - '_docs'
-      - 'client'
+      - '_docs/**'
+      - 'client/**'
       - 'Makefile'
   workflow_dispatch:
 
