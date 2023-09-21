@@ -22,7 +22,24 @@ export const metadata: Metadata = {
     images: [siteMetadata.socialBanner],
     locale: "pt_BR",
     type: "website",
-  }
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: false,
+      noimageindex: true,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+      'max-snippet': -1,
+    },
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteMetadata.title,
+    images: [siteMetadata.socialBanner],
+  },
 }
 
 export default function RootLayout({
