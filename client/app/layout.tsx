@@ -8,7 +8,10 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
-  title: 'Rian Negreiros Dos Santos',
+  title: {
+    template: `%s | ${siteMetadata.title}`,
+    default: siteMetadata.title,
+  },
   description: 'Rian Negreiros Dos Santos personal website',
 }
 
