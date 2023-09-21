@@ -14,7 +14,7 @@ async function fetchData(slug: string) {
   return { postData, commentsData };
 }
 
-export async function generateMetadata({ params, posts }: { params: { slug: string }, posts: Post[] }) {
+async function generateMetadata({ params, posts }: { params: { slug: string }, posts: Post[] }) {
   const post = posts.find((post) => post.slug === params.slug);
   if (!post) {
     return;
@@ -66,6 +66,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       const { postData, commentsData } = await fetchData(params.slug);
       setData(postData.data);
       setComments(commentsData.data);
+      generateMetadata({ params, posts: [postData.data] });
     }
     fetchDataAndComments();
   }, [params.slug]);
