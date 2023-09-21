@@ -2,6 +2,7 @@
 
 import { Post, Comment, CommentData } from "@/app/models";
 import { addCommentToPost, getCommentsForPost, getIsUserLoggedIn, getPostBySlug } from "@/app/utils/api";
+import siteMetadata from "@/app/utils/siteMetaData";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -11,6 +12,35 @@ async function fetchData(slug: string) {
   const postData = await getPostBySlug(slug);
   const commentsData = await getCommentsForPost(slug);
   return { postData, commentsData };
+}
+
+export async function generateMetadata({ params, posts }: { params: { slug: string }, posts: Post[] }) {
+  const post = posts.find((post) => post.slug === params.slug);
+  if (!post) {
+    return;
+  }
+
+  const publishedAt = new Date(post.createdAt).toISOString();
+
+  return {
+    title: post.title,
+    description: post.summary,
+    openGraph: {
+      title: post.title,
+      description: post.summary,
+      url: siteMetadata.siteUrl + 'post/' + post.slug,
+      siteName: siteMetadata.title,
+      locale: "pt_BR",
+      type: "article",
+      publishedTime: publishedAt,
+      authors: 'Rian Negreiros'
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.summary,
+    },
+  };
 }
 
 export default function PostPage({ params }: { params: { slug: string } }) {
