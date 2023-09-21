@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Navbar from './components/Navbar'
 import { Providers } from './components/Providers'
+import siteMetadata from './utils/siteMetaData'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteMetadata.title}`,
     default: siteMetadata.title,
   },
-  description: 'Rian Negreiros Dos Santos personal website',
+  description: siteMetadata.description,
 }
 
 export default function RootLayout({
