@@ -58,7 +58,7 @@ public class PostController : BaseApiController
   }
 
   [HttpPut("{identifier}")]
-  [SwaggerOperation(Summary = "Update a post.")]
+  [SwaggerOperation(Summary = "Update a post by id or slug.")]
   [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
