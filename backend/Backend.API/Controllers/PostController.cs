@@ -57,12 +57,12 @@ public class PostController : BaseApiController
     });
   }
 
-  [HttpPut("{id}")]
+  [HttpPut("{identifier}")]
   [SwaggerOperation(Summary = "Update a post.")]
   [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  public async Task<ActionResult<ApiResponse<PostViewModel>>> UpdatePost(string id, [FromForm] UpdatePostModel model)
+  public async Task<ActionResult<ApiResponse<PostViewModel>>> UpdatePost(string identifier, [FromForm] UpdatePostModel model)
   {
     FluentValidation.Results.ValidationResult validationResult = ValidateModel<UpdatePostModelValidator, UpdatePostModel>(model);
 
@@ -82,7 +82,7 @@ public class PostController : BaseApiController
         Errors = new List<string> { "User not found" }
       });
 
-    Post post = await _postService.UpdatePost(id, model, currentUser);
+    Post post = await _postService.UpdatePost(identifier, model, currentUser);
 
     return Ok(new ApiResponse<PostViewModel>
     {

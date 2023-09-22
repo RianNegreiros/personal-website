@@ -3,6 +3,7 @@ using Backend.Application.Models;
 using Backend.Core.Exceptions;
 using Backend.Core.Inferfaces.Repositories;
 using Backend.Core.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Backend.Application.Services
@@ -35,9 +36,17 @@ namespace Backend.Application.Services
       return await _postRepository.Create(post);
     }
 
-    public async Task<Post> UpdatePost(string id, UpdatePostModel model, User author)
+    public async Task<Post> UpdatePost(string identifier, UpdatePostModel model, User author)
     {
-      Post post = await _postRepository.GetById(id) ?? throw new PostNotFoundException("Post not found");
+      Post post;
+      if (ObjectId.TryParse(identifier, out ObjectId objectId))
+      {
+        post = await _postRepository.GetById(objectId.ToString());
+      }
+      else
+      {
+        post = await _postRepository.GetBySlug(identifier);
+      }
 
       if (post.Author.Id != author.Id)
         throw new AuthorizationException("You are not the author of this post");
