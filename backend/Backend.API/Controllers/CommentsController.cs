@@ -11,6 +11,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
 
+[Route("api/comments/{identifier}")]
 public class CommentsController : BaseApiController
 {
     private readonly ICommentsService _commentsService;
@@ -25,7 +26,7 @@ public class CommentsController : BaseApiController
     }
 
     [Authorize]
-    [HttpPost("{identifier}")]
+    [HttpPost]
     [SwaggerOperation(Summary = "Add a comment to a post.")]
     [ProducesResponseType(typeof(ApiResponse<CommentViewModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -49,10 +50,7 @@ public class CommentsController : BaseApiController
         }
 
         User user = await _userManager.FindByEmailAsync(email);
-        if (user == null)
-        {
-            return Unauthorized();
-        }
+        user ??= new User { Email = email };
 
         Comment addedComment;
 
@@ -80,7 +78,7 @@ public class CommentsController : BaseApiController
         });
     }
 
-    [HttpGet("{identifier}")]
+    [HttpGet]
     [SwaggerOperation(Summary = "Get all comments for a post.")]
     [ProducesResponseType(typeof(ApiResponse<List<CommentViewModel>>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
