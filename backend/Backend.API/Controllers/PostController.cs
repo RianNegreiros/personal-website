@@ -62,9 +62,9 @@ public class PostController : BaseApiController
   [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  public async Task<ActionResult<ApiResponse<PostViewModel>>> UpdatePost(string id, [FromForm] PostInputModel model)
+  public async Task<ActionResult<ApiResponse<PostViewModel>>> UpdatePost(string id, [FromForm] UpdatePostModel model)
   {
-    FluentValidation.Results.ValidationResult validationResult = ValidateModel<PostInputModelValidator, PostInputModel>(model);
+    FluentValidation.Results.ValidationResult validationResult = ValidateModel<UpdatePostModelValidator, UpdatePostModel>(model);
 
     if (!validationResult.IsValid)
       return BadRequest(new ApiResponse<PostViewModel>
@@ -73,7 +73,14 @@ public class PostController : BaseApiController
         Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
       });
 
-    User currentUser = await _userManager.GetUserAsync(User);
+    User currentUser = await _userManager.FindByIdAsync(model.AuthorId);
+
+    if (currentUser == null)
+      return BadRequest(new ApiResponse<PostViewModel>
+      {
+        Success = false,
+        Errors = new List<string> { "User not found" }
+      });
 
     Post post = await _postService.UpdatePost(id, model, currentUser);
 
@@ -115,25 +122,25 @@ public class PostController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<PostViewModel>> GetPost(string identifier)
   {
+    PostViewModel? post;
     if (ObjectId.TryParse(identifier, out ObjectId objectId)) // Check if it's a valid ObjectId (ID)
     {
-      PostViewModel? post = await _postService.GetPostById(objectId.ToString());
+      post = await _postService.GetPostById(objectId.ToString());
       if (post == null)
         return NotFound();
 
       return Ok(post);
     }
-    else // If not a valid ObjectId, treat it as a slug
-    {
-      PostViewModel? post = await _postService.GetPostBySlug(identifier);
-      if (post == null)
-        return NotFound();
 
-      return Ok(new ApiResponse<PostViewModel>
-      {
-        Success = true,
-        Data = post
-      });
-    }
+    // If not a valid ObjectId, treat it as a slug
+    post = await _postService.GetPostBySlug(identifier);
+    if (post == null)
+      return NotFound();
+
+    return Ok(new ApiResponse<PostViewModel>
+    {
+      Success = true,
+      Data = post
+    });
   }
 }
