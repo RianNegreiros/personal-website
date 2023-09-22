@@ -14,35 +14,6 @@ async function fetchData(slug: string) {
   return { postData, commentsData };
 }
 
-async function generateMetadata({ params, posts }: { params: { slug: string }, posts: Post[] }) {
-  const post = posts.find((post) => post.slug === params.slug);
-  if (!post) {
-    return;
-  }
-
-  const publishedAt = new Date(post.createdAt).toISOString();
-
-  return {
-    title: post.title,
-    description: post.summary,
-    openGraph: {
-      title: post.title,
-      description: post.summary,
-      url: siteMetadata.siteUrl + 'post/' + post.slug,
-      siteName: siteMetadata.title,
-      locale: "pt_BR",
-      type: "article",
-      publishedTime: publishedAt,
-      authors: 'Rian Negreiros'
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.summary,
-    },
-  };
-}
-
 export default function PostPage({ params }: { params: { slug: string } }) {
   const [data, setData] = useState<Post>({
     id: '',
@@ -66,7 +37,6 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       const { postData, commentsData } = await fetchData(params.slug);
       setData(postData.data);
       setComments(commentsData.data);
-      generateMetadata({ params, posts: [postData.data] });
     }
     fetchDataAndComments();
   }, [params.slug]);
@@ -105,6 +75,25 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   return (
     <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
       <header className="pt-6 xl:pb-6">
+
+        <meta property="og:title" content={data.title} />
+        <meta name="description" content={data.summary} />
+        <meta property="og:site_name" content={siteMetadata.title} />
+        <meta property="og:description" content={data.summary} />
+        <meta property="og:url" content={`${siteMetadata.siteUrl}/post/${data.slug}`} />
+        <meta property="og:type" content="article" />
+        <meta property="article:published_time" content={data.createdAt} />
+        <meta property="article:modified_time" content={data.createdAt} />
+        <meta property="article:author" content={siteMetadata.author} />
+        <meta property="article:section" content="Technology" />
+        <meta property="article:tag" content="Technology" />
+        <meta property="og:locale" content="pt_BR" />
+        <meta property="og:siteName" content={siteMetadata.title} />
+        <meta property="og:image" content={siteMetadata.socialBanner} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={data.title} />
+        <meta name="twitter:description" content={data.summary} />
+
         <div className="space-y-1 text-center">
           <div className="space-y-10 mb-3">
             <div>
