@@ -3,11 +3,12 @@ using Backend.Application.Models;
 using Backend.Core.Exceptions;
 using Backend.Core.Inferfaces.Repositories;
 using Backend.Core.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Backend.Application.Services
 {
-  public class PostService : IPostService
+    public class PostService : IPostService
   {
     private readonly IPostRepository _postRepository;
 
@@ -35,17 +36,25 @@ namespace Backend.Application.Services
       return await _postRepository.Create(post);
     }
 
-    public async Task<Post> UpdatePost(string id, PostInputModel model, User author)
+    public async Task<Post> UpdatePost(string identifier, UpdatePostModel model, User author)
     {
-      Post post = await _postRepository.GetById(id) ?? throw new PostNotFoundException("Post not found");
+      Post post;
+      if (ObjectId.TryParse(identifier, out ObjectId objectId))
+      {
+        post = await _postRepository.GetById(objectId.ToString());
+      }
+      else
+      {
+        post = await _postRepository.GetBySlug(identifier);
+      }
 
       if (post.Author.Id != author.Id)
         throw new AuthorizationException("You are not the author of this post");
 
-      post.Title = model.Title;
-      post.Summary = model.Summary;
-      post.Content = model.Content;
-      post.Slug = SlugHelper.Slugify(model.Title);
+      post.Title = model.Title ?? post.Title;
+      post.Summary = model.Summary ?? post.Summary;
+      post.Content = model.Content ?? post.Content;
+      post.Slug = SlugHelper.Slugify(model.Title ?? post.Title);
       post.UpdatedAt = DateTime.UtcNow;
 
       return await _postRepository.Update(post);
