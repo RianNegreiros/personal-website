@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import Navbar from './components/Navbar'
 import { Providers } from './components/Providers'
 import siteMetadata from './utils/siteMetaData'
+import FloatingButtons from './components/FloatingButtons'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -55,6 +56,7 @@ export default function RootLayout({
           <main className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
             {children}
           </main>
+          <FloatingButtons />
         </Providers>
       </body>
     </html>
