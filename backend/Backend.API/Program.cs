@@ -1,6 +1,7 @@
 using Backend.API.Extensions;
 using Backend.API.Middlewares;
 using Backend.Core.Models;
+using Backend.Infrastructure.Caching;
 using Backend.Infrastructure.Data;
 using Backend.Infrastructure.Data.SeedData;
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +19,13 @@ builder.Services.AddApplicationServices();
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddMongoDb(builder.Configuration);
 
+builder.Services.AddScoped<ICachingService, CachingService>();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = "Redis";
+});
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", policy =>
@@ -25,8 +33,6 @@ builder.Services.AddCors(options =>
         policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(builder.Configuration["ClientUrl"]);
     });
 });
-
-builder.Services.AddResponseCaching();
 
 var app = builder.Build();
 
@@ -53,8 +59,6 @@ if (app.Environment.IsDevelopment()) { }
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors("CorsPolicy");
-
-app.UseResponseCaching();
 
 app.UseSwaggerDocumentation();
 
