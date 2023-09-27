@@ -1,5 +1,5 @@
 bin/
 obj/
 appsettings.json
-appsettings.example.json
-appsettings.Development.json
+appsettings.json.example
+appsettings.Development.json.example
