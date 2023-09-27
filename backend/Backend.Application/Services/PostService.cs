@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace Backend.Application.Services
 {
-    public class PostService : IPostService
+  public class PostService : IPostService
   {
     private readonly IPostRepository _postRepository;
 
@@ -71,26 +71,18 @@ namespace Backend.Application.Services
           CreatedAt = post.CreatedAt
         }).ToList();
 
-    public async Task<PostViewModel?> GetPostById(string id)
+    public async Task<PostViewModel?> GetPostByIdentifier(string identifier)
     {
-      Post post = await _postRepository.GetById(id);
-      if (post == null)
-        return null;
-
-      return new PostViewModel
+      Post post;
+      if (ObjectId.TryParse(identifier, out ObjectId objectId))
       {
-        Id = post.Id,
-        Title = post.Title,
-        Summary = post.Summary,
-        Content = post.Content,
-        Slug = post.Slug,
-        CreatedAt = post.CreatedAt
-      };
-    }
+        post = await _postRepository.GetById(objectId.ToString());
+      }
+      else
+      {
+        post = await _postRepository.GetBySlug(identifier);
+      }
 
-    public async Task<PostViewModel?> GetPostBySlug(string slug)
-    {
-      Post post = await _postRepository.GetBySlug(slug);
       if (post == null)
         return null;
 

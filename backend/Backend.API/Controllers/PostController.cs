@@ -3,6 +3,7 @@ using Backend.Application.Models;
 using Backend.Application.Services;
 using Backend.Application.Validators;
 using Backend.Core.Models;
+using Backend.Infrastructure.Caching;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -122,18 +123,7 @@ public class PostController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<PostViewModel>> GetPost(string identifier)
   {
-    PostViewModel? post;
-    if (ObjectId.TryParse(identifier, out ObjectId objectId)) // Check if it's a valid ObjectId (ID)
-    {
-      post = await _postService.GetPostById(objectId.ToString());
-      if (post == null)
-        return NotFound();
-
-      return Ok(post);
-    }
-
-    // If not a valid ObjectId, treat it as a slug
-    post = await _postService.GetPostBySlug(identifier);
+    var post = await _postService.GetPostByIdentifier(identifier);
     if (post == null)
       return NotFound();
 
