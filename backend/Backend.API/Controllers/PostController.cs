@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
@@ -17,11 +18,13 @@ public class PostController : BaseApiController
 {
   private readonly IPostService _postService;
   private readonly UserManager<User> _userManager;
+  private readonly ICachingService _cachingService;
 
-  public PostController(IPostService postService, UserManager<User> userManager)
+  public PostController(IPostService postService, UserManager<User> userManager, ICachingService cachingService)
   {
     _postService = postService;
     _userManager = userManager;
+    _cachingService = cachingService;
   }
 
   [HttpPost]
@@ -123,9 +126,29 @@ public class PostController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<PostViewModel>> GetPost(string identifier)
   {
-    var post = await _postService.GetPostByIdentifier(identifier);
+    PostViewModel? post;
+    var postCache = await _cachingService.GetAsync(identifier);
+
+    if (!string.IsNullOrWhiteSpace(postCache))
+    {
+      post = JsonConvert.DeserializeObject<PostViewModel>(postCache);
+
+      if (post == null)
+        return NotFound();
+
+      return Ok(new ApiResponse<PostViewModel>
+      {
+        Success = true,
+        Data = post
+      });
+    }
+
+    post = await _postService.GetPostByIdentifier(identifier);
+
     if (post == null)
       return NotFound();
+
+    await _cachingService.SetAsync(identifier, JsonConvert.SerializeObject(post));
 
     return Ok(new ApiResponse<PostViewModel>
     {
