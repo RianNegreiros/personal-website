@@ -7,7 +7,7 @@ export default function FloatingButtons() {
     >
       <a
         href="https://github.com/RianNegreiros" target="_blank"
-        className={`w-10 h-10 bg-gray-800 rounded-full flex justify-center items-center`}
+        className={`w-10 h-10 dark:bg-gray-800 rounded-full flex justify-center items-center`}
       >
         <svg
           viewBox="0 0 1024 1024"
@@ -19,7 +19,7 @@ export default function FloatingButtons() {
       </a>
       <a
         href="https://www.linkedin.com/in/riannegreiros/" target="_blank"
-        className={`w-10 h-10 bg-gray-800 rounded-full flex justify-center items-center`}
+        className={`w-10 h-10 dark:bg-gray-800 rounded-full flex justify-center items-center`}
       >
         <svg
           viewBox="0 0 1024 1024"
@@ -32,7 +32,7 @@ export default function FloatingButtons() {
 
       <a
         href="mailto: riannegreiros@gmail.com" target="_blank"
-        className={`w-10 h-10 bg-gray-800 rounded-full flex justify-center items-center`}
+        className={`w-10 h-10 dark:bg-gray-800 rounded-full flex justify-center items-center`}
       >
         <svg
           viewBox="0 0 1024 1024"
