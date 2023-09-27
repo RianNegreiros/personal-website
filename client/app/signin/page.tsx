@@ -129,7 +129,7 @@ export default function SignInPage() {
                 {loggingIn ? "Logando..." : "Login"}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Ainda não tem uma conta ? <Link href="/signup" className="font-medium text-teal-600 hover:underline dark:text-primary-500">Registre-se</Link>
+                Ainda não tem uma conta ? <Link href="/signup" className="font-medium text-teal-500 hover:underline dark:text-primary-500">Registre-se</Link>
               </p>
             </form>
           </div>
