@@ -1,4 +1,3 @@
-using System.Reflection;
 using Backend.API.Filters;
 using Microsoft.OpenApi.Models;
 
@@ -14,12 +13,12 @@ public static class SwaggerServiceExtensions
       {
         Title = "API",
         Version = "v1",
-        Description = "API for my portfolio website",
+        Description = "API for portfolio website",
         Contact = new OpenApiContact
         {
-          Name = "Rian negreiros Dos Santos",
+          Name = "Rian Negreiros Dos Santos",
           Email = "riannegreiros@gmail.com",
-          Url = new Uri("https://github.com/RianNegreiros"),
+          Url = new Uri("https://www.riannegreiros.dev"),
         }
       });
 
