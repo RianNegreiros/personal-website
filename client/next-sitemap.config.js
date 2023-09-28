@@ -8,7 +8,7 @@ module.exports = {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/signin', '/signup'],
+        disallow: ['/signin', '/signup', '/terms'],
       },
     ],
   },
