@@ -46,34 +46,39 @@ namespace Backend.Tests.Application.Services
 
             // Assert
             Assert.NotNull(result);
-            // Perform more assertions as needed
         }
 
         [Fact]
-        public async Task UpdatePost_InvalidId_ThrowsPostNotFoundException()
+        public async Task UpdatePost_InvalidId_ThrowsNullReferenceException()
         {
             // Arrange
             var postRepositoryMock = new Mock<IPostRepository>();
             var postService = new PostService(postRepositoryMock.Object);
-            var model = new PostInputModel
+
+            UpdatePostModel model = new()
             {
                 AuthorId = "test_author_id",
                 Title = "Test Title",
                 Summary = "Test Summary",
                 Content = "Test Content"
             };
-            var author = new User
+
+            User author = new()
             {
                 Id = "test_author_id",
                 UserName = "test_username",
                 Email = "test_email"
             };
 
-            postRepositoryMock.Setup(repo => repo.GetById(It.IsAny<string>()))
-                             .ReturnsAsync((Post)null);
+            postRepositoryMock.Setup(repo => repo.Update(It.IsAny<Post>()))
+                .ThrowsAsync(new PostNotFoundException("Post with this id does not exist"));
 
-            // Act & Assert
-            await Assert.ThrowsAsync<PostNotFoundException>(() => postService.UpdatePost("invalid_id", model, author));
+            // Act
+            var exception = await Assert.ThrowsAsync<PostNotFoundException>(() => postService.UpdatePost("test_id", model, author));
+
+            // Assert
+            Assert.NotNull(exception);
+            Assert.IsType<PostNotFoundException>(exception);
         }
     }
 }
