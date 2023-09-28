@@ -49,19 +49,19 @@ git clone https://github.com/RianNegreiros/portfolio.git
 
 2- Set up the project environment variables in the [docker compose file](https://github.com/RianNegreiros/portfolio/blob/main/backend/docker-compose.yml) or create `appsettings.json`/`appsettings.Development.json` using [appsettings.Development.json.example](https://github.com/RianNegreiros/portfolio/blob/main/backend/Backend.API/appsettings.Development.json.example) as reference
 
-3- Run the tests with the command:
+3- Run the tests
 
 ```bash
 make run-tests
 ```
 
-4- Run the backend on `localhost:5000` with the command:
+4- Run the backend on `localhost:5000`
 
 ```bash
 make run-backend
 ```
 
-5- Run the client on `localhost:3000` with the command:
+5- Run the client on `localhost:3000`
 
 ```bash
 make run-client
