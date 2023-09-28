@@ -7,7 +7,6 @@ using Backend.Infrastructure.Caching;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -102,7 +101,6 @@ public class PostController : BaseApiController
     });
   }
 
-  [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
   [AllowAnonymous]
   [HttpGet]
   [SwaggerOperation(Summary = "Get all posts.")]
@@ -110,7 +108,30 @@ public class PostController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts()
   {
-    List<PostViewModel> posts = await _postService.GetPosts();
+    List<PostViewModel>? posts;
+    var postsCache = await _cachingService.GetAsync("posts");
+
+    if (!string.IsNullOrWhiteSpace(postsCache))
+    {
+      posts = JsonConvert.DeserializeObject<List<PostViewModel>>(postsCache);
+
+      if (posts == null)
+        return NotFound();
+
+      return Ok(new ApiResponse<List<PostViewModel>>
+      {
+        Success = true,
+        Data = posts
+      });
+    }
+
+    posts = await _postService.GetPosts();
+
+    if (posts == null)
+      return NotFound();
+
+    await _cachingService.SetAsync("posts", JsonConvert.SerializeObject(posts));
+
     return Ok(new ApiResponse<List<PostViewModel>>
     {
       Success = true,
