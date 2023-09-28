@@ -42,10 +42,14 @@ namespace Backend.Application.Services
       if (ObjectId.TryParse(identifier, out ObjectId objectId))
       {
         post = await _postRepository.GetById(objectId.ToString());
+        if (post == null)
+          throw new PostNotFoundException("Post with this id does not exist");
       }
       else
       {
         post = await _postRepository.GetBySlug(identifier);
+        if (post == null)
+          throw new PostNotFoundException("Post with this id does not exist");
       }
 
       if (post.Author.Id != author.Id)
