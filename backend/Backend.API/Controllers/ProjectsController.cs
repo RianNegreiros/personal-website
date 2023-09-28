@@ -3,8 +3,10 @@ using Backend.Application.Models;
 using Backend.Application.Services;
 using Backend.Application.Validators;
 using Backend.Core.Models;
+using Backend.Infrastructure.Caching;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
@@ -13,20 +15,43 @@ namespace Backend.API.Controllers;
 public class ProjectsController : BaseApiController
 {
     private readonly IProjectsService _projectsService;
+    private readonly ICachingService _cachingService;
 
-    public ProjectsController(IProjectsService projectsService)
+    public ProjectsController(IProjectsService projectsService, ICachingService cachingService)
     {
         _projectsService = projectsService;
+        _cachingService = cachingService;
     }
 
-    [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
     [AllowAnonymous]
     [HttpGet]
     [SwaggerOperation(Summary = "Get all projects.")]
     [ProducesResponseType(typeof(ApiResponse<List<Project>>), StatusCodes.Status200OK)]
     public async Task<ActionResult<List<Project>>> GetProjects()
     {
-        List<Project> projects = await _projectsService.GetProjects();
+        List<Project>? projects;
+        string cachedProjects = await _cachingService.GetAsync("projects");
+        if (!string.IsNullOrWhiteSpace(cachedProjects))
+        {
+            projects = JsonConvert.DeserializeObject<List<Project>>(cachedProjects);
+
+            if (projects == null)
+                return NotFound();
+
+            return Ok(new ApiResponse<List<Project>>
+            {
+                Success = true,
+                Data = projects
+            });
+        }
+
+        projects = await _projectsService.GetProjects();
+
+        if (projects == null)
+            return NotFound();
+
+        await _cachingService.SetAsync("projects", JsonConvert.SerializeObject(projects));
+
         return Ok(new ApiResponse<List<Project>>
         {
             Success = true,
@@ -42,12 +67,29 @@ public class ProjectsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Project>> GetProject(string id)
     {
-        Project project = await _projectsService.GetProject(id);
+        Project? project;
+        string cachedProject = await _cachingService.GetAsync(id);
+
+        if (!string.IsNullOrWhiteSpace(cachedProject))
+        {
+            project = JsonConvert.DeserializeObject<Project>(cachedProject);
+
+            if (project == null)
+                return NotFound();
+
+            return Ok(new ApiResponse<Project>
+            {
+                Success = true,
+                Data = project
+            });
+        }
+
+        project = await _projectsService.GetProject(id);
 
         if (project == null)
-        {
             return NotFound();
-        }
+
+        await _cachingService.SetAsync(id, JsonConvert.SerializeObject(project));
 
         return Ok(new ApiResponse<Project>
         {

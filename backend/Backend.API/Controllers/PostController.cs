@@ -3,10 +3,11 @@ using Backend.Application.Models;
 using Backend.Application.Services;
 using Backend.Application.Validators;
 using Backend.Core.Models;
+using Backend.Infrastructure.Caching;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
@@ -16,11 +17,13 @@ public class PostController : BaseApiController
 {
   private readonly IPostService _postService;
   private readonly UserManager<User> _userManager;
+  private readonly ICachingService _cachingService;
 
-  public PostController(IPostService postService, UserManager<User> userManager)
+  public PostController(IPostService postService, UserManager<User> userManager, ICachingService cachingService)
   {
     _postService = postService;
     _userManager = userManager;
+    _cachingService = cachingService;
   }
 
   [HttpPost]
@@ -98,7 +101,6 @@ public class PostController : BaseApiController
     });
   }
 
-  [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
   [AllowAnonymous]
   [HttpGet]
   [SwaggerOperation(Summary = "Get all posts.")]
@@ -106,7 +108,30 @@ public class PostController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts()
   {
-    List<PostViewModel> posts = await _postService.GetPosts();
+    List<PostViewModel>? posts;
+    var postsCache = await _cachingService.GetAsync("posts");
+
+    if (!string.IsNullOrWhiteSpace(postsCache))
+    {
+      posts = JsonConvert.DeserializeObject<List<PostViewModel>>(postsCache);
+
+      if (posts == null)
+        return NotFound();
+
+      return Ok(new ApiResponse<List<PostViewModel>>
+      {
+        Success = true,
+        Data = posts
+      });
+    }
+
+    posts = await _postService.GetPosts();
+
+    if (posts == null)
+      return NotFound();
+
+    await _cachingService.SetAsync("posts", JsonConvert.SerializeObject(posts));
+
     return Ok(new ApiResponse<List<PostViewModel>>
     {
       Success = true,
@@ -123,19 +148,28 @@ public class PostController : BaseApiController
   public async Task<ActionResult<PostViewModel>> GetPost(string identifier)
   {
     PostViewModel? post;
-    if (ObjectId.TryParse(identifier, out ObjectId objectId)) // Check if it's a valid ObjectId (ID)
+    var postCache = await _cachingService.GetAsync(identifier);
+
+    if (!string.IsNullOrWhiteSpace(postCache))
     {
-      post = await _postService.GetPostById(objectId.ToString());
+      post = JsonConvert.DeserializeObject<PostViewModel>(postCache);
+
       if (post == null)
         return NotFound();
 
-      return Ok(post);
+      return Ok(new ApiResponse<PostViewModel>
+      {
+        Success = true,
+        Data = post
+      });
     }
 
-    // If not a valid ObjectId, treat it as a slug
-    post = await _postService.GetPostBySlug(identifier);
+    post = await _postService.GetPostByIdentifier(identifier);
+
     if (post == null)
       return NotFound();
+
+    await _cachingService.SetAsync(identifier, JsonConvert.SerializeObject(post));
 
     return Ok(new ApiResponse<PostViewModel>
     {

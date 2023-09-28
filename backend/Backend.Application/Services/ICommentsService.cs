@@ -5,8 +5,6 @@ namespace Backend.Application.Services;
 
 public interface ICommentsService
 {
-    Task<Comment> AddCommentToPostById(string postId, CommentInputModel comment, User author);
-    Task<Comment> AddCommentToPostBySlug(string postSlug, CommentInputModel comment, User author);
-    Task<List<Comment>> GetCommentsForPostById(string postId);
-    Task<List<Comment>> GetCommentsForPostBySlug(string postSlug);
+    Task<Comment> AddCommentToPost(PostViewModel post, CommentInputModel comment, User author);
+    Task<List<Comment>> GetCommentsForPostByIdentifier(string identifier);
 }
