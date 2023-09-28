@@ -15,12 +15,14 @@ namespace Backend.API.Controllers;
 public class CommentsController : BaseApiController
 {
     private readonly ICommentsService _commentsService;
+    private readonly IPostService _postService;
     private readonly UserManager<User> _userManager;
     private readonly IConfiguration _config;
 
-    public CommentsController(ICommentsService commentsService, UserManager<User> userManager, IConfiguration config)
+    public CommentsController(ICommentsService commentsService, IPostService postService, UserManager<User> userManager, IConfiguration config)
     {
         _commentsService = commentsService;
+        _postService = postService;
         _userManager = userManager;
         _config = config;
     }
@@ -43,6 +45,17 @@ public class CommentsController : BaseApiController
                 Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
             });
 
+        PostViewModel? post = await _postService.GetPostByIdentifier(identifier);
+
+        if (post == null)
+        {
+            return BadRequest(new ApiResponse<CommentViewModel>
+            {
+                Success = false,
+                Errors = new List<string> { "Post not found." }
+            });
+        }
+
         string? email = AutoLoginHelper.GetEmailFromValidToken(_config, comment.token);
         if (email == null)
         {
@@ -54,16 +67,7 @@ public class CommentsController : BaseApiController
 
         Comment addedComment;
 
-        if (Guid.TryParse(identifier, out _))
-        {
-            // If identifier is a valid Guid, assume it's an ID
-            addedComment = await _commentsService.AddCommentToPostById(identifier, comment, user);
-        }
-        else
-        {
-            // If identifier is not a valid Guid, assume it's a slug
-            addedComment = await _commentsService.AddCommentToPostBySlug(identifier, comment, user);
-        }
+        addedComment = await _commentsService.AddCommentToPost(post, comment, user);
 
         return Ok(new ApiResponse<CommentViewModel>
         {
@@ -86,16 +90,7 @@ public class CommentsController : BaseApiController
     {
         IEnumerable<Comment> comments;
 
-        if (Guid.TryParse(identifier, out _))
-        {
-            // If identifier is a valid Guid, assume it's an ID
-            comments = await _commentsService.GetCommentsForPostById(identifier);
-        }
-        else
-        {
-            // If identifier is not a valid Guid, assume it's a slug
-            comments = await _commentsService.GetCommentsForPostBySlug(identifier);
-        }
+        comments = await _commentsService.GetCommentsForPostByIdentifier(identifier);
 
         List<CommentViewModel> commentsViewModel = comments.Select(c => new CommentViewModel
         {

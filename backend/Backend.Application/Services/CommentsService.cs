@@ -13,39 +13,31 @@ public class CommentsService : ICommentsService
         _commentsRepository = commentsRepository;
     }
 
-    public async Task<Comment> AddCommentToPostById(string postId, CommentInputModel comment, User author)
+    public async Task<Comment> AddCommentToPost(PostViewModel post, CommentInputModel comment, User author)
     {
         Comment newComment = new()
         {
-            Content = comment.Content,
+            PostId = post.Id,
+            PostSlug = post.Slug,
             Author = author,
-            PostId = postId,
-            CreatedAt = DateTime.UtcNow
+            Content = comment.Content,
+            CreatedAt = DateTime.Now
         };
 
         return await _commentsRepository.AddComment(newComment);
     }
 
-    public async Task<Comment> AddCommentToPostBySlug(string postSlug, CommentInputModel comment, User author)
+    public Task<List<Comment>> GetCommentsForPostByIdentifier(string identifier)
     {
-        Comment newComment = new()
+        if (Guid.TryParse(identifier, out _))
         {
-            Content = comment.Content,
-            Author = author,
-            PostSlug = postSlug,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        return await _commentsRepository.AddComment(newComment);
-    }
-
-    public async Task<List<Comment>> GetCommentsForPostById(string postId)
-    {
-        return await _commentsRepository.GetCommentsForPostById(postId);
-    }
-
-    public async Task<List<Comment>> GetCommentsForPostBySlug(string postSlug)
-    {
-        return await _commentsRepository.GetCommentsForPostBySlug(postSlug);
+            // If identifier is a valid Guid, assume it's an ID
+            return _commentsRepository.GetCommentsForPostById(identifier);
+        }
+        else
+        {
+            // If identifier is not a valid Guid, assume it's a slug
+            return _commentsRepository.GetCommentsForPostBySlug(identifier);
+        }
     }
 }
