@@ -47,7 +47,7 @@ Here are some key endpoints you may want to explore:
 git clone https://github.com/RianNegreiros/portfolio.git
 ```
 
-2- Set up the project environment variables in the [docker compose file](https://github.com/RianNegreiros/portfolio/blob/main/backend/docker-compose.yml) or create `appsettings.json`/`appsettings.Development.json` using [appsettings.Development.json.example](https://github.com/RianNegreiros/portfolio/blob/main/backend/Backend.API/appsettings.Development.json.example) as reference
+2- Create and set up the environment variables in the `appsettings.json`/`appsettings.Development.json` using [appsettings.Development.json.example](https://github.com/RianNegreiros/portfolio/blob/main/backend/Backend.API/appsettings.Development.json.example) as reference
 
 3- Run the tests
 
