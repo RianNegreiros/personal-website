@@ -79,6 +79,7 @@ make run-client
 - [Docker compose](https://docs.docker.com/compose/gettingstarted)
 - [PostgreSQL](https://www.postgresql.org/about)
 - [MongoDB](https://www.mongodb.com/atlas/database)
+- [Redis](https://redis.io/docs/getting-started)
 - [Swagger](https://learn.microsoft.com/pt-br/aspnet/core/tutorials/web-api-help-pages-using-swagger?view=aspnetcore-6.0)
 
 ## Principles
