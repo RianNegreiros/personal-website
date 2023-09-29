@@ -34,7 +34,9 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<IdentityDbContext>()
+    .AddMongoDb(builder.Configuration.GetConnectionString("MongoConnection"));
 
 var app = builder.Build();
 
