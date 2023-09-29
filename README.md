@@ -17,6 +17,7 @@ Here are some key endpoints you may want to explore:
 - [Blog/Home Page](https://riannegreiros.dev/)
 - [Projects Page](https://riannegreiros.dev/projects)
 - [API Endpoints](https://personalwebsitebackend.azurewebsites.net/swagger/index.html)
+- [Health Checks](https://personalwebsitebackend.azurewebsites.net/health)
 
 ![Homepage screenshot](./_docs/images/homepage.png)
 
@@ -25,6 +26,7 @@ Here are some key endpoints you may want to explore:
 - Users can
   - Log in
   - Register
+  - Logout
   - Post comments
 
 - Admins can
@@ -71,6 +73,7 @@ make run-client
 
 - [ASP.NET Core 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 - [ASP.NET Core Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-7.0&tabs=visual-studio)
+- [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/get-started/overview/install)
 - [xUnit](https://xunit.net/#documentation)
 - [Next.js](https://nextjs.org/docs)
 - [Typescript](https://www.typescriptlang.org/docs)
