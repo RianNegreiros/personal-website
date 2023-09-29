@@ -34,6 +34,8 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -55,6 +57,8 @@ using (var scope = app.Services.CreateScope())
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) { }
+
+app.UseHealthChecks("/status");
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
