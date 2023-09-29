@@ -1,11 +1,14 @@
+using System.Text.Json;
 using Backend.API.Extensions;
 using Backend.API.Middlewares;
 using Backend.Core.Models;
 using Backend.Infrastructure.Caching;
 using Backend.Infrastructure.Data;
 using Backend.Infrastructure.Data.SeedData;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +37,14 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("IdentityConnection"),
+        name: "PostgreSQL", tags: new string[] { "db", "data" })
+    .AddMongoDb(builder.Configuration.GetConnectionString("MongoConnection"),
+        name: "MongoDB", tags: new string[] { "db", "data" })
+    .AddRedis(builder.Configuration.GetConnectionString("Redis"),
+        name: "Redis", tags: new string[] { "db", "data" });
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -55,6 +66,24 @@ using (var scope = app.Services.CreateScope())
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) { }
+
+app.UseHealthChecks("/health", new HealthCheckOptions()
+{
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
+        var response = new
+        {
+            status = report.Status.ToString(),
+            errors = report.Entries.Select(e => new
+            {
+                key = e.Key,
+                value = Enum.GetName(typeof(HealthStatus), e.Value.Status)
+            })
+        };
+        await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+    }
+});
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
