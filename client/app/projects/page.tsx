@@ -4,6 +4,7 @@ import Image from "next/image"
 import { getProjects } from "../utils/api";
 import { Project } from "../models";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 async function getData() {
   return await getProjects();
@@ -43,17 +44,17 @@ export default function Projects() {
             </div>
 
             <div className="p-4 sm:p-6">
-              <a href={project.url} target="_blank">
+              <Link href={project.url} target="_blank">
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                   {project.title}
                 </h3>
-              </a>
+              </Link>
 
               <p className=" line-clamp-3 mt-2 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
                 {project.overview}
               </p>
 
-              <a
+              <Link
                 href={project.url}
                 target="_blank"
                 className="cursor-pointer group mt-4 inline-flex items-center gap-1 text-sm font-medium text-teal-500"
@@ -62,7 +63,7 @@ export default function Projects() {
                 <span className="block transition-all group-hover:ms-0.5">
                   &rarr;
                 </span>
-              </a>
+              </Link>
             </div>
           </article>
         ))}

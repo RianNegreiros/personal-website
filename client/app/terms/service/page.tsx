@@ -1,11 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 
+import Link from "next/link";
+
 export default function TermsOfService() {
   return (
     <div>
       <h2 style={{ color: 'rgb(68, 68, 68)' }}>1. Termos</h2>
       <p style={{ color: 'rgb(68, 68, 68)' }}>
-        Ao acessar ao site <a href="https://riannegreiros.is-a.dev/" style={{ color: 'rgb(68, 68, 68)' }}>Rian Negreiros Dos Santos website</a>, concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis ​​e concorda que é responsável pelo cumprimento de todas as leis locais aplicáveis. Se você não concordar com algum desses termos, está proibido de usar ou acessar este site. Os materiais contidos neste site são protegidos pelas leis de direitos autorais e marcas comerciais aplicáveis.
+        Ao acessar ao site <Link href="https://riannegreiros.is-a.dev/" style={{ color: 'rgb(68, 68, 68)' }}>Rian Negreiros Dos Santos website</Link>, concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis ​​e concorda que é responsável pelo cumprimento de todas as leis locais aplicáveis. Se você não concordar com algum desses termos, está proibido de usar ou acessar este site. Os materiais contidos neste site são protegidos pelas leis de direitos autorais e marcas comerciais aplicáveis.
       </p>
       <h2 style={{ color: 'rgb(68, 68, 68)' }}>2. Uso de Licença</h2>
       <p style={{ color: 'rgb(68, 68, 68)' }}>

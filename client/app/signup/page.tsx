@@ -131,14 +131,14 @@ export default function SignUpPage() {
                   htmlFor="terms"
                   className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                   Eu concordo com os
-                  <a href="/terms/service" target="_blank" className="m-1 text-teal-600 hover:underline dark:text-teal-500"
+                  <Link href="/terms/service" target="_blank" className="m-1 text-teal-600 hover:underline dark:text-teal-500"
                   >
                     Termos de Serviço
-                  </a>
+                  </Link>
                   e
-                  <a href="/terms/privacy" target="_blank" className="m-1 text-teal-600 hover:underline dark:text-teal-500">
+                  <Link href="/terms/privacy" target="_blank" className="m-1 text-teal-600 hover:underline dark:text-teal-500">
                     Política de Privacidade
-                  </a>
+                  </Link>
                 </label>
               </div>
               <button

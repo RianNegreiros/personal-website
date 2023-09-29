@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 export default function PrivacyPolicy() {
   return (
     <div>
       <h2 style={{ color: 'rgb(68, 68, 68)' }}>Política Privacidade</h2>
       <p style={{ color: 'rgb(68, 68, 68)' }}>
         A sua privacidade é importante para nós. É política do Rian Negreiros Dos Santos website respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site{' '}
-        <a href="https://riannegreiros.is-a.dev/" style={{ color: 'rgb(68, 68, 68)' }}>Rian Negreiros Dos Santos website</a>, e outros sites que possuímos e operamos.
+        <Link href="https://riannegreiros.is-a.dev/" style={{ color: 'rgb(68, 68, 68)' }}>Rian Negreiros Dos Santos website</Link>, e outros sites que possuímos e operamos.
       </p>
       <p style={{ color: 'rgb(68, 68, 68)' }}>
         Solicitamos informações pessoais apenas quando realmente precisamos delas para lhe fornecer um serviço. Fazemo-lo por meios justos e legais, com o seu conhecimento e consentimento. Também informamos por que estamos coletando e como será usado.
@@ -16,7 +18,7 @@ export default function PrivacyPolicy() {
         Não compartilhamos informações de identificação pessoal publicamente ou com terceiros, exceto quando exigido por lei.
       </p>
       <p style={{ color: 'rgb(68, 68, 68)' }}>
-        O nosso site pode ter links para sites externos que não são operados por nós. Esteja ciente de que não temos controle sobre o conteúdo e práticas desses sites e não podemos aceitar responsabilidade por suas respectivas <a href="https://politicaprivacidade.com/" rel="noopener noreferrer" target="_blank" style={{ color: 'rgb(68, 68, 68)' }}>políticas de privacidade</a>.
+        O nosso site pode ter links para sites externos que não são operados por nós. Esteja ciente de que não temos controle sobre o conteúdo e práticas desses sites e não podemos aceitar responsabilidade por suas respectivas <Link href="https://politicaprivacidade.com/" rel="noopener noreferrer" target="_blank" style={{ color: 'rgb(68, 68, 68)' }}>políticas de privacidade</Link>.
       </p>
       <p style={{ color: 'rgb(68, 68, 68)' }}>
         Você é livre para recusar a nossa solicitação de informações pessoais, entendendo que talvez não possamos fornecer alguns dos serviços desejados.
