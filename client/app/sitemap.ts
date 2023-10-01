@@ -6,7 +6,7 @@ export default async function sitemap() {
   const data = response.data.data;
 
   const posts = data.map(({ slug, createdAt }: { slug: string, createdAt: string } ) => ({
-    url: `${siteMetadata.siteUrl}/${slug}`,
+    url: `${siteMetadata.siteUrl}/post/${slug}`,
     lastModified: createdAt,
   }));
 
