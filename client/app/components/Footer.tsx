@@ -1,4 +1,14 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname === "/signin" || pathname === "/signup") {
+    return null;
+  }
+
   return (
     <footer className="mt-auto bg-white dark:bg-gray-900">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -19,6 +29,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-
   );
 }
