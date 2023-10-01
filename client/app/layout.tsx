@@ -51,15 +51,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} flex flex-col min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white h-full selection:bg-gray-50 dark:selection:bg-gray-800`}>
+      <body className={`${inter.className} bg-white text-black dark:bg-gray-900 dark:text-white h-full selection:bg-gray-50 dark:selection:bg-gray-800`}>
         <Providers>
           <Navbar />
-          <main className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <main className='flex flex-col min-h-screen max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
             {children}
           </main>
-          <Footer />
           <FloatingButtons />
         </Providers>
+        <Footer />
       </body>
     </html>
   )
