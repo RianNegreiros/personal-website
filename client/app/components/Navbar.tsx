@@ -3,12 +3,10 @@
 import Link from "next/link";
 import ThemeButton from "./ThemeButton";
 import AuthLinks from "./AuthLinks";
-import { useAuth } from "../contexts/AuthContext";
 import { Disclosure } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  const { isAdmin } = useAuth();
   let pathname = usePathname() || "/";
 
   return (
