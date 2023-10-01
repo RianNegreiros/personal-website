@@ -5,6 +5,7 @@ import Navbar from './components/Navbar'
 import { Providers } from './components/Providers'
 import siteMetadata from './utils/siteMetaData'
 import FloatingButtons from './components/FloatingButtons'
+import Footer from './components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -50,12 +51,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-white text-black dark:bg-gray-900 dark:text-white h-full selection:bg-gray-50 dark:selection:bg-gray-800`}>
+      <body className={`${inter.className} flex flex-col min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white h-full selection:bg-gray-50 dark:selection:bg-gray-800`}>
         <Providers>
           <Navbar />
           <main className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
             {children}
           </main>
+          <Footer />
           <FloatingButtons />
         </Providers>
       </body>
