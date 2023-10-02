@@ -106,10 +106,12 @@ public class PostController : BaseApiController
   [SwaggerOperation(Summary = "Get all posts.")]
   [ProducesResponseType(typeof(ApiResponse<List<PostViewModel>>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts(int pageNumber = 1, int pageSize = 10)
+  public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
   {
+    var cacheKey = $"posts_{pageNumber}_{pageSize}";
+
     List<PostViewModel>? posts;
-    var postsCache = await _cachingService.GetAsync("posts");
+    var postsCache = await _cachingService.GetAsync(cacheKey);
 
     if (!string.IsNullOrWhiteSpace(postsCache))
     {
@@ -125,18 +127,19 @@ public class PostController : BaseApiController
       });
     }
 
-    posts = await _postService.GetPosts();
+    posts = await _postService.GetPosts(pageNumber, pageSize);
 
     if (posts == null)
       return NotFound();
 
-    await _cachingService.SetAsync("posts", JsonConvert.SerializeObject(posts));
+    await _cachingService.SetAsync(cacheKey, JsonConvert.SerializeObject(posts));
 
     return Ok(new ApiResponse<List<PostViewModel>>
     {
       Success = true,
       Data = posts
     });
+
   }
 
   [AllowAnonymous]
