@@ -4,11 +4,10 @@ using Backend.Core.Exceptions;
 using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;
 using MongoDB.Bson;
-using MongoDB.Driver;
 
 namespace Backend.Application.Services
 {
-  public class PostService : IPostService
+    public class PostService : IPostService
   {
     private readonly IPostRepository _postRepository;
 
