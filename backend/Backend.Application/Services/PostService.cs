@@ -1,7 +1,7 @@
 using Backend.Application.Helpers;
 using Backend.Application.Models;
 using Backend.Core.Exceptions;
-using Backend.Core.Inferfaces.Repositories;
+using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;

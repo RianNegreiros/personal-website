@@ -1,6 +1,6 @@
 using Backend.Application.Services;
-using Backend.Core.CloudServices;
-using Backend.Core.Inferfaces.Repositories;
+using Backend.Core.Interfaces.CloudServices;
+using Backend.Core.Interfaces.Repositories;
 using Backend.Infrastructure.CloudServices;
 using Backend.Infrastructure.Repositories;
 

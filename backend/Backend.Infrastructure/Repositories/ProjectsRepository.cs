@@ -1,4 +1,4 @@
-using Backend.Core.Inferfaces.Repositories;
+using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;
 using MongoDB.Driver;
 

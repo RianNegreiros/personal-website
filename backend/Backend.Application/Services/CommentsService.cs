@@ -1,5 +1,5 @@
 using Backend.Application.Models;
-using Backend.Core.Inferfaces.Repositories;
+using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;
 
 namespace Backend.Application.Services;

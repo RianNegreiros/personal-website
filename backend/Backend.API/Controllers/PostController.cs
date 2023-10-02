@@ -106,7 +106,7 @@ public class PostController : BaseApiController
   [SwaggerOperation(Summary = "Get all posts.")]
   [ProducesResponseType(typeof(ApiResponse<List<PostViewModel>>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts()
+  public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts(int pageNumber = 1, int pageSize = 10)
   {
     List<PostViewModel>? posts;
     var postsCache = await _cachingService.GetAsync("posts");
