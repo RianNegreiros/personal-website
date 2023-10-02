@@ -64,22 +64,25 @@ namespace Backend.Application.Services
       return await _postRepository.Update(post);
     }
 
-    public async Task<List<PostViewModel>> GetPosts(int pageNumber, int pageSize)
+    public async Task<PaginatedResult<PostViewModel>> GetPosts(int pageNumber, int pageSize)
     {
-      List<Post> posts = await _postRepository.GetAll();
-      int totalPosts = posts.Count;
-      int totalPages = (int)Math.Ceiling(totalPosts / (double)pageSize);
-      List<Post> paginatedPosts = posts.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+      List<Post> posts = await _postRepository.GetAll(pageNumber, pageSize);
+      int totalCount = await _postRepository.Count();
 
-      return paginatedPosts.Select(post => new PostViewModel
+      return new PaginatedResult<PostViewModel>
       {
-        Id = post.Id,
-        Title = post.Title,
-        Summary = post.Summary,
-        Content = post.Content,
-        Slug = post.Slug,
-        CreatedAt = post.CreatedAt
-      }).ToList();
+        Items = posts.Select(post => new PostViewModel
+        {
+          Id = post.Id,
+          Title = post.Title,
+          Summary = post.Summary,
+          Slug = post.Slug,
+          CreatedAt = post.CreatedAt
+        }),
+        TotalCount = totalCount,
+        CurrentPage = pageNumber,
+        PageSize = pageSize
+      };
     }
 
     public async Task<PostViewModel?> GetPostByIdentifier(string identifier)

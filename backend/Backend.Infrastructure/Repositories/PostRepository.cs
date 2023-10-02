@@ -35,8 +35,16 @@ public class PostRepository : IPostRepository
         return await _postCollection.Find(p => p.Slug == slug).FirstOrDefaultAsync();
     }
 
-    public async Task<List<Post>> GetAll()
+    public async Task<List<Post>> GetAll(int pageNumber, int pageSize)
     {
-        return await _postCollection.Find(_ => true).ToListAsync();
+        return await _postCollection.Find(_ => true)
+            .Skip((pageNumber - 1) * pageSize)
+            .Limit(pageSize)
+            .ToListAsync();
+    }
+
+    public async Task<int> Count()
+    {
+        return (int) await _postCollection.CountDocumentsAsync(_ => true);
     }
 }

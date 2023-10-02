@@ -106,40 +106,39 @@ public class PostController : BaseApiController
   [SwaggerOperation(Summary = "Get all posts.")]
   [ProducesResponseType(typeof(ApiResponse<List<PostViewModel>>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  public async Task<ActionResult<IEnumerable<PostViewModel>>> GetPosts([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+  public async Task<ActionResult<ApiResponse<PaginatedResult<PostViewModel>>>> GetPosts([FromQuery] QueryParameters parameters)
   {
-    var cacheKey = $"posts_{pageNumber}_{pageSize}";
+    var posts = new PaginatedResult<PostViewModel>();
+    var cacheKey = $"posts-{parameters.PageNumber}-{parameters.PageSize}";
 
-    List<PostViewModel>? posts;
     var postsCache = await _cachingService.GetAsync(cacheKey);
 
     if (!string.IsNullOrWhiteSpace(postsCache))
     {
-      posts = JsonConvert.DeserializeObject<List<PostViewModel>>(postsCache);
+      posts = JsonConvert.DeserializeObject<PaginatedResult<PostViewModel>>(postsCache);
 
       if (posts == null)
         return NotFound();
 
-      return Ok(new ApiResponse<List<PostViewModel>>
+      return Ok(new ApiResponse<PaginatedResult<PostViewModel>>
       {
         Success = true,
         Data = posts
       });
     }
 
-    posts = await _postService.GetPosts(pageNumber, pageSize);
+    posts = await _postService.GetPosts(parameters.PageNumber, parameters.PageSize);
 
     if (posts == null)
       return NotFound();
 
     await _cachingService.SetAsync(cacheKey, JsonConvert.SerializeObject(posts));
 
-    return Ok(new ApiResponse<List<PostViewModel>>
+    return Ok(new ApiResponse<PaginatedResult<PostViewModel>>
     {
       Success = true,
       Data = posts
     });
-
   }
 
   [AllowAnonymous]
