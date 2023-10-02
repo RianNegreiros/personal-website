@@ -6,35 +6,38 @@ import { getPosts } from "./utils/api";
 import { useEffect, useState } from "react";
 import Loading from "./components/Loading";
 
-async function getData() {
-  return await getPosts();
+async function getData(pageNumber: number, pageSize: number) {
+  return await getPosts(pageNumber, pageSize);
 }
 
 export default function BlogPage() {
-  const [data, setData] = useState<Post[]>([]);
-  const [sortBy, setSortBy] = useState<"newest" | "oldest">("newest");
   const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<Post[]>([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalCount, setTotalCount] = useState(0);
+  const [nextPage, setNextPage] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      const fetchedData = await getData();
-      setData(fetchedData.data);
+      const fetchedData = await getData(pageNumber, pageSize);
+      setData(fetchedData.data.items);
+      setNextPage(fetchedData.data.hasNextPage);
+      setTotalCount(fetchedData.data.totalCount);
       setIsLoading(false);
     }
     fetchData();
   }, []);
 
-  const handleSortChange = (value: "newest" | "oldest") => {
-    setSortBy(value);
-  };
-
-  const sortedData = data.slice().sort((a, b) => {
-    if (sortBy === "oldest") {
-      return a.createdAt.localeCompare(b.createdAt);
-    } else {
-      return b.createdAt.localeCompare(a.createdAt);
-    }
-  });
+  const handlePageChange = async (pageNumber: number) => {
+    setIsLoading(true);
+    const fetchedData = await getData(pageNumber, pageSize);
+    setData(fetchedData.data.items);
+    console.log(fetchedData.data);
+    setPageNumber(fetchedData.data.currentPage);
+    setNextPage(fetchedData.data.hasNextPage);
+    setIsLoading(false);
+  }
 
   return (
     <>
@@ -42,26 +45,10 @@ export default function BlogPage() {
         <Loading />
       ) : (
         <div className="divide-y divide-gray-200 dark:divide-gray-700">
-          <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-            <div>
-              <label htmlFor="sortButton" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Ordenar por:
-              </label>
-              <button
-                id="sortButton"
-                className="mt-2 flex items-center space-x-1 p-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                onClick={() => handleSortChange(sortBy === "newest" ? "oldest" : "newest")}
-              >
-                <svg className="mr-1" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                  <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" />
-                </svg>
-                <span>{sortBy === "newest" ? "Mais recente" : "Mais antigo"}</span>
-              </button>
-            </div>
-          </div>
+          <div className="space-y-2 pt-6 pb-8 md:space-y-5"></div>
 
           <ul>
-            {sortedData.map((post) => (
+            {data.map((post) => (
               <li key={post.id} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                   <div>
@@ -87,6 +74,25 @@ export default function BlogPage() {
                 </article>
               </li>
             ))}
+            <div className="flex flex-col items-center">
+              {totalCount > 10 && (
+                <span className="text-sm text-gray-700 dark:text-gray-400">
+                  <span className="font-semibold text-gray-900 dark:text-white">{pageSize}</span> de <span className="font-semibold text-gray-900 dark:text-white">{totalCount}</span>
+                </span>
+              )}
+              <div className="inline-flex mt-2 xs:mt-0">
+                {pageNumber > 1 && (
+                  <button onClick={() => handlePageChange(pageNumber - 1)} className={`flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${nextPage ? "rounded-l " : "rounded"}`}>
+                    Anterior
+                  </button>
+                )}
+                {nextPage && (
+                  <button onClick={() => handlePageChange(pageNumber + 1)} className={`flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-gray-700 hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${pageNumber > 1 ? "border-l rounded-r" : "border rounded"}`}>
+                    Próximo
+                  </button>
+                )}
+              </div>
+            </div>
           </ul>
         </div>
       )}
