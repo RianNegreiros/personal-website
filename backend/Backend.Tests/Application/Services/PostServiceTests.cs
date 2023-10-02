@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Backend.Application.Models;
 using Backend.Application.Services;
 using Backend.Core.Exceptions;
-using Backend.Core.Inferfaces.Repositories;
+using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;
 using Moq;
 using Xunit;

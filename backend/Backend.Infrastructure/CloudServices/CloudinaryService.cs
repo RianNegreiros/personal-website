@@ -1,4 +1,4 @@
-using Backend.Core.CloudServices;
+using Backend.Core.Interfaces.CloudServices;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Configuration;

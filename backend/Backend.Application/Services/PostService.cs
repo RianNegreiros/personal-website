@@ -1,7 +1,7 @@
 using Backend.Application.Helpers;
 using Backend.Application.Models;
 using Backend.Core.Exceptions;
-using Backend.Core.Inferfaces.Repositories;
+using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -64,16 +64,23 @@ namespace Backend.Application.Services
       return await _postRepository.Update(post);
     }
 
-    public async Task<List<PostViewModel>> GetPosts() => (await _postRepository.GetAll())
-        .Select(post => new PostViewModel
-        {
-          Id = post.Id,
-          Title = post.Title,
-          Summary = post.Summary,
-          Content = post.Content,
-          Slug = post.Slug,
-          CreatedAt = post.CreatedAt
-        }).ToList();
+    public async Task<List<PostViewModel>> GetPosts(int pageNumber, int pageSize)
+    {
+      List<Post> posts = await _postRepository.GetAll();
+      int totalPosts = posts.Count;
+      int totalPages = (int)Math.Ceiling(totalPosts / (double)pageSize);
+      List<Post> paginatedPosts = posts.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+      return paginatedPosts.Select(post => new PostViewModel
+      {
+        Id = post.Id,
+        Title = post.Title,
+        Summary = post.Summary,
+        Content = post.Content,
+        Slug = post.Slug,
+        CreatedAt = post.CreatedAt
+      }).ToList();
+    }
 
     public async Task<PostViewModel?> GetPostByIdentifier(string identifier)
     {

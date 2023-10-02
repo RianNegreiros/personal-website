@@ -1,6 +1,6 @@
 using Backend.Core.Models;
 
-namespace Backend.Core.Inferfaces.Repositories;
+namespace Backend.Core.Interfaces.Repositories;
 
 public interface ICommentsRepository
 {
