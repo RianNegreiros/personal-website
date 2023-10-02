@@ -79,9 +79,9 @@ async function autoLoginUser(token: string) {
   return response.data;
 }
 
-async function getPosts() {
+async function getPosts(pageNumber: number, pageSize: number) {
   try {
-    const response = await axios.get(`${API_URL}/post`);
+    const response = await axios.get(`${API_URL}/post/?pageNumber=${pageNumber}&pageSize=${pageSize}`);
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch posts. Please try again later.');
