@@ -38,6 +38,7 @@ public class PostRepository : IPostRepository
     public async Task<List<Post>> GetAll(int pageNumber, int pageSize)
     {
         return await _postCollection.Find(_ => true)
+            .SortByDescending(p => p.CreatedAt)
             .Skip((pageNumber - 1) * pageSize)
             .Limit(pageSize)
             .ToListAsync();
