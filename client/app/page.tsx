@@ -27,13 +27,12 @@ export default function BlogPage() {
       setIsLoading(false);
     }
     fetchData();
-  }, []);
+  }, [pageNumber, pageSize]);
 
   const handlePageChange = async (pageNumber: number) => {
     setIsLoading(true);
     const fetchedData = await getData(pageNumber, pageSize);
     setData(fetchedData.data.items);
-    console.log(fetchedData.data);
     setPageNumber(fetchedData.data.currentPage);
     setNextPage(fetchedData.data.hasNextPage);
     setIsLoading(false);
@@ -75,11 +74,6 @@ export default function BlogPage() {
               </li>
             ))}
             <div className="flex flex-col items-center">
-              {totalCount > 10 && (
-                <span className="text-sm text-gray-700 dark:text-gray-400">
-                  <span className="font-semibold text-gray-900 dark:text-white">{pageSize}</span> de <span className="font-semibold text-gray-900 dark:text-white">{totalCount}</span>
-                </span>
-              )}
               <div className="inline-flex mt-2 xs:mt-0">
                 {pageNumber > 1 && (
                   <button onClick={() => handlePageChange(pageNumber - 1)} className={`flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${nextPage ? "rounded-l " : "rounded"}`}>
