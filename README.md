@@ -18,6 +18,7 @@ Here are some key endpoints you may want to explore:
 - [Projects Page](https://riannegreiros.dev/projects)
 - [API Endpoints](https://personalwebsitebackend.azurewebsites.net/swagger/index.html)
 - [Health Checks](https://personalwebsitebackend.azurewebsites.net/health)
+- [RSS Feed](https://personalwebsitebackend.azurewebsites.net/api/rss)
 
 ![Homepage screenshot](./_docs/images/homepage.png)
 
