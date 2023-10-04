@@ -8,6 +8,7 @@ public interface IPostRepository
     Task<Post> Update(Post post);
     Task<Post> GetById(string id);
     Task<Post> GetBySlug(string slug);
-    Task<List<Post>> GetAll(int pageNumber, int pageSize);
+    Task<List<Post>> GetAllWithParameters(int pageNumber, int pageSize);
+    Task<List<Post>> GetAll();
     Task<int> Count();
 }
