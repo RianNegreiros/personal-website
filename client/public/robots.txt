@@ -1,6 +1,8 @@
 # *
 User-agent: *
-Allow: /
+Allow: /post/*
+Allow: /projects
+
 Disallow: /signin
 Disallow: /signup
 Disallow: /terms/service
