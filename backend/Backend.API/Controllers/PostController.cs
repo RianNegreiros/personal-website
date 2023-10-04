@@ -127,7 +127,7 @@ public class PostController : BaseApiController
       });
     }
 
-    posts = await _postService.GetPosts(parameters.PageNumber, parameters.PageSize);
+    posts = await _postService.GetPaginatedPosts(parameters.PageNumber, parameters.PageSize);
 
     if (posts == null)
       return NotFound();
