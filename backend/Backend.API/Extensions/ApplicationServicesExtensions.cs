@@ -1,6 +1,7 @@
 using Backend.Application.Services;
 using Backend.Core.Interfaces.CloudServices;
 using Backend.Core.Interfaces.Repositories;
+using Backend.Infrastructure.Caching;
 using Backend.Infrastructure.CloudServices;
 using Backend.Infrastructure.Repositories;
 
@@ -19,6 +20,8 @@ public static class ApplicationServicesExtensions
     services.AddScoped<ICloudinaryService, CloudinaryService>();
     services.AddScoped<IProjectsService, ProjectsService>();
     services.AddScoped<ICommentsService, CommentsService>();
+
+    services.AddScoped<ICachingService, CachingService>();
 
     return services;
   }
