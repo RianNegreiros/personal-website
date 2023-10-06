@@ -103,10 +103,10 @@ public class PostController : BaseApiController
 
   [AllowAnonymous]
   [HttpGet]
-  [SwaggerOperation(Summary = "Get all posts.")]
+  [SwaggerOperation(Summary = "Get posts paginated.")]
   [ProducesResponseType(typeof(ApiResponse<List<PostViewModel>>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  public async Task<ActionResult<ApiResponse<PaginatedResult<PostViewModel>>>> GetPosts([FromQuery] QueryParameters parameters)
+  public async Task<ActionResult<ApiResponse<PaginatedResult<PostViewModel>>>> GetPostsPaginated([FromQuery] QueryParameters parameters)
   {
     var posts = new PaginatedResult<PostViewModel>();
     var cacheKey = $"posts-{parameters.PageNumber}-{parameters.PageSize}";

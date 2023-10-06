@@ -16,4 +16,12 @@ public class Project
     public string Overview { get; set; }
     [BsonElement("imageUrl")]
     public string ImageUrl { get; set; }
+
+    [BsonElement("createdAt")]
+    [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+    public DateTime CreatedAt { get; set; }
+
+    [BsonElement("updatedAt")]
+    [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

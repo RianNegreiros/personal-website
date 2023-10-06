@@ -88,6 +88,15 @@ async function getPosts(pageNumber: number, pageSize: number) {
   }
 }
 
+async function getFeed() {
+  try {
+    const response = await axios.get(`${API_URL}/feed`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch posts. Please try again later.');
+  }
+}
+
 async function getProjects() {
   try {
     const response = await axios.get(`${API_URL}/projects`);
@@ -201,5 +210,6 @@ export {
   getCommentsForPost,
   addCommentToPost,
   createProject,
-  getProjects
+  getProjects,
+  getFeed
 };

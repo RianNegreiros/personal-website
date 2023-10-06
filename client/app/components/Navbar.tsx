@@ -22,10 +22,22 @@ export default function Navbar() {
                       Rian <span className="text-teal-500">Negreiros</span>
                     </h1>
                   </Link>
+
                   <Link
                     href="/"
                     prefetch
                     className={`${pathname === "/"
+                      ? "border-teal-500 dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                      : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                      }`}
+                  >
+                    Home
+                  </Link>
+
+                  <Link
+                    href="/post"
+                    prefetch
+                    className={`${pathname === "/post"
                       ? "border-teal-500 dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                       : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                       }`}
@@ -102,6 +114,17 @@ export default function Navbar() {
                 href="/"
                 prefetch
                 className={`${pathname == "/"
+                  ? "bg-teal-50 border-teal-500 text-teal-500 block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
+                  : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-teal-500 block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
+                  } `}
+              >
+                Home
+              </Link>
+
+              <Link
+                href="/post"
+                prefetch
+                className={`${pathname == "/post"
                   ? "bg-teal-50 border-teal-500 text-teal-500 block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
                   : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-teal-500 block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
                   } `}

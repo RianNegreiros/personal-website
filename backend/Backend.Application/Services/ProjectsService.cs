@@ -35,7 +35,9 @@ namespace Backend.Application.Services
                 Title = model.Title,
                 Overview = model.Overview,
                 ImageUrl = imageUrl,
-                Url = model.Url
+                Url = model.Url,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
 
             await _projectsRepository.CreateProjectAsync(newProject);
