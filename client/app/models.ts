@@ -57,6 +57,8 @@ export interface Project {
   overview: string;
   url: string;
   imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ProjectData {
