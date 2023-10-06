@@ -76,6 +76,7 @@ namespace Backend.Application.Services
           Title = post.Title,
           Summary = post.Summary,
           Slug = post.Slug,
+          Content = post.Content,
           CreatedAt = post.CreatedAt
         }),
         TotalCount = totalCount,
@@ -94,6 +95,7 @@ namespace Backend.Application.Services
           Title = post.Title,
           Summary = post.Summary,
           Slug = post.Slug,
+          Content = post.Content,
           CreatedAt = post.CreatedAt
         }).ToList();
       }
