@@ -3,7 +3,9 @@ import { getFeed } from "./utils/api";
 
 export default async function sitemap() {
   const response = await getFeed();
-  const data = response.data.data;
+  const data = await response.data;
+
+  console.log(data);
 
   const posts = data.map(({ slug, createdAt }: { slug: string, createdAt: string } ) => ({
     url: `${siteMetadata.siteUrl}/post/${slug}`,
