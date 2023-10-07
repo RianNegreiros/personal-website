@@ -12,6 +12,8 @@ on:
       - '_docs/**'
       - 'client/**'
       - 'Makefile'
+      - 'README.md'
+      - '.vercelignore'
   workflow_dispatch:
 
 jobs:
