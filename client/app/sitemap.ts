@@ -1,19 +1,41 @@
 import siteMetadata from "./utils/siteMetaData";
 import { getFeed } from "./utils/api";
 
-export default async function sitemap() {
-  const response = await getFeed();
-  const data = await response.data;
+interface PostData {
+  slug: string;
+  createdAt: string;
+}
 
-  const posts = data.map(({ slug, createdAt }: { slug: string, createdAt: string } ) => ({
-    url: `${siteMetadata.siteUrl}/post/${slug}`,
-    lastModified: createdAt,
-  }));
+interface Route {
+  url: string;
+  lastModified: string;
+}
 
-  const routes = ["", "/projects", "/post"].map((route) => ({
-    url: `${siteMetadata.siteUrl}${route}`,
-    lastModified: new Date().toISOString(),
-  }));
+function formatPostURL(slug: string): string {
+  return `${siteMetadata.siteUrl}/posts/${slug}`;
+}
 
-  return [...routes, ...posts];
+export default async function sitemap(): Promise<Route[]> {
+  try {
+    const response = await getFeed();
+    const data: PostData[] = await response.data;
+
+    const posts: Route[] = data.map(({ slug, createdAt }) => ({
+      url: formatPostURL(slug),
+      lastModified: createdAt,
+    }));
+
+    const routes: Route[] = [
+      { url: `${siteMetadata.siteUrl}/`, lastModified: new Date().toISOString() },
+      { url: `${siteMetadata.siteUrl}/projects`, lastModified: new Date().toISOString() },
+      { url: `${siteMetadata.siteUrl}/posts`, lastModified: new Date().toISOString() }
+    ];
+
+    const sitemapData: Route[] = [...routes, ...posts];
+
+    return sitemapData;
+  } catch (error) {
+    console.error("Error generating sitemap:", error);
+    return [];
+  }
 }
