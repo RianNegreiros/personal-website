@@ -13,13 +13,13 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Backend.API.Controllers;
 
 [Authorize(Roles = "Admin")]
-public class PostController : BaseApiController
+public class PostsController : BaseApiController
 {
   private readonly IPostService _postService;
   private readonly UserManager<User> _userManager;
   private readonly ICachingService _cachingService;
 
-  public PostController(IPostService postService, UserManager<User> userManager, ICachingService cachingService)
+  public PostsController(IPostService postService, UserManager<User> userManager, ICachingService cachingService)
   {
     _postService = postService;
     _userManager = userManager;
