@@ -16,7 +16,7 @@ export default function Navbar() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justfiy-between h-16">
               <div className="flex justify-between w-full">
-                <div className="flex items-center hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
+                <div className="flex items-center sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
                   <Link href="/">
                     <h1 className="text-2xl font-medium">
                       Rian <span className="text-teal-500">Negreiros</span>
@@ -35,9 +35,9 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="/post"
+                    href="/posts"
                     prefetch
-                    className={`${pathname === "/post"
+                    className={`${pathname === "/posts"
                       ? "border-teal-500 dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                       : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                       }`}
@@ -122,9 +122,9 @@ export default function Navbar() {
               </Link>
 
               <Link
-                href="/post"
+                href="/posts"
                 prefetch
-                className={`${pathname == "/post"
+                className={`${pathname == "/posts"
                   ? "bg-teal-50 border-teal-500 text-teal-500 block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
                   : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-teal-500 block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
                   } `}

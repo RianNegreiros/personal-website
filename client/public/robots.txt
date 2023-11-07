@@ -1,13 +1,13 @@
 # *
 User-agent: *
-Allow: /post/*
+Allow: /posts/*
 Allow: /projects
 
 Disallow: /signin
 Disallow: /signup
 Disallow: /terms/service
 Disallow: /terms/privacy
-Disallow: /post/new
+Disallow: /posts/new
 Disallow: /projects/new
 
 # Host

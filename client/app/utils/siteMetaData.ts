@@ -1,8 +1,8 @@
 const siteMetadata = {
-  title: 'Rian Negreiros Portfolio',
+  title: 'Rian Negreiros',
   author: 'Rian Negreiros Dos Santos',
-  headerTitle: 'Rian Negreiros Portfolio',
-  description: 'Portfolio de Rian Negreiros, desenvolvedor Back-end',
+  headerTitle: 'Rian Negreiros',
+  description: 'Rian Negreiros, desenvolvedor Back-end',
   language: 'pt-BR',
   theme: 'system',
   siteUrl: 'https://www.riannegreiros.dev',
