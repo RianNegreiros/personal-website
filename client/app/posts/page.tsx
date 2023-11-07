@@ -56,7 +56,7 @@ export default function BlogPage() {
                     </p>
                   </div>
 
-                  <Link href={`/post/${post.slug}`}
+                  <Link href={`/posts/${post.slug}`}
                     prefetch
                     className="space-y-3 xl:col-span-3"
                   >

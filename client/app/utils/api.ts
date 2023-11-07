@@ -52,7 +52,7 @@ async function getIsAdmin() {
 async function createPost(formData: PostData) {
   formData.authorId = localStorage.getItem('userId') || sessionStorage.getItem('userId') as string;
   try {
-    const response = await axios.post(`${API_URL}/post`, formData, {
+    const response = await axios.post(`${API_URL}/posts`, formData, {
       headers: {
         'Content-Type': 'application/json',
         ...getAuthorizationHeader(),
@@ -81,7 +81,7 @@ async function autoLoginUser(token: string) {
 
 async function getPosts(pageNumber: number, pageSize: number) {
   try {
-    const response = await axios.get(`${API_URL}/post/?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    const response = await axios.get(`${API_URL}/posts/?pageNumber=${pageNumber}&pageSize=${pageSize}`);
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch posts. Please try again later.');
@@ -188,7 +188,7 @@ async function createProject(projectData: ProjectData): Promise<any> {
 
 async function getPostBySlug(slug: string) {
   try {
-    const response = await axios.get(`${API_URL}/post/${slug}`);
+    const response = await axios.get(`${API_URL}/posts/${slug}`);
     const data = response.data;
     JSON.stringify(data.content);
     return data;

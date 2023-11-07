@@ -59,7 +59,7 @@ export default function AuthLinks({ pathname }: { pathname: string }) {
       return (
         <div>
           <Link
-            href="/post/new"
+            href="/posts/new"
             className="text-sm px-4 py-2 rounded-lg border-2 border-teal-500 text-gray-500 hover:text-white hover:border-teal-600"
           >
             Criar Post

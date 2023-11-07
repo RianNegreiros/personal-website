@@ -86,7 +86,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             <meta name="description" content={data.summary} />
             <meta property="og:site_name" content={siteMetadata.title} />
             <meta property="og:description" content={data.summary} />
-            <meta property="og:url" content={`${siteMetadata.siteUrl}/post/${data.slug}`} />
+            <meta property="og:url" content={`${siteMetadata.siteUrl}/posts/${data.slug}`} />
             <meta property="og:type" content="article" />
             <meta property="article:published_time" content={data.createdAt} />
             <meta property="article:modified_time" content={data.createdAt} />
