@@ -37,7 +37,7 @@ public class RssController : BaseApiController
           new XElement("language", "pt-BR"),
           posts.Select(post => new XElement("item",
             new XElement("title", post.Title),
-            new XElement("link", $"{_configuration["ClientUrl"]}/post/{post.Slug}"),
+            new XElement("link", $"{_configuration["ClientUrl"]}/posts/{post.Slug}"),
             new XElement("description", post.Summary),
             new XElement("pubDate", post.CreatedAt.ToString("R"))
           ))
