@@ -1,7 +1,17 @@
+"use client"
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function FloatingButtons() {
+
+  const pathname = usePathname();
+
+  if (pathname.includes("/posts/")) {
+    return null
+  }
+
   return (
     <div
       className={`fixed bottom-10 right-10 z-50 flex flex-col gap-2`}
