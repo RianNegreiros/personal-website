@@ -4,6 +4,7 @@ import Loading from "@/app/components/Loading";
 import { Post, Comment, CommentData } from "@/app/models";
 import { addCommentToPost, getCommentsForPost, getIsUserLoggedIn, getPostBySlug } from "@/app/utils/api";
 import siteMetadata from "@/app/utils/siteMetaData";
+import { EmailIcon, EmailShareButton, LinkedinIcon, LinkedinShareButton, PocketIcon, PocketShareButton } from "next-share";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -125,7 +126,31 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             </div>
           </div>
 
-          <ol className="relative border-l border-gray-200 dark:border-gray-700">
+          <div className="flex justify-center space-x-4 mb-4">
+            <LinkedinShareButton
+            url={`${siteMetadata.siteUrl}/posts/${data.slug}`}
+            title={data.title}
+            >
+              <LinkedinIcon size={32} round />
+            </LinkedinShareButton>
+
+            <PocketShareButton
+              url={`${siteMetadata.siteUrl}/posts/${data.slug}`}
+              title={data.title}
+            >
+              <PocketIcon size={32} round />
+            </PocketShareButton>
+
+            <EmailShareButton
+              url={`${siteMetadata.siteUrl}/posts/${data.slug}`}
+              subject={data.title}
+              body="body"
+            >
+              <EmailIcon size={32} round />
+            </EmailShareButton>
+          </div>
+
+          <ol className="relative">
             {comments.map((comment) => (
               <li key={comment.id} className="mb-10 ml-4">
                 <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
