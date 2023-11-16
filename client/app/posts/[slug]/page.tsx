@@ -76,7 +76,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
+    <>
       {isLoading ? (
         <Loading />
       ) : (
@@ -128,8 +128,9 @@ export default function PostPage({ params }: { params: { slug: string } }) {
 
           <div className="flex justify-center space-x-4 mb-4">
             <LinkedinShareButton
-            url={`${siteMetadata.siteUrl}/posts/${data.slug}`}
-            title={data.title}
+              url={`${siteMetadata.siteUrl}/posts/${data.slug}`}
+              title={data.title}
+              about={data.summary}
             >
               <LinkedinIcon size={32} round />
             </LinkedinShareButton>
@@ -137,6 +138,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             <PocketShareButton
               url={`${siteMetadata.siteUrl}/posts/${data.slug}`}
               title={data.title}
+              about={data.summary}
             >
               <PocketIcon size={32} round />
             </PocketShareButton>
@@ -144,6 +146,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             <EmailShareButton
               url={`${siteMetadata.siteUrl}/posts/${data.slug}`}
               subject={data.title}
+              about={data.summary}
               body="body"
             >
               <EmailIcon size={32} round />
@@ -194,6 +197,6 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           </form>
         </>
       )}
-    </div>
+    </>
   )
 }
