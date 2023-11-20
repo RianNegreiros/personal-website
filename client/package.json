@@ -19,7 +19,7 @@
     "autoprefixer": "10.4.16",
     "axios": "^1.6.2",
     "eslint": "8.54.0",
-    "eslint-config-next": "14.0.2",
+    "eslint-config-next": "14.0.3",
     "next": "^14.0.1",
     "next-share": "^0.27.0",
     "next-themes": "^0.2.1",
