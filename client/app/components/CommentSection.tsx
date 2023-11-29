@@ -3,6 +3,8 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Comment, CommentData } from "../models";
 import { addCommentToPost, getCommentsForPost, getIsUserLoggedIn } from "../utils/api";
+import AuthLinks from "./AuthLinks";
+import { usePathname } from "next/navigation";
 
 interface CommentSectionProps {
   slug: string;
@@ -17,6 +19,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({ slug }) => {
   });
 
   const [isLogged, setIsLogged] = useState(false);
+
+  let pathname = usePathname()
 
   useEffect(() => {
     async function fetchDataAndComments() {
@@ -90,14 +94,19 @@ const CommentSection: React.FC<CommentSectionProps> = ({ slug }) => {
             ></textarea>
           </div>
           <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
-            <button
-              type="submit"
-              className={`inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-teal-500 rounded-lg focus:ring-4 focus:ring-teal-200 dark:focus:ring-teal-900 hover:bg-teal-800 ${!isLogged ? 'cursor-not-allowed opacity-50' : ''
-                }`}
-              disabled={!isLogged}
-            >
-              Poste um comentário
-            </button>
+            {isLogged ? (
+              <button
+                type="submit"
+                className={`inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-teal-500 rounded-lg focus:ring-4 focus:ring-teal-200 dark:focus:ring-teal-900 hover:bg-teal-800 ${!isLogged ? 'cursor-not-allowed opacity-50' : ''
+                  }`}
+                disabled={!isLogged}
+              >
+                Poste um comentário
+              </button>
+            ) : (
+              <AuthLinks pathname={pathname} />
+            )}
+
           </div>
         </div>
       </form>

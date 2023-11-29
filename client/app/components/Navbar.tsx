@@ -59,8 +59,6 @@ export default function Navbar() {
 
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
 
-                  <AuthLinks pathname={pathname} />
-
                   <ThemeButton />
                 </div>
               </div>
