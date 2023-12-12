@@ -5,6 +5,7 @@ import ThemeButton from "./ThemeButton";
 import AuthLinks from "./AuthLinks";
 import { Disclosure } from "@headlessui/react";
 import { usePathname } from "next/navigation";
+import NewLinks from "./NewLinks";
 
 export default function Navbar() {
   let pathname = usePathname() || "/";
@@ -59,7 +60,7 @@ export default function Navbar() {
 
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
 
-                  <AuthLinks pathname={pathname} />
+                  <NewLinks pathname={pathname} />
 
                   <ThemeButton />
                 </div>
