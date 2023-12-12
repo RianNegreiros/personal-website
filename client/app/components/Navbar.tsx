@@ -6,6 +6,8 @@ import AuthLinks from "./AuthLinks";
 import { Disclosure } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 import NewLinks from "./NewLinks";
+import Logout from "./LogoutLink";
+import LogoutLink from "./LogoutLink";
 
 export default function Navbar() {
   let pathname = usePathname() || "/";
@@ -61,7 +63,7 @@ export default function Navbar() {
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
 
                   <NewLinks pathname={pathname} />
-
+                  <LogoutLink pathname={pathname} />
                   <ThemeButton />
                 </div>
               </div>
