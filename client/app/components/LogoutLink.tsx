@@ -1,9 +1,11 @@
+"use client"
+
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { logoutUser } from "../utils/api";
 
 export default function LogoutLink({ pathname }: { pathname: string }) {
-  const { isAdmin, setIsAdmin, setIsLogged } = useAuth();
+  const { setIsAdmin, setIsLogged } = useAuth();
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -25,7 +27,7 @@ export default function LogoutLink({ pathname }: { pathname: string }) {
     return null;
   }
 
-  const logoutLink = (
+  return (
     <button
       onClick={handleLogout}
       className="ml-4 text-sm px-4 py-2 rounded-lg bg-teal-500 text-white hover:bg-teal-600"
@@ -33,6 +35,4 @@ export default function LogoutLink({ pathname }: { pathname: string }) {
       Sair
     </button>
   );
-
-
 }

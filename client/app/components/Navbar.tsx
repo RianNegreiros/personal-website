@@ -2,11 +2,9 @@
 
 import Link from "next/link";
 import ThemeButton from "./ThemeButton";
-import AuthLinks from "./AuthLinks";
 import { Disclosure } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 import NewLinks from "./NewLinks";
-import Logout from "./LogoutLink";
 import LogoutLink from "./LogoutLink";
 
 export default function Navbar() {
