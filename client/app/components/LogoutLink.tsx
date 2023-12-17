@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { logoutUser } from "../utils/api";
 
 export default function LogoutLink({ pathname }: { pathname: string }) {
-  const { setIsAdmin, setIsLogged } = useAuth();
+  const { setIsAdmin, setIsLogged, isLogged } = useAuth();
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -23,7 +23,7 @@ export default function LogoutLink({ pathname }: { pathname: string }) {
     }
   };
 
-  if (pathname === "/signin" || pathname === "/signup") {
+  if (pathname === "/signin" || pathname === "/signup" || !isLogged) {
     return null;
   }
 
