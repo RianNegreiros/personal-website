@@ -26,6 +26,8 @@ public class RssController : BaseApiController
       return NotFound();
     }
 
+    posts = posts.OrderByDescending(post => post.CreatedAt).ToList();
+
     XDocument rssFeed = new(
         new XDeclaration("1.0", "utf-8", "yes"),
         new XElement("rss",
