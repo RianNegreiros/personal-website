@@ -6,8 +6,9 @@ import { getPosts } from "../utils/api";
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 
-async function getData(pageNumber: number, pageSize: number) {
-  return await getPosts(pageNumber, pageSize);
+async function fetchData(pageNumber: number, pageSize: number) {
+  const result = await getPosts(pageNumber, pageSize);
+  return result.data;
 }
 
 export default function BlogPage() {
@@ -19,24 +20,26 @@ export default function BlogPage() {
   const [nextPage, setNextPage] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      const fetchedData = await getData(pageNumber, pageSize);
-      setData(fetchedData.data.items);
-      setNextPage(fetchedData.data.hasNextPage);
-      setTotalCount(fetchedData.data.totalCount);
+    const fetchDataAndSetState = async () => {
+      setIsLoading(true);
+      const fetchedData = await fetchData(pageNumber, pageSize);
+      setData(fetchedData.items);
+      setNextPage(fetchedData.hasNextPage);
+      setTotalCount(fetchedData.totalCount);
       setIsLoading(false);
-    }
-    fetchData();
+    };
+
+    fetchDataAndSetState();
   }, [pageNumber, pageSize]);
 
-  const handlePageChange = async (pageNumber: number) => {
+  const handlePageChange = async (newPageNumber: number) => {
     setIsLoading(true);
-    const fetchedData = await getData(pageNumber, pageSize);
-    setData(fetchedData.data.items);
-    setPageNumber(fetchedData.data.currentPage);
-    setNextPage(fetchedData.data.hasNextPage);
+    const fetchedData = await fetchData(newPageNumber, pageSize);
+    setData(fetchedData.items);
+    setPageNumber(fetchedData.currentPage);
+    setNextPage(fetchedData.hasNextPage);
     setIsLoading(false);
-  }
+  };
 
   return (
     <>
