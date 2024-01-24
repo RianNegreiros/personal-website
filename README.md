@@ -13,7 +13,7 @@ You can access the application, hosted at `riannegreiros.dev`, using the followi
 Here are some key endpoints you may want to explore:
 
 - [Home Page](https://riannegreiros.dev)
-- [Blog](https://riannegreiros.dev/posts)
+- [Blog Page](https://riannegreiros.dev/posts)
 - [Projects Page](https://riannegreiros.dev/projects)
 - [API Endpoints](https://personalwebsitebackend.azurewebsites.net/swagger/index.html)
 - [Health Checks](https://personalwebsitebackend.azurewebsites.net/health)
