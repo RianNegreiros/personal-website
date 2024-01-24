@@ -89,6 +89,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ slug }) => {
               onChange={handleChange}
               rows={4}
               className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+              disabled={!isLogged}
               placeholder={isLogged ? 'Escreva um comentário...' : 'Faça login para postar um comentário'}
               required
             ></textarea>
@@ -99,14 +100,12 @@ const CommentSection: React.FC<CommentSectionProps> = ({ slug }) => {
                 type="submit"
                 className={`inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-teal-500 rounded-lg focus:ring-4 focus:ring-teal-200 dark:focus:ring-teal-900 hover:bg-teal-800 ${!isLogged ? 'cursor-not-allowed opacity-50' : ''
                   }`}
-                disabled={!isLogged}
               >
                 Poste um comentário
               </button>
             ) : (
               <AuthLinks pathname={pathname} />
             )}
-
           </div>
         </div>
       </form>
