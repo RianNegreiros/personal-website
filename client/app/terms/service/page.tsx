@@ -20,7 +20,7 @@ export default function TermsOfService() {
         <li>usar os materiais para qualquer finalidade comercial ou para exibição pública (comercial ou não comercial);</li>
         <li>tentar descompilar ou fazer engenharia reversa de qualquer software contido no site Rian Negreiros Dos Santos website;</li>
         <li>remover quaisquer direitos autorais ou outras notações de propriedade dos materiais; ou</li>
-        <li>transferir os materiais para outra pessoa ou 'espelhe' os materiais em qualquer outro servidor.</li>
+        <li>transferir os materiais para outra pessoa ou &apos;espelhe&apos; os materiais em qualquer outro servidor.</li>
       </ol>
       <p>
         Esta licença será automaticamente rescindida se você violar alguma dessas restrições e poderá ser rescindida por Rian Negreiros Dos Santos website a qualquer momento. Ao encerrar a visualização desses materiais ou após o término desta licença, você deve apagar todos os materiais baixados em sua posse, seja em formato eletrônico ou impresso.
@@ -29,7 +29,7 @@ export default function TermsOfService() {
       <ol className="list-decimal list-inside">
         <li>
           <span>
-            Os materiais no site da Rian Negreiros Dos Santos website são fornecidos 'como estão'. Rian Negreiros Dos Santos website não oferece garantias, expressas ou implícitas, e, por este meio, isenta e nega todas as outras garantias, incluindo, sem limitação, garantias implícitas ou condições de comercialização, adequação a um fim específico ou não violação de propriedade intelectual ou outra violação de direitos.
+            Os materiais no site da Rian Negreiros Dos Santos website são fornecidos &apos;como estão&apos;. Rian Negreiros Dos Santos website não oferece garantias, expressas ou implícitas, e, por este meio, isenta e nega todas as outras garantias, incluindo, sem limitação, garantias implícitas ou condições de comercialização, adequação a um fim específico ou não violação de propriedade intelectual ou outra violação de direitos.
           </span>
         </li>
         <li>
