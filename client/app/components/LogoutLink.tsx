@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { logoutUser } from "../utils/api";
+import { toast } from 'react-toastify';
 
 export default function LogoutLink({ pathname }: { pathname: string }) {
   const { setIsAdmin, setIsLogged, isLogged } = useAuth();
@@ -11,15 +12,26 @@ export default function LogoutLink({ pathname }: { pathname: string }) {
   const handleLogout = async () => {
     try {
       await logoutUser();
+
       setIsAdmin(false);
       setIsLogged(false);
+
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('userId');
-      router.push('/');
+
+      if (pathname !== "/") router.push('/');
+
+      toast.success('Logged out successfully!', {
+        position: "top-center",
+        autoClose: 3000,
+      });
     } catch (error) {
-      console.error('Logout failed:', error);
+      toast.error('Failed to log out. Please try again.', {
+        position: "top-center",
+        autoClose: 5000,
+      });
     }
   };
 
