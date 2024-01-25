@@ -6,6 +6,8 @@ import { Providers } from './components/Providers'
 import siteMetadata from './utils/siteMetaData'
 import FloatingButtons from './components/FloatingButtons'
 import Footer from './components/Footer'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -53,6 +55,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} bg-white text-black dark:bg-gray-900 dark:text-white h-full selection:bg-gray-50 dark:selection:bg-gray-800`}>
         <Providers>
+          <ToastContainer />
           <Navbar />
           <main className='flex flex-col min-h-screen max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
             {children}
