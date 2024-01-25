@@ -36,19 +36,6 @@ async function signInUser(formData: SignInData) {
   }
 }
 
-async function getIsAdmin() {
-  try {
-    const response = await axios.get(`${API_URL}/user/isadmin`, {
-      headers: {
-        ...getAuthorizationHeader(),
-      },
-    });
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to fetch user. Please try again later.');
-  }
-}
-
 async function createPost(formData: PostData) {
   formData.authorId = localStorage.getItem('userId') || sessionStorage.getItem('userId') as string;
   try {
@@ -201,7 +188,6 @@ export {
   signUpUser,
   signInUser,
   autoLoginUser,
-  getIsAdmin,
   logoutUser,
   getIsUserLoggedIn,
   createPost,
