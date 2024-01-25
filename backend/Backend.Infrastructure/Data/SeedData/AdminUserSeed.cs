@@ -17,8 +17,7 @@ namespace Backend.Infrastructure.Data.SeedData
             {
                 UserName = configuration["AdminUser:UserName"],
                 Email = configuration["AdminUser:Email"],
-                EmailConfirmed = true,
-                PersistentToken = Guid.NewGuid().ToString()
+                EmailConfirmed = true
             };
 
             if (await userManager.FindByEmailAsync(configuration["AdminUser:Email"]) == null)

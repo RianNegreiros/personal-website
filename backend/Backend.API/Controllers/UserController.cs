@@ -48,8 +48,7 @@ public class UserController : BaseApiController
     User user = new()
     {
       Email = model.Email,
-      UserName = model.Username,
-      PersistentToken = ""
+      UserName = model.Username
     };
 
     IdentityResult result = await _userManager.CreateAsync(user, model.Password);
@@ -108,7 +107,6 @@ public class UserController : BaseApiController
 
     if (model.RememberMe)
     {
-      user.PersistentToken = Guid.NewGuid().ToString();
       await _userManager.UpdateAsync(user);
     }
 
