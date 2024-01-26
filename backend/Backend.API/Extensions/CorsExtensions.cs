@@ -8,7 +8,7 @@ public static class CorsExtensions
       {
         options.AddPolicy("CorsPolicy", policy =>
           {
-            policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(configuration["ClientUrl"]);
+            policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(configuration["ClientUrl"]);
           });
       });
 

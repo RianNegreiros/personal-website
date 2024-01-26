@@ -5,6 +5,7 @@ using Backend.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Backend.API.Extensions;
 
@@ -12,17 +13,14 @@ public static class IdentityServiceExtensions
 {
   public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
   {
-    IdentityBuilder builder = services.AddIdentityCore<User>();
+    IdentityBuilder builder = services.AddIdentity<User, IdentityRole>();
 
-    builder = new IdentityBuilder(builder.UserType, builder.Services);
-    builder.AddRoles<IdentityRole>();
     builder.AddEntityFrameworkStores<IdentityDbContext>();
     builder.AddSignInManager<SignInManager<User>>();
     builder.AddDefaultTokenProviders();
 
     services.AddAuthentication(options =>
     {
-      options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
       options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
       options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     })
@@ -37,7 +35,19 @@ public static class IdentityServiceExtensions
         ValidateIssuer = true,
         ValidateAudience = false
       };
-    });
+      options.Events = new JwtBearerEvents
+      {
+        OnMessageReceived = context =>
+        {
+          context.Token = context.Request.Cookies["token"];
+          return Task.CompletedTask;
+        }
+      };
+    })
+    .AddCookie(options =>
+        {
+          options.Cookie.Name = "token";
+        });
 
     services.AddAuthorization(options =>
     {
