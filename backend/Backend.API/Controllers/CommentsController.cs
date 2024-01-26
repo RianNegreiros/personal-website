@@ -1,4 +1,3 @@
-using Backend.API.Helpers;
 using Backend.API.Models;
 using Backend.Application.Models;
 using Backend.Application.Services;
@@ -34,9 +33,9 @@ public class CommentsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> AddCommentToPost(string identifier, [FromBody] CommentInputModel comment)
+    public async Task<IActionResult> AddCommentToPost(string identifier, [FromBody] CommentInputModel model)
     {
-        FluentValidation.Results.ValidationResult validationResult = ValidateModel<CommentInputModelValidator, CommentInputModel>(comment);
+        FluentValidation.Results.ValidationResult validationResult = ValidateModel<CommentInputModelValidator, CommentInputModel>(model);
 
         if (!validationResult.IsValid)
             return BadRequest(new ApiResponse<CommentViewModel>
@@ -56,18 +55,11 @@ public class CommentsController : BaseApiController
             });
         }
 
-        string? email = AutoLoginHelper.GetEmailFromValidToken(_config, comment.token);
-        if (email == null)
-        {
-            return Unauthorized();
-        }
-
-        User user = await _userManager.FindByEmailAsync(email);
-        user ??= new User { Email = email };
+        var user = await _userManager.FindByIdAsync(model.Id);
 
         Comment addedComment;
 
-        addedComment = await _commentsService.AddCommentToPost(post, comment, user);
+        addedComment = await _commentsService.AddCommentToPost(post, model, user);
 
         return Ok(new ApiResponse<CommentViewModel>
         {
