@@ -26,10 +26,10 @@ public static class IdentityServiceExtensions
       options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
       options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     })
-    .AddJwtBearer(opt =>
+    .AddJwtBearer(options =>
     {
-      opt.SaveToken = true;
-      opt.TokenValidationParameters = new TokenValidationParameters
+      options.SaveToken = true;
+      options.TokenValidationParameters = new TokenValidationParameters
       {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtConfig:SecretKey"])),
@@ -44,6 +44,11 @@ public static class IdentityServiceExtensions
       options.Cookie.HttpOnly = true;
       options.ExpireTimeSpan = TimeSpan.FromDays(7);
       options.SlidingExpiration = true;
+    });
+
+    services.AddAuthorization(options =>
+    {
+      options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
     });
 
     services.AddDbContext<IdentityDbContext>(opt =>
