@@ -52,20 +52,6 @@ async function createPost(formData: PostData) {
   }
 }
 
-async function autoLoginUser(token: string) {
-  const response = await axios.post(
-    `${API_URL}/user/autologin`,
-    JSON.stringify(token),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  );
-
-  return response.data;
-}
-
 async function getPosts(pageNumber: number, pageSize: number) {
   try {
     const response = await axios.get(`${API_URL}/posts/?pageNumber=${pageNumber}&pageSize=${pageSize}`);
@@ -123,32 +109,6 @@ async function addCommentToPost(commentData: CommentData) {
   }
 }
 
-async function getIsUserLoggedIn() {
-  try {
-    const response = await axios.get(`${API_URL}/user/me`, {
-      headers: {
-        ...getAuthorizationHeader(),
-      },
-    });
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to fetch user. Please try again later.');
-  }
-}
-
-async function logoutUser(): Promise<any> {
-  try {
-    const response = await axios.post(`${API_URL}/user/logout`, null, {
-      headers: {
-        ...getAuthorizationHeader(),
-      },
-    });
-    return response.data;
-  } catch (error) {
-    throw new Error('Logout failed. Please try again later.');
-  }
-}
-
 async function createProject(projectData: ProjectData): Promise<any> {
   try {
     const formData = new FormData();
@@ -187,9 +147,6 @@ async function getPostBySlug(slug: string) {
 export {
   signUpUser,
   signInUser,
-  autoLoginUser,
-  logoutUser,
-  getIsUserLoggedIn,
   createPost,
   getPostBySlug,
   getPosts,

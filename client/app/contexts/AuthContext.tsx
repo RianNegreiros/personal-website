@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { autoLoginUser } from '../utils/api';
 
 interface AuthContextType {
   isAdmin: boolean;
@@ -25,16 +24,16 @@ interface AuthProviderProps {
 async function autoLogin(
   setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>,
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>
-  ) {
+) {
   const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const isAdmin = localStorage.getItem('isAdmin') || sessionStorage.getItem('isAdmin');
+
   if (storedToken) {
-    try {
-      const response = await autoLoginUser(storedToken);
-      setIsAdmin(response.data.isAdmin);
-      setIsLogged(true);
-    } catch (error) {
-    }
     setIsLogged(true);
+  }
+
+  if (isAdmin) {
+    setIsAdmin(true);
   }
 }
 

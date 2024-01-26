@@ -15,28 +15,44 @@ public class TokenService : ITokenService
   public TokenService(IConfiguration config)
   {
     _config = config;
-    _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtConfig:SecretKey"]));
+    _key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_config["JwtConfig:SecretKey"]));
   }
 
   public string GenerateJwtToken(User user, bool isAdmin = false)
   {
-    SigningCredentials credentials = new(_key, SecurityAlgorithms.HmacSha256);
+    SigningCredentials credentials = new(_key, SecurityAlgorithms.HmacSha256Signature);
 
-    List<Claim> claims = new()
+    JwtSecurityTokenHandler handler = new();
+
+    SecurityTokenDescriptor tokenDescriptor = new()
     {
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
-                new Claim(ClaimTypes.Role, isAdmin ? "Admin" : "User")
+      Issuer = _config["JwtConfig:Issuer"],
+      Audience = _config["JwtConfig:Audience"],
+      SigningCredentials = credentials,
+      Expires = DateTime.UtcNow.AddMinutes(30),
+      Subject = GenerateClaims(user, isAdmin)
     };
 
-    JwtSecurityToken token = new(
-        issuer: _config["JwtConfig:Issuer"],
-        audience: _config["JwtConfig:Audience"],
-        claims,
-        expires: DateTime.UtcNow.AddMinutes(30),
-        signingCredentials: credentials
+    var token = handler.CreateToken(tokenDescriptor);
+
+    return handler.WriteToken(token);
+  }
+
+  private static ClaimsIdentity GenerateClaims(User user, bool isAdmin = false)
+  {
+    var ci = new ClaimsIdentity();
+    ci.AddClaim(
+      new Claim(ClaimTypes.Email, user.Email)
     );
 
-    return new JwtSecurityTokenHandler().WriteToken(token);
+    ci.AddClaim(
+      new Claim(ClaimTypes.Name, user.UserName)
+    );
+
+    ci.AddClaim(
+      new Claim(ClaimTypes.Role, isAdmin ? "Admin" : "User")
+    );
+
+    return ci;
   }
 }

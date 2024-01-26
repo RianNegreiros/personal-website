@@ -23,7 +23,7 @@ export default function SignInPage() {
 
   const handleInputChange = (event: FormEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = event.currentTarget;
-    const inputValue = type === 'checkbox' ? checked : value;
+    const inputValue = type === "checkbox" ? checked : value;
     setFormData({ ...formData, [name]: inputValue });
   };
 
@@ -39,11 +39,16 @@ export default function SignInPage() {
 
       if (formData.rememberMe) {
         localStorage.setItem("userId", response.data.id);
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem("isAdmin", response.data.isAdmin);
+        localStorage.setItem("token", response.data.token);
       } else {
         sessionStorage.setItem("userId", response.data.id);
-        sessionStorage.setItem('token', response.data.token);
-        localStorage.removeItem('token');
+        sessionStorage.setItem("isAdmin", response.data.isAdmin);
+        sessionStorage.setItem("token", response.data.token);
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("isAdmin");
       }
 
       setLoggingIn(false);

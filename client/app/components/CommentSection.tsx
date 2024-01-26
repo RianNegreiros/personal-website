@@ -2,23 +2,23 @@
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Comment, CommentData } from "../models";
-import { addCommentToPost, getCommentsForPost, getIsUserLoggedIn } from "../utils/api";
+import { addCommentToPost, getCommentsForPost } from "../utils/api";
 import AuthLinks from "./AuthLinks";
 import { usePathname } from "next/navigation";
+import { useAuth } from "../contexts/AuthContext";
 
 interface CommentSectionProps {
   slug: string;
 }
 
 const CommentSection: React.FC<CommentSectionProps> = ({ slug }) => {
+  const { isLogged } = useAuth();
   const [comments, setComments] = useState<Comment[]>([]);
   const [formData, setFormData] = useState<CommentData>({
     postSlug: slug,
     content: '',
     token: '',
   });
-
-  const [isLogged, setIsLogged] = useState(false);
 
   let pathname = usePathname()
 
@@ -29,18 +29,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({ slug }) => {
     }
     fetchDataAndComments();
   }, [slug]);
-
-  useEffect(() => {
-    async function checkUserLoggedIn() {
-      try {
-        const response = await getIsUserLoggedIn();
-        setIsLogged(response);
-      } catch (error) {
-        setIsLogged(false);
-      }
-    }
-    checkUserLoggedIn();
-  }, []);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
