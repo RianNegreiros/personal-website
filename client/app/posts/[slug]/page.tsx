@@ -31,7 +31,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   const [formData, setFormData] = useState<CommentData>({
     postSlug: params.slug,
     content: '',
-    token: '',
+    id: '',
   });
 
   useEffect(() => {

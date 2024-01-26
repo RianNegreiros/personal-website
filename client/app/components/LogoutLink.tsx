@@ -14,10 +14,10 @@ export default function LogoutLink({ pathname }: { pathname: string }) {
       setIsAdmin(false);
       setIsLogged(false);
 
-      localStorage.removeItem('token');
       localStorage.removeItem('userId');
-      sessionStorage.removeItem('token');
+      localStorage.removeItem('isAdmin');
       sessionStorage.removeItem('userId');
+      sessionStorage.removeItem('isAdmin');
 
       if (pathname !== "/") router.push('/');
 

@@ -40,13 +40,10 @@ export default function SignInPage() {
       if (formData.rememberMe) {
         localStorage.setItem("userId", response.data.id);
         localStorage.setItem("isAdmin", response.data.isAdmin);
-        localStorage.setItem("token", response.data.token);
       } else {
         sessionStorage.setItem("userId", response.data.id);
         sessionStorage.setItem("isAdmin", response.data.isAdmin);
-        sessionStorage.setItem("token", response.data.token);
 
-        localStorage.removeItem("token");
         localStorage.removeItem("userId");
         localStorage.removeItem("isAdmin");
       }
