@@ -1,21 +1,17 @@
-import axios from 'axios';
+import Axios from 'axios';
 import { CommentData, PostData, ProjectData, SignInData, SignUpData } from '../models';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-function getAuthorizationHeader(): Record<string, string> {
-  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-  return {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
-  };
-}
+const axios = Axios.create({
+  withCredentials: true,
+});
+
+axios.defaults.withCredentials = true;
 
 async function signUpUser(formData: SignUpData): Promise<any> {
   try {
-    const response = await axios.post(`${API_URL}/user/register`, formData, {
-      headers: getAuthorizationHeader(),
-    });
+    const response = await axios.post(`${API_URL}/user/register`, formData);
     return response.data;
   } catch (error) {
     throw new Error('Sign up failed. Please try again later.');
@@ -27,7 +23,7 @@ async function signInUser(formData: SignInData) {
     const response = await axios.post(`${API_URL}/user/login`, formData, {
       headers: {
         'Content-Type': 'application/json',
-      },
+      }
     });
 
     return response.data;
@@ -41,8 +37,7 @@ async function createPost(formData: PostData) {
   try {
     const response = await axios.post(`${API_URL}/posts`, formData, {
       headers: {
-        'Content-Type': 'application/json',
-        ...getAuthorizationHeader(),
+        'Content-Type': 'application/json'
       },
     });
 
@@ -90,18 +85,14 @@ async function getCommentsForPost(postId: string) {
 
 async function addCommentToPost(commentData: CommentData) {
   try {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-    commentData.token = token as string;
+    const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
+    commentData.id = userId as string;
 
-    if (!token) {
-      throw new Error('User token not found.');
+    if (!userId) {
+      throw new Error('User id not found.');
     }
 
-    const response = await axios.post(`${API_URL}/comments/${commentData.postSlug}`, commentData, {
-      headers: {
-        ...getAuthorizationHeader(),
-      },
-    });
+    const response = await axios.post(`${API_URL}/comments/${commentData.postSlug}`, commentData);
 
     return response.data;
   } catch (error) {
@@ -122,8 +113,7 @@ async function createProject(projectData: ProjectData): Promise<any> {
 
     const response = await axios.post(`${API_URL}/projects`, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
+        'Content-Type': 'multipart/form-data'
       },
     });
 

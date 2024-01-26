@@ -17,7 +17,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ slug }) => {
   const [formData, setFormData] = useState<CommentData>({
     postSlug: slug,
     content: '',
-    token: '',
+    id: ''
   });
 
   let pathname = usePathname()
@@ -34,7 +34,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({ slug }) => {
     e.preventDefault();
 
     try {
-      console.log(formData);
       await addCommentToPost(formData);
       const response = await getCommentsForPost(slug);
       setComments(response.data);

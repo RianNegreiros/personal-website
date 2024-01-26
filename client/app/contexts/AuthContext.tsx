@@ -25,10 +25,10 @@ async function autoLogin(
   setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>,
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>
 ) {
-  const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
   const isAdmin = localStorage.getItem('isAdmin') || sessionStorage.getItem('isAdmin');
 
-  if (storedToken) {
+  if (userId) {
     setIsLogged(true);
   }
 

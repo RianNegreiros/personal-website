@@ -3,6 +3,7 @@ using Backend.API.Middlewares;
 using Backend.Core.Models;
 using Backend.Infrastructure.Data;
 using Backend.Infrastructure.Data.SeedData;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +28,12 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors("CorsPolicy");
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    HttpOnly = HttpOnlyPolicy.Always,
+    Secure = CookieSecurePolicy.Always,
+    MinimumSameSitePolicy = SameSiteMode.None
+});
 
 app.UseSwaggerDocumentation();
 

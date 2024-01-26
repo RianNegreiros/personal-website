@@ -48,7 +48,7 @@ export interface Comment {
 export interface CommentData {
   postSlug: string;
   content: string;
-  token: string;
+  id: string;
 }
 
 export interface Project {

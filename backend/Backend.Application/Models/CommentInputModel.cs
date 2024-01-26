@@ -4,6 +4,6 @@ namespace Backend.Application.Models;
 
 public class CommentInputModel : BaseCommentModel
 {
-    [SwaggerSchema(Description = "The user's token")]
-    public string token { get; set; }
+    [SwaggerSchema(Description = "The user's id")]
+    public string Id { get; set; }
 }
