@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.CookiePolicy;
 
 namespace Backend.API.Extensions;
 
@@ -49,6 +50,23 @@ public static class IdentityServiceExtensions
           options.Cookie.Name = "token";
         });
 
+    services.Configure<CookiePolicyOptions>(options =>
+    {
+      options.MinimumSameSitePolicy = SameSiteMode.None;
+
+      var environment = config.GetValue<string>(WebHostDefaults.EnvironmentKey);
+      if (environment == Environments.Development)
+      {
+        options.HttpOnly = HttpOnlyPolicy.None;
+        options.Secure = CookieSecurePolicy.None;
+      }
+      else
+      {
+        options.HttpOnly = HttpOnlyPolicy.Always;
+        options.Secure = CookieSecurePolicy.Always;
+      }
+    });
+
     services.AddAuthorization(options =>
     {
       options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
@@ -56,9 +74,7 @@ public static class IdentityServiceExtensions
 
     services.AddDbContext<IdentityDbContext>(opt =>
     {
-      string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
       string connStr = config.GetConnectionString("IdentityConnection");
-
       opt.UseNpgsql(connStr);
     });
 
