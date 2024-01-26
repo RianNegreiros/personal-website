@@ -3,10 +3,10 @@
 import CommentSection from "@/app/components/CommentSection";
 import Loading from "@/app/components/Loading";
 import { Post, Comment, CommentData } from "@/app/models";
-import { addCommentToPost, getCommentsForPost, getIsUserLoggedIn, getPostBySlug } from "@/app/utils/api";
+import { getCommentsForPost, getPostBySlug } from "@/app/utils/api";
 import siteMetadata from "@/app/utils/siteMetaData";
 import { EmailIcon, EmailShareButton, LinkedinIcon, LinkedinShareButton, PocketIcon, PocketShareButton } from "next-share";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
@@ -34,8 +34,6 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     token: '',
   });
 
-  const [isLogged, setIsLogged] = useState(false);
-
   useEffect(() => {
     async function fetchDataAndComments() {
       const { postData, commentsData } = await fetchData(params.slug);
@@ -45,37 +43,6 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     }
     fetchDataAndComments();
   }, [params.slug]);
-
-  useEffect(() => {
-    async function checkUserLoggedIn() {
-      try {
-        const response = await getIsUserLoggedIn();
-        setIsLogged(response);
-      } catch (error) {
-        setIsLogged(false);
-      }
-    }
-    checkUserLoggedIn();
-  }, []);
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      console.log(formData);
-      await addCommentToPost(formData);
-      const response = await getCommentsForPost(params.slug);
-      setComments(response.data);
-      setFormData((prevData) => ({ ...prevData, content: '' }));
-    } catch (error) {
-      console.error('Failed to create comment:', error);
-    }
-  }
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  }
 
   return (
     <>

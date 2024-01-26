@@ -98,16 +98,11 @@ public class UserController : BaseApiController
       return BadRequest("Invalid username or password.");
     }
 
-    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
     if (!result.Succeeded)
     {
       return BadRequest("Invalid username or password.");
-    }
-
-    if (model.RememberMe)
-    {
-      await _userManager.UpdateAsync(user);
     }
 
     bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");

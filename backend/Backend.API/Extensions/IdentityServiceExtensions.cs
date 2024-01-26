@@ -22,7 +22,7 @@ public static class IdentityServiceExtensions
 
     services.AddAuthentication(options =>
     {
-      options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+      options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
       options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
       options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     })
@@ -37,13 +37,6 @@ public static class IdentityServiceExtensions
         ValidateIssuer = true,
         ValidateAudience = false
       };
-    })
-    .AddCookie(IdentityConstants.ApplicationScheme, options =>
-    {
-      options.Cookie.Name = "token";
-      options.Cookie.HttpOnly = true;
-      options.ExpireTimeSpan = TimeSpan.FromDays(7);
-      options.SlidingExpiration = true;
     });
 
     services.AddAuthorization(options =>

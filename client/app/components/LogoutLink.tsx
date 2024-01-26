@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
-import { logoutUser } from "../utils/api";
 import { toast } from 'react-toastify';
 
 export default function LogoutLink({ pathname }: { pathname: string }) {
@@ -11,7 +10,6 @@ export default function LogoutLink({ pathname }: { pathname: string }) {
 
   const handleLogout = async () => {
     try {
-      await logoutUser();
 
       setIsAdmin(false);
       setIsLogged(false);
