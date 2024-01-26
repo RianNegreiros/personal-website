@@ -30,6 +30,8 @@ public class TokenService : ITokenService
       Audience = _config["JwtConfig:Audience"],
       SigningCredentials = credentials,
       Expires = DateTime.UtcNow.AddMinutes(30),
+      NotBefore = DateTime.UtcNow,
+      IssuedAt = DateTime.UtcNow,
       Subject = GenerateClaims(user, isAdmin)
     };
 
