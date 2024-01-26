@@ -128,35 +128,6 @@ public class UserController : BaseApiController
     });
   }
 
-  [Authorize]
-  [HttpPost("logout")]
-  [SwaggerOperation(Summary = "Logout a user.")]
-  [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
-  [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
-  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  public async Task<IActionResult> Logout()
-  {
-    try
-    {
-      await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
-    }
-    catch (Exception)
-    {
-      return BadRequest(new ApiResponse<string>
-      {
-        Success = false,
-        Errors = new List<string> { "Error logging out." }
-      });
-    }
-
-    return Ok(new ApiResponse<string>
-    {
-      Success = true,
-      Data = "Logged out."
-    });
-  }
-
   [HttpGet("me")]
   [SwaggerOperation(Summary = "Check if user is logged in.")]
   [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
@@ -195,41 +166,5 @@ public class UserController : BaseApiController
     bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
     return Ok(isAdmin);
-  }
-
-  [HttpPost("autologin")]
-  [SwaggerOperation(Summary = "Auto login a user.")]
-  [ProducesResponseType(typeof(ApiResponse<UserViewModel>), StatusCodes.Status200OK)]
-  [ProducesResponseType(StatusCodes.Status400BadRequest)]
-  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  public async Task<ActionResult<UserViewModel>> AutoLogin([FromBody] string token)
-  {
-    string? email = AutoLoginHelper.GetEmailFromValidToken(_config, token);
-    if (email == null)
-    {
-      return Unauthorized();
-    }
-
-    User user = await _userManager.FindByEmailAsync(email);
-    if (user == null)
-    {
-      return Unauthorized();
-    }
-
-    bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
-
-    return Ok(new ApiResponse<UserViewModel>
-    {
-      Success = true,
-      Data = new UserViewModel
-      {
-        Id = user.Id,
-        Username = user.UserName,
-        Email = user.Email,
-        Token = token,
-        IsAdmin = isAdmin
-      }
-    });
   }
 }
