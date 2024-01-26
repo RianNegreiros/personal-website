@@ -1,11 +1,9 @@
 ﻿using System.Security.Claims;
-using Backend.API.Helpers;
 using Backend.API.Models;
 using Backend.Application.Models;
 using Backend.Application.Services;
 using Backend.Application.Validators;
 using Backend.Core.Models;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +16,12 @@ public class UserController : BaseApiController
   private readonly UserManager<User> _userManager;
   private readonly SignInManager<User> _signInManager;
   private readonly ITokenService _tokenService;
-  private readonly IConfiguration _config;
 
-  public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService, IConfiguration config)
+  public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
   {
     _userManager = userManager;
     _signInManager = signInManager;
     _tokenService = tokenService;
-    _config = config;
   }
 
   [HttpPost("register")]
@@ -109,6 +105,8 @@ public class UserController : BaseApiController
 
     string token = _tokenService.GenerateJwtToken(user, isAdmin);
 
+    SetAuthCookie(token);
+
     return Ok(new ApiResponse<UserViewModel>
     {
       Success = true,
@@ -161,5 +159,18 @@ public class UserController : BaseApiController
     bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
     return Ok(isAdmin);
+  }
+
+  private void SetAuthCookie(string token)
+  {
+    var cookieOptions = new CookieOptions
+    {
+      HttpOnly = true,
+      Secure = true,
+      Path = "/",
+      SameSite = SameSiteMode.None
+    };
+
+    Response.Cookies.Append("token", token, cookieOptions);
   }
 }
