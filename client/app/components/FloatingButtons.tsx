@@ -8,7 +8,7 @@ export default function FloatingButtons() {
 
   const pathname = usePathname();
 
-  if (pathname.includes("/posts/")) {
+  if (pathname.includes("/posts/") || pathname.includes("/admin/")) {
     return null
   }
 
