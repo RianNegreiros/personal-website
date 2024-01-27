@@ -34,7 +34,7 @@ public class UserService : IUserService
     return await _userManager.FindByIdAsync(userId);
   }
 
-  public async Task<IdentityResult> UpdateUser(string userId, string newUserName, string newEmail)
+  public async Task<IdentityResult> UpdateUser(string userId, string? newUserName, string? newEmail)
   {
     var user = await _userManager.FindByIdAsync(userId);
 
