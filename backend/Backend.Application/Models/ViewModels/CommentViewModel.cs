@@ -1,7 +1,7 @@
 using Backend.Core.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Backend.Application.Models;
+namespace Backend.Application.Models.ViewModels;
 
 public class CommentViewModel : BaseCommentModel
 {

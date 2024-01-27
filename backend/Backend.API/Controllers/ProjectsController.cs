@@ -1,6 +1,6 @@
 using Backend.API.Models;
-using Backend.Application.Models;
-using Backend.Application.Services;
+using Backend.Application.Models.InputModels;
+using Backend.Application.Services.Interfaces;
 using Backend.Application.Validators;
 using Backend.Core.Models;
 using Backend.Infrastructure.Caching;

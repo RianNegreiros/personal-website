@@ -4,8 +4,9 @@ using Backend.Core.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Backend.Application.Services.Interfaces;
 
-namespace Backend.Application.Services;
+namespace Backend.Application.Services.Implementations;
 
 public class TokenService : ITokenService
 {
@@ -18,7 +19,7 @@ public class TokenService : ITokenService
     _key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_config["JwtConfig:SecretKey"]));
   }
 
-  public string GenerateJwtToken(User user, bool isAdmin = false)
+  public string GenerateJwtToken(User user, DateTime expireTime, bool isAdmin = false)
   {
     SigningCredentials credentials = new(_key, SecurityAlgorithms.HmacSha256Signature);
 
@@ -29,7 +30,7 @@ public class TokenService : ITokenService
       Issuer = _config["JwtConfig:Issuer"],
       Audience = _config["JwtConfig:Audience"],
       SigningCredentials = credentials,
-      Expires = DateTime.UtcNow.AddMinutes(30),
+      Expires = expireTime,
       NotBefore = DateTime.UtcNow,
       IssuedAt = DateTime.UtcNow,
       Subject = GenerateClaims(user, isAdmin)

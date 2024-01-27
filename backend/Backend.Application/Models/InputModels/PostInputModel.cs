@@ -1,6 +1,6 @@
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Backend.Application.Models;
+namespace Backend.Application.Models.InputModels;
 
 public class PostInputModel : BasePostModel
 {

@@ -3,7 +3,6 @@ using Backend.API.Middlewares;
 using Backend.Core.Models;
 using Backend.Infrastructure.Data;
 using Backend.Infrastructure.Data.SeedData;
-using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

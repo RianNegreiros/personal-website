@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Backend.Application.Models;
+namespace Backend.Application.Models.InputModels;
 
 public class ProjectInputModel
 {

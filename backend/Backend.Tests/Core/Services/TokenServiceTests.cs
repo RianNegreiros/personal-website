@@ -1,4 +1,5 @@
-using Backend.Application.Services;
+using System;
+using Backend.Application.Services.Implementations;
 using Backend.Core.Models;
 using Microsoft.Extensions.Configuration;
 using Moq;
@@ -6,7 +7,7 @@ using Xunit;
 
 namespace Backend.Tests.Application.Services
 {
-    public class TokenServiceTests
+  public class TokenServiceTests
   {
     [Fact]
     public void GenerateJwtToken_ValidUser_ReturnsToken()
@@ -27,7 +28,8 @@ namespace Backend.Tests.Application.Services
       var tokenService = new TokenService(configurationMock.Object);
 
       // Act
-      var token = tokenService.GenerateJwtToken(user);
+      var tokenExpiresTime = DateTime.UtcNow.AddMinutes(30);
+      var token = tokenService.GenerateJwtToken(user, tokenExpiresTime);
 
       // Assert
       Assert.NotNull(token);

@@ -1,7 +1,8 @@
 ﻿using System.Security.Claims;
 using Backend.API.Models;
-using Backend.Application.Models;
-using Backend.Application.Services;
+using Backend.Application.Models.InputModels;
+using Backend.Application.Models.ViewModels;
+using Backend.Application.Services.Interfaces;
 using Backend.Application.Validators;
 using Backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -54,7 +55,8 @@ public class UserController : BaseApiController
       return BadRequest(result.Errors);
     }
 
-    string token = _tokenService.GenerateJwtToken(user);
+    var tokenExpireTime = DateTime.UtcNow.AddHours(7);
+    string token = _tokenService.GenerateJwtToken(user, tokenExpireTime);
 
     return Ok(new ApiResponse<UserViewModel>
     {
@@ -103,9 +105,24 @@ public class UserController : BaseApiController
 
     bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
-    string token = _tokenService.GenerateJwtToken(user, isAdmin);
+    string token;
 
-    SetAuthCookie(token);
+    if (model.RememberMe)
+    {
+      var tokenExpireTime = DateTime.UtcNow.AddDays(7);
+      token = _tokenService.GenerateJwtToken(user, tokenExpireTime, isAdmin);
+
+      var cookieExpireTime = DateTimeOffset.UtcNow.AddDays(7);
+      SetAuthCookie(token, cookieExpireTime);
+    }
+    else
+    {
+      var tokenExpireTime = DateTime.UtcNow.AddHours(7);
+      token = _tokenService.GenerateJwtToken(user, tokenExpireTime, isAdmin);
+
+      var cookieExpireTime = DateTimeOffset.UtcNow.AddHours(7);
+      SetAuthCookie(token, cookieExpireTime);
+    }
 
     return Ok(new ApiResponse<UserViewModel>
     {
@@ -161,14 +178,15 @@ public class UserController : BaseApiController
     return Ok(isAdmin);
   }
 
-  private void SetAuthCookie(string token)
+  private void SetAuthCookie(string token, DateTimeOffset expireTime)
   {
     var cookieOptions = new CookieOptions
     {
       HttpOnly = true,
       Secure = true,
       Path = "/",
-      SameSite = SameSiteMode.None
+      SameSite = SameSiteMode.None,
+      Expires = expireTime
     };
 
     Response.Cookies.Append("token", token, cookieOptions);

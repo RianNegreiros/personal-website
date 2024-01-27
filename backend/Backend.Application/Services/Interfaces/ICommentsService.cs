@@ -1,7 +1,8 @@
-using Backend.Application.Models;
+using Backend.Application.Models.InputModels;
+using Backend.Application.Models.ViewModels;
 using Backend.Core.Models;
 
-namespace Backend.Application.Services;
+namespace Backend.Application.Services.Interfaces;
 
 public interface ICommentsService
 {

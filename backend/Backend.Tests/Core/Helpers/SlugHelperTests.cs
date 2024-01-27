@@ -1,7 +1,7 @@
-using Backend.Application.Helpers;
+using Backend.Core.Helpers;
 using Xunit;
 
-namespace Backend.Tests.Application.Helpers;
+namespace Backend.Tests.Core.Helpers;
 
 public class SlugHelperTests
 {

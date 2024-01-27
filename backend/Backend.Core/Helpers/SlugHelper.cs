@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Backend.Application.Helpers;
+namespace Backend.Core.Helpers;
 
 public static class SlugHelper
 {
@@ -33,7 +33,6 @@ public static class SlugHelper
     // Remove leading and trailing hyphens.
     output = output.Trim('-');
 
-    // Return the slug.  
     return output;
     }
 }

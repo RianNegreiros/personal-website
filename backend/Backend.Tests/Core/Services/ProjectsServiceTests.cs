@@ -1,7 +1,7 @@
 using System.IO;
 using System.Threading.Tasks;
-using Backend.Application.Models;
-using Backend.Application.Services;
+using Backend.Application.Models.InputModels;
+using Backend.Application.Services.Implementations;
 using Backend.Core.Interfaces.CloudServices;
 using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;

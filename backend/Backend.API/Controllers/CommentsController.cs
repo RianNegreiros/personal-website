@@ -1,6 +1,7 @@
 using Backend.API.Models;
-using Backend.Application.Models;
-using Backend.Application.Services;
+using Backend.Application.Models.InputModels;
+using Backend.Application.Models.ViewModels;
+using Backend.Application.Services.Interfaces;
 using Backend.Application.Validators;
 using Backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -16,14 +17,12 @@ public class CommentsController : BaseApiController
     private readonly ICommentsService _commentsService;
     private readonly IPostService _postService;
     private readonly UserManager<User> _userManager;
-    private readonly IConfiguration _config;
 
-    public CommentsController(ICommentsService commentsService, IPostService postService, UserManager<User> userManager, IConfiguration config)
+    public CommentsController(ICommentsService commentsService, IPostService postService, UserManager<User> userManager)
     {
         _commentsService = commentsService;
         _postService = postService;
         _userManager = userManager;
-        _config = config;
     }
 
     [Authorize]
