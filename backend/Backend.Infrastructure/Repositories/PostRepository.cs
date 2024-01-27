@@ -1,5 +1,6 @@
 using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Backend.Infrastructure.Repositories;
@@ -51,6 +52,13 @@ public class PostRepository : IPostRepository
 
     public async Task<int> Count()
     {
-        return (int) await _postCollection.CountDocumentsAsync(_ => true);
+        return (int)await _postCollection.CountDocumentsAsync(_ => true);
+    }
+
+    public async Task Delete(string id)
+    {
+        var filter = Builders<Post>.Filter.Eq("Id", id);
+
+        await _postCollection.DeleteOneAsync(filter);
     }
 }
