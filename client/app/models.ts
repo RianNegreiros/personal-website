@@ -16,10 +16,20 @@ export interface PostData {
 
 export interface UserData {
   id: string;
-  username: string;
+  userName: string;
   email: string;
   token: string;
 }
+
+export interface UserAdminData {
+  id: string;
+  username: string;
+  email: string;
+  posts: [{ title: string, slug: string }],
+  comments: [{ content: string, postSlug: string }]
+  isAdmin: boolean
+}
+
 
 export interface SignUpData {
   Id: string;

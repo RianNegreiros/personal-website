@@ -56,6 +56,24 @@ async function getPosts(pageNumber: number, pageSize: number) {
   }
 }
 
+async function getAdminPosts() {
+  try {
+    const response = await axios.get(`${API_URL}/admin/posts`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch posts. Please try again later.');
+  }
+}
+
+async function getAdminUsers() {
+  try {
+    const response = await axios.get(`${API_URL}/admin/users`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch posts. Please try again later.');
+  }
+}
+
 async function getFeed() {
   try {
     const response = await axios.get(`${API_URL}/feed`);
@@ -134,6 +152,22 @@ async function getPostBySlug(slug: string) {
   }
 }
 
+async function deleteAdminPost(id: string) {
+  try {
+    await axios.delete(`${API_URL}/admin/posts/${id}`);
+  } catch (error) {
+    throw new Error('Failed to delete post. Please try again later.');
+  }
+}
+
+async function deleteAdminUser(id: string) {
+  try {
+    await axios.delete(`${API_URL}/admin/users/${id}`);
+  } catch (error) {
+    throw new Error('Failed to delete post. Please try again later.');
+  }
+}
+
 export {
   signUpUser,
   signInUser,
@@ -144,5 +178,9 @@ export {
   addCommentToPost,
   createProject,
   getProjects,
-  getFeed
+  getFeed,
+  getAdminPosts,
+  deleteAdminPost,
+  getAdminUsers,
+  deleteAdminUser
 };

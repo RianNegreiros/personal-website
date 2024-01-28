@@ -1,32 +1,55 @@
+"use client"
+
+import AdminCreateUserModal from "@/app/components/AdminCreateUserModal";
+import AdminDeleteModal from "@/app/components/AdminDeleteModal";
+import { UserAdminData } from "@/app/models";
+import { deleteAdminUser, getAdminUsers } from "@/app/utils/api";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+async function fetchData() {
+  const result = await getAdminUsers();
+  return result;
+}
 
 export default function UsersPage() {
-  const dummyData = [
-    {
-      id: 1,
-      email: 'john.doe@example.com',
-      name: 'John Doe',
-      postsCount: 5,
-      commentsCount: 10,
-      role: 'Admin',
-    },
-    {
-      id: 2,
-      email: 'jane.smith@example.com',
-      name: 'Jane Smith',
-      postsCount: 8,
-      commentsCount: 15,
-      role: 'User',
-    },
-    {
-      id: 3,
-      email: 'bob.jones@example.com',
-      name: 'Bob Jones',
-      postsCount: 3,
-      commentsCount: 6,
-      role: 'Moderator',
-    },
-  ];
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isCreateUserModalOpen, setIsCreateUserModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<string>('');
+  const [data, setData] = useState<UserAdminData[]>([]);
+
+  useEffect(() => {
+    async function getData() {
+      const projects = await fetchData();
+      setData(projects);
+    }
+    getData();
+  }, []);
+
+  console.log(data)
+
+  const handleDeleteCancel = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedUserId('');
+  };
+
+  const handleDeleteConfirm = async () => {
+    setIsDeleteModalOpen(false);
+    await deleteAdminUser(selectedUserId);
+  };
+
+  const openDeleteModal = (userId: string) => {
+    setIsDeleteModalOpen(true);
+    setSelectedUserId(userId);
+  };
+
+  const openCreateUserModal = () => {
+    setIsCreateUserModalOpen(true);
+  };
+
+  const closeCreateUserModal = () => {
+    setIsCreateUserModalOpen(false);
+  };
 
   return (
     <>
@@ -37,7 +60,7 @@ export default function UsersPage() {
               <div className="flex-1 flex items-center space-x-2">
                 <h5>
                   <span className="text-gray-500">All Users: </span>
-                  <span className="dark:text-white">123456</span>
+                  <span className="dark:text-white">{data.length}</span>
                 </h5>
               </div>
             </div>
@@ -74,8 +97,8 @@ export default function UsersPage() {
                 </form>
               </div>
               <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                <Link
-                  href="/add-user"
+                <button
+                  onClick={() => openCreateUserModal()}
                   className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                 >
                   <svg
@@ -92,7 +115,7 @@ export default function UsersPage() {
                     />
                   </svg>
                   Add user
-                </Link>
+                </button>
                 <div id="filterDropdown" className="z-10 hidden px-3 pt-1 bg-white rounded-lg shadow w-80 dark:bg-gray-700 right-0">
                   <div className="pt-3 pb-2">
                     <label htmlFor="input-group-search" className="sr-only">
@@ -159,18 +182,18 @@ export default function UsersPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {dummyData.map((user) => (
+                  {data.map((user) => (
                     <tr key={user.id} className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                       <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <div className="flex items-center mr-3">{user.id}</div>
                       </th>
                       <td className="px-4 py-3">{user.email}</td>
                       <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <div className="flex items-center">{user.name}</div>
+                        <div className="flex items-center">{user.username}</div>
                       </td>
-                      <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{user.postsCount}</td>
-                      <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{user.commentsCount}</td>
-                      <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{user.role}</td>
+                      <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{user.posts.length}</td>
+                      <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{user.comments.length}</td>
+                      <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{user.isAdmin ? "Admin" : "User"}</td>
                       <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <div className="flex items-center space-x-4">
                           <Link
@@ -195,9 +218,7 @@ export default function UsersPage() {
                           </Link>
                           <button
                             type="button"
-                            data-drawer-target={`drawer-delete-product-${user.id}`}
-                            data-drawer-show={`drawer-delete-product-${user.id}`}
-                            aria-controls={`drawer-delete-product-${user.id}`}
+                            onClick={() => openDeleteModal(user.id)}
                             className="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                           >
                             <svg
@@ -208,9 +229,9 @@ export default function UsersPage() {
                               aria-hidden="true"
                             >
                               <path
-                                fill-rule="evenodd"
+                                fillRule="evenodd"
                                 d="M5.293 4.293a1 1 0 011.414 0L10 8.586l3.293-3.293a1 1 0 011.414 0 1 1 0 010 1.414L11.414 10l3.293 3.293a1 1 0 010 1.414 1 1 0 01-1.414 0L10 11.414l-3.293 3.293a1 1 0 01-1.414 0 1 1 0 010-1.414L8.586 10 5.293 6.707a1 1 0 010-1.414z"
-                                clip-rule="evenodd"
+                                clipRule="evenodd"
                               />
                             </svg>
                             Delete
@@ -225,6 +246,12 @@ export default function UsersPage() {
           </div>
         </div>
       </section>
+
+      <AdminCreateUserModal isOpen={isCreateUserModalOpen} onClose={closeCreateUserModal} />
+
+      {isDeleteModalOpen && (
+        <AdminDeleteModal onCancel={handleDeleteCancel} onDelete={handleDeleteConfirm} isOpen={isDeleteModalOpen} />
+      )}
     </>
   );
 }
