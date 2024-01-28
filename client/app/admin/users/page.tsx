@@ -2,8 +2,8 @@
 
 import AdminCreateUserModal from "@/app/components/AdminCreateUserModal";
 import AdminDeleteModal from "@/app/components/AdminDeleteModal";
-import { UserAdminData } from "@/app/models";
-import { deleteAdminUser, getAdminUsers } from "@/app/utils/api";
+import { CreateUser, UserAdminData } from "@/app/models";
+import { createUser, deleteAdminUser, getAdminUsers } from "@/app/utils/api";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -20,13 +20,11 @@ export default function UsersPage() {
 
   useEffect(() => {
     async function getData() {
-      const projects = await fetchData();
-      setData(projects);
+      const users = await fetchData();
+      setData(users);
     }
     getData();
   }, []);
-
-  console.log(data)
 
   const handleDeleteCancel = () => {
     setIsDeleteModalOpen(false);
@@ -36,6 +34,8 @@ export default function UsersPage() {
   const handleDeleteConfirm = async () => {
     setIsDeleteModalOpen(false);
     await deleteAdminUser(selectedUserId);
+    const users = await fetchData();
+    setData(users);
   };
 
   const openDeleteModal = (userId: string) => {
@@ -45,6 +45,16 @@ export default function UsersPage() {
 
   const openCreateUserModal = () => {
     setIsCreateUserModalOpen(true);
+  };
+
+  const handleCreate = async (formData: CreateUser) => {
+    try {
+      await createUser(formData);
+      const users = await fetchData();
+      setData(users);
+    } catch (error) {
+      console.error('Error creating user');
+    }
   };
 
   const closeCreateUserModal = () => {
@@ -184,7 +194,7 @@ export default function UsersPage() {
                 <tbody>
                   {data.map((user) => (
                     <tr key={user.id} className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                      <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <th scope="row" className="truncate px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <div className="flex items-center mr-3">{user.id}</div>
                       </th>
                       <td className="px-4 py-3">{user.email}</td>
@@ -247,7 +257,7 @@ export default function UsersPage() {
         </div>
       </section>
 
-      <AdminCreateUserModal isOpen={isCreateUserModalOpen} onClose={closeCreateUserModal} />
+      <AdminCreateUserModal isOpen={isCreateUserModalOpen} onClose={closeCreateUserModal} onCreateUser={handleCreate} />
 
       {isDeleteModalOpen && (
         <AdminDeleteModal onCancel={handleDeleteCancel} onDelete={handleDeleteConfirm} isOpen={isDeleteModalOpen} />

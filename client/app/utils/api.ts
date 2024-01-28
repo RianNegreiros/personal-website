@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { CommentData, PostData, ProjectData, SignInData, SignUpData } from '../models';
+import { CommentData, CreateUser, PostData, ProjectData, SignInData, SignUpData } from '../models';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -15,6 +15,15 @@ async function signUpUser(formData: SignUpData): Promise<any> {
     return response.data;
   } catch (error) {
     throw new Error('Sign up failed. Please try again later.');
+  }
+}
+
+async function createUser(formData: CreateUser): Promise<any> {
+  console.log(formData)
+  try {
+    await axios.post(`${API_URL}/admin/users`, formData);
+  } catch (error) {
+    throw new Error('User creation failed. Please try again later.');
   }
 }
 
@@ -168,6 +177,14 @@ async function deleteAdminUser(id: string) {
   }
 }
 
+async function logoutUser() {
+  try {
+    await axios.post(`${API_URL}/user/logout`);
+  } catch (error) {
+    throw new Error('Failed to logout user. Please try again later.');
+  }
+}
+
 export {
   signUpUser,
   signInUser,
@@ -182,5 +199,7 @@ export {
   getAdminPosts,
   deleteAdminPost,
   getAdminUsers,
-  deleteAdminUser
+  deleteAdminUser,
+  createUser,
+  logoutUser
 };

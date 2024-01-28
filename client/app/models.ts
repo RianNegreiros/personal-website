@@ -30,13 +30,19 @@ export interface UserAdminData {
   isAdmin: boolean
 }
 
-
 export interface SignUpData {
   Id: string;
   email: string;
   username: string;
   password: string;
   confirmPassword: string;
+}
+
+export interface CreateUser {
+  username?: string;
+  email?: string;
+  password?: string;
+  admin: boolean;
 }
 
 export interface SignInData {
