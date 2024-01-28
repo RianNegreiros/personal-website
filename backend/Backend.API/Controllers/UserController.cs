@@ -5,6 +5,8 @@ using Backend.Application.Models.ViewModels;
 using Backend.Application.Services.Interfaces;
 using Backend.Application.Validators;
 using Backend.Core.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -176,6 +178,14 @@ public class UserController : BaseApiController
     bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
     return Ok(isAdmin);
+  }
+
+  [Authorize]
+  [HttpPost("logout")]
+  public async Task<IActionResult> Logout()
+  {
+    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    return Ok();
   }
 
   private void SetAuthCookie(string token, DateTimeOffset expireTime)
