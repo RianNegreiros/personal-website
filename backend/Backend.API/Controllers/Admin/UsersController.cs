@@ -1,3 +1,4 @@
+using Backend.Application.Models.InputModels;
 using Backend.Application.Models.ViewModels;
 using Backend.Application.Services.Interfaces;
 using Backend.Core.Models;
@@ -39,9 +40,9 @@ public class UsersController : ControllerBase
   }
 
   [HttpPost]
-  public async Task<IActionResult> Create(string userName, string email, string password)
+  public async Task<IActionResult> Create([FromBody] AdminCreateUserInputModel model)
   {
-    var result = await _userService.CreateUser(userName, email, password);
+    var result = await _userService.CreateUser(model.Username, model.Email, model.Password, model.Admin);
 
     if (result.Succeeded)
     {

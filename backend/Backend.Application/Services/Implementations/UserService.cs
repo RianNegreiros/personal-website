@@ -46,14 +46,22 @@ public class UserService : IUserService
     return adminUserViewModels;
   }
 
-  public async Task<IdentityResult> CreateUser(string userName, string email, string password)
+  public async Task<IdentityResult> CreateUser(string username, string email, string password, bool admin = false)
   {
     var user = new User
     {
-      UserName = userName,
+      UserName = username,
       Email = email
     };
-    return await _userManager.CreateAsync(user, password);
+
+    var result = await _userManager.CreateAsync(user, password);
+
+    if (admin)
+    {
+      await _userManager.AddToRoleAsync(user, "Admin");
+    }
+
+    return result;
   }
 
   public async Task<User> GetUserById(string userId)
