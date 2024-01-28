@@ -10,4 +10,5 @@ public interface ICommentsRepository
     Task<List<Comment>> GetCommentsForPostById(string postId);
     Task<List<Comment>> GetCommentsForPostBySlug(string postSlug);
     Task Delete(string id);
+    Task<List<Comment>> GetCommentsForUserById(string userId);
 }

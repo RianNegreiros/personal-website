@@ -1,3 +1,4 @@
+using Backend.Application.Models.ViewModels;
 using Backend.Application.Services.Interfaces;
 using Backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -18,7 +19,7 @@ public class UsersController : ControllerBase
   }
 
   [HttpGet]
-  public async Task<ActionResult<IEnumerable<User>>> GetAll()
+  public async Task<ActionResult<IEnumerable<AdminUserViewModel>>> GetAll()
   {
     var users = await _userService.GetAllUsers();
     return Ok(users);

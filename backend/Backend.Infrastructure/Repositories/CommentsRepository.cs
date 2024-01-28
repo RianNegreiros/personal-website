@@ -29,6 +29,11 @@ public class CommentsRepository : ICommentsRepository
         return comment;
     }
 
+    public async Task<List<Comment>> GetCommentsForUserById(string userId)
+    {
+        return await _comments.Find(c => c.Author.Id == userId).ToListAsync();
+    }
+
     public async Task<List<Comment>> GetCommentsForPostById(string postId)
     {
         return await _comments.Find(c => c.PostId == postId).ToListAsync();
@@ -38,6 +43,7 @@ public class CommentsRepository : ICommentsRepository
     {
         return await _comments.Find(c => c.PostSlug == postSlug).ToListAsync();
     }
+
     public async Task Delete(string id)
     {
         var filter = Builders<Comment>.Filter.Eq("Id", id);

@@ -61,4 +61,10 @@ public class PostRepository : IPostRepository
 
         await _postCollection.DeleteOneAsync(filter);
     }
+
+    public async Task<List<Post>> GetPostsForUserById(string userId)
+    {
+        return await _postCollection.Find(c => c.Author.Id == userId).ToListAsync();
+    }
+
 }
