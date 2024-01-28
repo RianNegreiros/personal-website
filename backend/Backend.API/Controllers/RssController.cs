@@ -1,6 +1,6 @@
 using System.Xml.Linq;
-using Backend.Application.Models;
-using Backend.Application.Services;
+using Backend.Application.Models.ViewModels;
+using Backend.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.API.Controllers;

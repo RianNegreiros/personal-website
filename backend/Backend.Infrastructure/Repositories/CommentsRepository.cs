@@ -13,10 +13,25 @@ public class CommentsRepository : ICommentsRepository
         _comments = database.GetCollection<Comment>("comments");
     }
 
+    public async Task<List<Comment>> GetAll()
+    {
+        return await _comments.Find(_ => true).ToListAsync();
+    }
+
+    public async Task<Comment> GetById(string id)
+    {
+        return await _comments.Find(p => p.Id == id).FirstOrDefaultAsync();
+    }
+
     public async Task<Comment> AddComment(Comment comment)
     {
         await _comments.InsertOneAsync(comment);
         return comment;
+    }
+
+    public async Task<List<Comment>> GetCommentsForUserById(string userId)
+    {
+        return await _comments.Find(c => c.Author.Id == userId).ToListAsync();
     }
 
     public async Task<List<Comment>> GetCommentsForPostById(string postId)
@@ -27,5 +42,12 @@ public class CommentsRepository : ICommentsRepository
     public async Task<List<Comment>> GetCommentsForPostBySlug(string postSlug)
     {
         return await _comments.Find(c => c.PostSlug == postSlug).ToListAsync();
+    }
+
+    public async Task Delete(string id)
+    {
+        var filter = Builders<Comment>.Filter.Eq("Id", id);
+
+        await _comments.DeleteOneAsync(filter);
     }
 }

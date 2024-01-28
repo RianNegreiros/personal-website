@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { CommentData, PostData, ProjectData, SignInData, SignUpData } from '../models';
+import { CommentData, CreateUser, PostData, ProjectData, SignInData, SignUpData } from '../models';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -15,6 +15,15 @@ async function signUpUser(formData: SignUpData): Promise<any> {
     return response.data;
   } catch (error) {
     throw new Error('Sign up failed. Please try again later.');
+  }
+}
+
+async function createUser(formData: CreateUser): Promise<any> {
+  console.log(formData)
+  try {
+    await axios.post(`${API_URL}/admin/users`, formData);
+  } catch (error) {
+    throw new Error('User creation failed. Please try again later.');
   }
 }
 
@@ -50,6 +59,24 @@ async function createPost(formData: PostData) {
 async function getPosts(pageNumber: number, pageSize: number) {
   try {
     const response = await axios.get(`${API_URL}/posts/?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch posts. Please try again later.');
+  }
+}
+
+async function getAdminPosts() {
+  try {
+    const response = await axios.get(`${API_URL}/admin/posts`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch posts. Please try again later.');
+  }
+}
+
+async function getAdminUsers() {
+  try {
+    const response = await axios.get(`${API_URL}/admin/users`);
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch posts. Please try again later.');
@@ -134,6 +161,30 @@ async function getPostBySlug(slug: string) {
   }
 }
 
+async function deleteAdminPost(id: string) {
+  try {
+    await axios.delete(`${API_URL}/admin/posts/${id}`);
+  } catch (error) {
+    throw new Error('Failed to delete post. Please try again later.');
+  }
+}
+
+async function deleteAdminUser(id: string) {
+  try {
+    await axios.delete(`${API_URL}/admin/users/${id}`);
+  } catch (error) {
+    throw new Error('Failed to delete post. Please try again later.');
+  }
+}
+
+async function logoutUser() {
+  try {
+    await axios.post(`${API_URL}/user/logout`);
+  } catch (error) {
+    throw new Error('Failed to logout user. Please try again later.');
+  }
+}
+
 export {
   signUpUser,
   signInUser,
@@ -144,5 +195,11 @@ export {
   addCommentToPost,
   createProject,
   getProjects,
-  getFeed
+  getFeed,
+  getAdminPosts,
+  deleteAdminPost,
+  getAdminUsers,
+  deleteAdminUser,
+  createUser,
+  logoutUser
 };

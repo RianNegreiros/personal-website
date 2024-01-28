@@ -13,7 +13,6 @@ public class UpdatePostModel
     [SwaggerSchema(Description = "The post's summary")]
     public string? Summary { get; set; }
 
-
     [SwaggerSchema(Description = "The post's content")]
     public string? Content { get; set; }
 }

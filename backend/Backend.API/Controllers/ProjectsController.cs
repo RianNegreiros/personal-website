@@ -1,6 +1,6 @@
 using Backend.API.Models;
-using Backend.Application.Models;
-using Backend.Application.Services;
+using Backend.Application.Models.InputModels;
+using Backend.Application.Services.Interfaces;
 using Backend.Application.Validators;
 using Backend.Core.Models;
 using Backend.Infrastructure.Caching;
@@ -126,16 +126,11 @@ public class ProjectsController : BaseApiController
     [SwaggerOperation(Summary = "Update a project.")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Project>> UpdateProject(string id, Project project)
+    public async Task<ActionResult<Project>> UpdateProject(string id, [FromForm] UpdateProjectInputModel model)
     {
-        if (id != project.Id)
-        {
-            return BadRequest();
-        }
+        var project = await _projectsService.UpdateProject(id, model);
 
-        await _projectsService.UpdateProject(id, project);
-
-        return NoContent();
+        return Ok(project);
     }
 
     [HttpDelete("{id}")]

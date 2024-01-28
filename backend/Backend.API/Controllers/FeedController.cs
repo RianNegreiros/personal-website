@@ -1,6 +1,6 @@
 using Backend.API.Models;
-using Backend.Application.Models;
-using Backend.Application.Services;
+using Backend.Application.Models.ViewModels;
+using Backend.Application.Services.Interfaces;
 using Backend.Infrastructure.Caching;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

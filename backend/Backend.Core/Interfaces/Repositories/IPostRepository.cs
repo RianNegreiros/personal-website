@@ -11,4 +11,6 @@ public interface IPostRepository
     Task<List<Post>> GetAllWithParameters(int pageNumber, int pageSize);
     Task<List<Post>> GetAll();
     Task<int> Count();
+    Task Delete(string id);
+    Task<List<Post>> GetPostsForUserById(string userId);
 }
