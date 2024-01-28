@@ -8,6 +8,6 @@ public interface IProjectsService
     Task<List<Project>> GetProjects();
     Task<Project> GetProject(string id);
     Task<Project> CreateProject(ProjectInputModel project);
-    Task<Project> UpdateProject(string id, Project project);
+    Task<Project> UpdateProject(string id, UpdateProjectInputModel model);
     Task DeleteProject(string id);
 }

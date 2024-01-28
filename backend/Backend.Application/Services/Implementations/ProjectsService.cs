@@ -45,9 +45,36 @@ public class ProjectsService : IProjectsService
         return newProject;
     }
 
-    public async Task<Project> UpdateProject(string id, Project project)
+    public async Task<Project> UpdateProject(string id, UpdateProjectInputModel model)
     {
+        var project = await _projectsRepository.GetProjectByIdAsync(id);
+
+        string imageUrl = project.Url;
+
+        if (model.Image != null)
+        {
+            imageUrl = await _cloudinaryService.UploadImageAsync(model.Image.OpenReadStream(), model.Image.FileName);
+        }
+
+        if (model.Title != null)
+        {
+            project.Title = model.Title;
+        }
+
+        if (model.Url != null)
+        {
+            project.Url = model.Url;
+        }
+
+        if (model.Overview != null)
+        {
+            project.Overview = model.Overview;
+        }
+
+        project.Url = imageUrl;
+
         await _projectsRepository.UpdateProjectAsync(id, project);
+
         return project;
     }
 
