@@ -8,6 +8,7 @@ import FloatingButtons from './components/FloatingButtons'
 import Footer from './components/Footer'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Head from 'next/head'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,14 +19,15 @@ export const metadata: Metadata = {
     default: siteMetadata.title,
   },
   description: siteMetadata.description,
+  icons: siteMetadata.siteLogo,
   openGraph: {
     title: siteMetadata.title,
     description: siteMetadata.description,
     url: siteMetadata.siteUrl,
     siteName: siteMetadata.title,
-    images: [siteMetadata.socialBanner],
     locale: "pt_BR",
     type: "website",
+    emails: siteMetadata.email
   },
   robots: {
     index: true,
@@ -38,12 +40,7 @@ export const metadata: Metadata = {
       'max-video-preview': -1,
       'max-snippet': -1,
     },
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: siteMetadata.title,
-    images: [siteMetadata.socialBanner],
-  },
+  }
 }
 
 export default function RootLayout({
@@ -53,6 +50,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "http://schema.org",
+              "@type": "Person",
+              "name": "Rian Negreiros Dos Santos",
+              "url": "${siteMetadata.siteUrl}",
+              "sameAs": [
+                "${siteMetadata.github}",
+                "${siteMetadata.linkedin}"
+              ]
+            }
+        `}
+        </script>
+      </Head>
       <body className={`${inter.className} bg-white text-black dark:bg-gray-900 dark:text-white h-full selection:bg-gray-50 dark:selection:bg-gray-800`}>
         <Providers>
           <ToastContainer />
