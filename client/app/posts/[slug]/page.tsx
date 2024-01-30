@@ -6,14 +6,11 @@ import { Post, Comment } from "@/app/models";
 import { getCommentsForPost, getPostBySlug } from "@/app/utils/api";
 import siteMetadata from "@/app/utils/siteMetaData";
 import { EmailIcon, EmailShareButton, LinkedinIcon, LinkedinShareButton, PocketIcon, PocketShareButton } from "next-share";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-
-interface PostPageProps {
-  params: { slug: string };
-}
 
 async function fetchData(slug: string) {
   const postData = await getPostBySlug(slug);
@@ -49,8 +46,38 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         <Loading />
       ) : (
         <>
+          <Head>
+            <meta property="og:title" content={data.title} />
+            <meta property="og:description" content={data.summary} />
+            <meta property="og:url" content={`${siteMetadata.siteUrl}/posts/${data.slug}`} />
+            <meta name="robots" content="index, follow" />
+            <meta name="author" content={siteMetadata.author} />
+            <meta property="og:type" content="article" />
+            <script type="application/ld+json">
+              {`
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "${data.title}",
+            "datePublished": "${data.createdAt},
+            "author": {
+              "@type": "Person",
+              "name": "${siteMetadata.author}"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "riannegreiros.dev",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "${siteMetadata.siteLogo}"
+              }
+            },
+            "description": "${data.summary}"
+          }
+        `}
+            </script>
+          </Head>
           <header className="pt-6 xl:pb-6">
-
             <div className="space-y-1 text-center">
               <div className="space-y-10 mb-3">
                 <div>
@@ -105,7 +132,8 @@ export default function PostPage({ params }: { params: { slug: string } }) {
 
           <CommentSection slug={params.slug} />
         </>
-      )}
+      )
+      }
     </>
   )
 }
