@@ -80,7 +80,8 @@ public class PostService : IPostService
         Summary = post.Summary,
         Slug = post.Slug,
         Content = post.Content,
-        CreatedAt = post.CreatedAt
+        CreatedAt = post.CreatedAt,
+        UpdatedAt = post.UpdatedAt
       }),
       TotalCount = totalCount,
       CurrentPage = pageNumber,
@@ -100,7 +101,8 @@ public class PostService : IPostService
         Summary = post.Summary,
         Slug = post.Slug,
         Content = post.Content,
-        CreatedAt = post.CreatedAt
+        CreatedAt = post.CreatedAt,
+        UpdatedAt = post.UpdatedAt
       }).ToList();
     }
 
@@ -129,7 +131,8 @@ public class PostService : IPostService
       Summary = post.Summary,
       Content = post.Content,
       Slug = post.Slug,
-      CreatedAt = post.CreatedAt
+      CreatedAt = post.CreatedAt,
+      UpdatedAt = post.UpdatedAt
     };
   }
 }

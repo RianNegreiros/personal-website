@@ -12,4 +12,7 @@ public class PostViewModel : BasePostModel
 
   [SwaggerSchema(Description = "The post's date of creation")]
   public DateTime CreatedAt { get; set; }
+
+  [SwaggerSchema(Description = "The post's last update")]
+  public DateTime UpdatedAt { get; set; }
 }
