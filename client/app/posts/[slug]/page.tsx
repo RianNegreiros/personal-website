@@ -2,7 +2,7 @@
 
 import CommentSection from "@/app/components/CommentSection";
 import Loading from "@/app/components/Loading";
-import { Post, Comment, CommentData } from "@/app/models";
+import { Post, Comment } from "@/app/models";
 import { getCommentsForPost, getPostBySlug } from "@/app/utils/api";
 import siteMetadata from "@/app/utils/siteMetaData";
 import { EmailIcon, EmailShareButton, LinkedinIcon, LinkedinShareButton, PocketIcon, PocketShareButton } from "next-share";
@@ -10,6 +10,10 @@ import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+
+interface PostPageProps {
+  params: { slug: string };
+}
 
 async function fetchData(slug: string) {
   const postData = await getPostBySlug(slug);
@@ -28,11 +32,6 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     createdAt: ''
   });
   const [comments, setComments] = useState<Comment[]>([]);
-  const [formData, setFormData] = useState<CommentData>({
-    postSlug: params.slug,
-    content: '',
-    id: '',
-  });
 
   useEffect(() => {
     async function fetchDataAndComments() {
