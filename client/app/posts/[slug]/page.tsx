@@ -51,24 +51,6 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         <>
           <header className="pt-6 xl:pb-6">
 
-            <meta property="og:title" content={data.title} />
-            <meta name="description" content={data.summary} />
-            <meta property="og:site_name" content={siteMetadata.title} />
-            <meta property="og:description" content={data.summary} />
-            <meta property="og:url" content={`${siteMetadata.siteUrl}/posts/${data.slug}`} />
-            <meta property="og:type" content="article" />
-            <meta property="article:published_time" content={data.createdAt} />
-            <meta property="article:modified_time" content={data.createdAt} />
-            <meta property="article:author" content={siteMetadata.author} />
-            <meta property="article:section" content="Technology" />
-            <meta property="article:tag" content="Technology" />
-            <meta property="og:locale" content="pt_BR" />
-            <meta property="og:siteName" content={siteMetadata.title} />
-            <meta property="og:image" content={siteMetadata.socialBanner} />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={data.title} />
-            <meta name="twitter:description" content={data.summary} />
-
             <div className="space-y-1 text-center">
               <div className="space-y-10 mb-3">
                 <div>
