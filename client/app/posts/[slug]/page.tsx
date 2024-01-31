@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     openGraph: {
       title: postData.data.title,
       description: postData.data.summary,
-      url: `${new URL(siteMetadata.siteUrl)}/posts/${postData.data.slug}`,
+      url: `${siteMetadata.siteUrl}/posts/${postData.data.slug}`,
       siteName: siteMetadata.title,
       locale: "pt_BR",
       type: "article",

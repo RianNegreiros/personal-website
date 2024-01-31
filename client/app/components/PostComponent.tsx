@@ -78,14 +78,14 @@ export default function PostComponent({
 
           <div className="flex justify-center space-x-4 mb-4">
             <LinkedinShareButton
-              url={`${new URL(siteMetadata.siteUrl)}/posts/${data.slug}`}
+              url={`${siteMetadata.siteUrl}/posts/${data.slug}`}
               title={data.title}
               summary={data.summary}>
               <LinkedinIcon size={32} round />
             </LinkedinShareButton>
 
             <PocketShareButton
-              url={`${new URL(siteMetadata.siteUrl)}/posts/${data.slug}`}
+              url={`${siteMetadata.siteUrl}/posts/${data.slug}`}
               title={data.title}
               about={data.summary}
             >
@@ -93,7 +93,7 @@ export default function PostComponent({
             </PocketShareButton>
 
             <EmailShareButton
-              url={`${new URL(siteMetadata.siteUrl)}/posts/${data.slug}`}
+              url={`${siteMetadata.siteUrl}/posts/${data.slug}`}
               subject={data.title}
               about={data.summary}
               body="body"
