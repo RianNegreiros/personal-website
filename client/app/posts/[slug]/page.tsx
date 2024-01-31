@@ -2,9 +2,15 @@ import PostComponent from "@/app/components/PostComponent";
 import { getCommentsForPost, getPostBySlug } from "@/app/utils/api";
 import siteMetadata from "@/app/utils/siteMetaData";
 import { Metadata } from "next";
+import { cache } from "react";
+
+const getPosts = cache(async (slug: string) => {
+  const postData = await getPostBySlug(slug);
+  return postData;
+})
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const postData = await getPostBySlug(params.slug);
+  const postData = await getPosts(params.slug);
 
   return {
     metadataBase: new URL(siteMetadata.siteUrl),
@@ -29,7 +35,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
-  const postData = await getPostBySlug(params.slug);
+  const postData = await getPosts(params.slug);
   const commentsData = await getCommentsForPost(params.slug);
 
   return (
