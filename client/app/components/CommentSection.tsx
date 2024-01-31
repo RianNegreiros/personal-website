@@ -9,6 +9,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 interface CommentSectionProps {
   slug: string;
+  comments: Comment[];
 }
 
 const CommentSection: React.FC<CommentSectionProps> = ({ slug }) => {
@@ -23,12 +24,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({ slug }) => {
   let pathname = usePathname()
 
   useEffect(() => {
-    async function fetchDataAndComments() {
-      const commentsData = await getCommentsForPost(slug);
-      setComments(commentsData.data);
-    }
-    fetchDataAndComments();
-  }, [slug]);
+    setComments(comments);
+  }, [comments]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

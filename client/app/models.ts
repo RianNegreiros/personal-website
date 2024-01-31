@@ -5,6 +5,7 @@ export interface Post {
   content: string
   slug: string
   createdAt: string
+  updatedAt: string
 }
 
 export interface PostData {
