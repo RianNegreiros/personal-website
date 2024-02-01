@@ -1,3 +1,6 @@
+using System.ServiceModel.Syndication;
+using System.Text;
+using System.Xml;
 using Backend.API.Models;
 using Backend.Application.Models;
 using Backend.Application.Models.InputModels;
@@ -26,6 +29,44 @@ public class PostsController : BaseApiController
     _postService = postService;
     _userManager = userManager;
     _cachingService = cachingService;
+  }
+
+  [AllowAnonymous]
+  [ResponseCache(Duration = 1200)]
+  [HttpGet("rss")]
+  public async Task<IActionResult> Rss()
+  {
+    List<PostViewModel> posts = await _postService.GetPosts();
+
+    var feed = new SyndicationFeed(
+        "Rian Negreiros Blog Feed",
+        "RSS Feed from Rian Negreiros Dos Santos Blog",
+        new Uri("https://www.riannegreiros.dev"),
+        posts.Select(post => new SyndicationItem(
+            post.Title,
+            post.Content,
+            new Uri($"https://www.riannegreiros.dev/posts/{post.Slug}"),
+            post.Id.ToString(),
+            post.CreatedAt
+        )).ToList()
+    );
+
+    var settings = new XmlWriterSettings
+    {
+      Encoding = Encoding.UTF8,
+      NewLineHandling = NewLineHandling.Entitize,
+      NewLineOnAttributes = true,
+      Indent = true
+    };
+
+    using var stream = new MemoryStream();
+    using (var xmlWriter = XmlWriter.Create(stream, settings))
+    {
+      var rssFormatter = new Rss20FeedFormatter(feed, false);
+      rssFormatter.WriteTo(xmlWriter);
+      xmlWriter.Flush();
+    }
+    return File(stream.ToArray(), "application/rss+xml; charset=utf-8");
   }
 
   [HttpPost]
