@@ -17,7 +17,6 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
 
-[Authorize(Roles = "Admin")]
 public class PostsController : BaseApiController
 {
   private readonly IPostService _postService;
@@ -31,9 +30,9 @@ public class PostsController : BaseApiController
     _cachingService = cachingService;
   }
 
-  [AllowAnonymous]
   [ResponseCache(Duration = 1200)]
   [HttpGet("rss")]
+  [SwaggerOperation(Summary = "Get Posts RSS Feed")]
   public async Task<IActionResult> Rss()
   {
     List<PostViewModel> posts = await _postService.GetPosts();
@@ -69,6 +68,7 @@ public class PostsController : BaseApiController
     return File(stream.ToArray(), "application/rss+xml; charset=utf-8");
   }
 
+  [Authorize(Roles = "Admin")]
   [HttpPost]
   [SwaggerOperation(Summary = "Create a new post.")]
   [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
@@ -103,6 +103,7 @@ public class PostsController : BaseApiController
     });
   }
 
+  [Authorize(Roles = "Admin")]
   [HttpPut("{identifier}")]
   [SwaggerOperation(Summary = "Update a post by id or slug.")]
   [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
@@ -144,7 +145,6 @@ public class PostsController : BaseApiController
     });
   }
 
-  [AllowAnonymous]
   [HttpGet]
   [SwaggerOperation(Summary = "Get posts paginated.")]
   [ProducesResponseType(typeof(ApiResponse<List<PostViewModel>>), StatusCodes.Status200OK)]
@@ -184,7 +184,6 @@ public class PostsController : BaseApiController
     });
   }
 
-  [AllowAnonymous]
   [HttpGet("{identifier}")]
   [SwaggerOperation(Summary = "Get a post by ID or slug.")]
   [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
