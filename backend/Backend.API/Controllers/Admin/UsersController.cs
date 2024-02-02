@@ -4,12 +4,14 @@ using Backend.Application.Services.Interfaces;
 using Backend.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers.Admin;
 
 [Authorize(Roles = "Admin")]
 [ApiController]
 [Route("api/admin/[controller]")]
+[SwaggerTag("To admins manage users in the system.")]
 public class UsersController : ControllerBase
 {
   private readonly IUserService _userService;
@@ -20,6 +22,10 @@ public class UsersController : ControllerBase
   }
 
   [HttpGet]
+  [SwaggerOperation(Summary = "Get all users.")]
+  [ProducesResponseType(typeof(IEnumerable<AdminUserViewModel>), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<IEnumerable<AdminUserViewModel>>> GetAll()
   {
     var users = await _userService.GetAllUsers();
@@ -27,6 +33,11 @@ public class UsersController : ControllerBase
   }
 
   [HttpGet("{id}")]
+  [SwaggerOperation(Summary = "Get a user by ID.")]
+  [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status404NotFound)]
+  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<User>> GetById(string id)
   {
     var user = await _userService.GetUserById(id);
@@ -40,6 +51,11 @@ public class UsersController : ControllerBase
   }
 
   [HttpPost]
+  [SwaggerOperation(Summary = "Create a new user.")]
+  [ProducesResponseType(StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<IActionResult> Create([FromBody] AdminCreateUserInputModel model)
   {
     var result = await _userService.CreateUser(model.Username, model.Email, model.Password, model.Admin);
@@ -55,6 +71,11 @@ public class UsersController : ControllerBase
   }
 
   [HttpPut("{id}")]
+  [SwaggerOperation(Summary = "Update a user.")]
+  [ProducesResponseType(StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<IActionResult> Update(string id, string? newUserName, string? newEmail)
   {
     var result = await _userService.UpdateUser(id, newUserName, newEmail);
@@ -69,6 +90,10 @@ public class UsersController : ControllerBase
   }
 
   [HttpDelete("{id}")]
+  [SwaggerOperation(Summary = "Delete a user.")]
+  [ProducesResponseType(StatusCodes.Status204NoContent)]
+  [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<IActionResult> Delete(string id)
   {
     await _userService.DeleteUser(id);
