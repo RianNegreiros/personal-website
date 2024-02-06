@@ -19,8 +19,6 @@ Here are some key endpoints you may want to explore:
 - [Health Checks](https://personalwebsitebackend.azurewebsites.net/health)
 - [RSS Feed](https://personalwebsitebackend.azurewebsites.net/api/posts/rss)
 
-![Homepage screenshot](./_docs/images/homepage.png)
-
 ## How to run
 
 ### Prerequisites
