@@ -41,13 +41,23 @@ public class PostsController : BaseApiController
         "Rian Negreiros Blog Feed",
         "RSS Feed from Rian Negreiros Dos Santos Blog",
         new Uri("https://www.riannegreiros.dev"),
-        posts.Select(post => new SyndicationItem(
-            post.Title,
-            post.Content,
-            new Uri($"https://www.riannegreiros.dev/posts/{post.Slug}"),
-            post.Id.ToString(),
-            new DateTimeOffset(post.CreatedAt)
-        )).ToList()
+        posts.Select(post =>
+        {
+          var item = new SyndicationItem(
+              title: post.Title,
+              content: post.Content,
+              new Uri($"https://www.riannegreiros.dev/posts/{post.Slug}"),
+              id: post.Id.ToString(),
+              new DateTimeOffset(post.CreatedAt)
+          )
+          {
+            PublishDate = post.CreatedAt,
+            Copyright = new TextSyndicationContent($"Copyright {post.CreatedAt.Year}"),
+            Summary = new TextSyndicationContent(post.Summary),
+            LastUpdatedTime = post.UpdatedAt
+          };
+          return item;
+        }).ToList()
     );
 
     var settings = new XmlWriterSettings
