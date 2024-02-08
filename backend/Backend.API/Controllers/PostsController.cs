@@ -35,7 +35,9 @@ public class PostsController : BaseApiController
   [SwaggerOperation(Summary = "Get Posts RSS Feed")]
   public async Task<IActionResult> Rss()
   {
-    List<PostViewModel> posts = await _postService.GetPosts();
+    List<PostViewModel> posts = (await _postService.GetPosts())
+    .OrderByDescending(post => post.CreatedAt)
+    .ToList();
 
     var feed = new SyndicationFeed(
         "Rian Negreiros Blog Feed",
@@ -44,11 +46,11 @@ public class PostsController : BaseApiController
         posts.Select(post =>
         {
           var item = new SyndicationItem(
-              title: post.Title,
-              content: post.Content,
-              new Uri($"https://www.riannegreiros.dev/posts/{post.Slug}"),
-              id: post.Id.ToString(),
-              new DateTimeOffset(post.CreatedAt)
+            post.Title,
+            post.Content,
+            new Uri($"https://www.riannegreiros.dev/posts/{post.Slug}"),
+            post.Id.ToString(),
+            post.CreatedAt
           )
           {
             PublishDate = post.CreatedAt,
