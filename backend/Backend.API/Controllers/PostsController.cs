@@ -46,7 +46,7 @@ public class PostsController : BaseApiController
             post.Content,
             new Uri($"https://www.riannegreiros.dev/posts/{post.Slug}"),
             post.Id.ToString(),
-            post.CreatedAt
+            new DateTimeOffset(post.CreatedAt)
         )).ToList()
     );
 
