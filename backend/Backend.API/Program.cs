@@ -3,6 +3,8 @@ using Backend.API.Middlewares;
 using Backend.Core.Models;
 using Backend.Infrastructure.Data;
 using Backend.Infrastructure.Data.SeedData;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +39,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/api/health", new HealthCheckOptions
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 // Seed data
 using (var scope = app.Services.CreateScope())
