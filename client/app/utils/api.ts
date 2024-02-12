@@ -88,7 +88,7 @@ async function getFeed() {
     const response = await axios.get(`${API_URL}/feed`);
     return response.data;
   } catch (error) {
-    throw new Error('Failed to fetch posts. Please try again later.');
+    throw new Error('Failed to fetch the feed. Please try again later.');
   }
 }
 

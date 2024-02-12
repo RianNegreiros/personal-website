@@ -1,21 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Post, Project } from '../models';
-import { getFeed, getProjects } from '../utils/api';
-
+import { FeedItem } from '../models';
+import { getFeed } from '../utils/api';
 import Link from 'next/link';
 import Loading from './Loading';
 
 export default function Feed() {
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<Post[] | Project[]>([]);
+  const [data, setData] = useState<FeedItem[]>([]);
 
   useEffect(() => {
     async function fetchData() {
-      const posts = await getFeed();
-      const projects = await getProjects();
-      const mergedData = [...posts.data, ...projects.data];
-      mergedData.sort((a: Post | Project, b: Post | Project) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-      setData(mergedData);
+      const feed = await getFeed();
+      setData(feed.data);
       setIsLoading(false);
     }
     fetchData();
@@ -27,10 +23,10 @@ export default function Feed() {
         <Loading />
       ) : (
         <ol className="relative border-l border-gray-200 dark:border-gray-700">
-          {data.map((item: Post | Project) => (
+          {data.map((item: FeedItem) => (
             <li className="mb-10 mt-10 ml-10" key={item.id}>
               <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                {'summary' in item ? (
+                {item.summary ? (
                   <svg className="w-2.5 h-2.5 text-teal-800 dark:text-teal-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M19 4h-1a1 1 0 1 0 0 2v11a1 1 0 0 1-2 0V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V5a1 1 0 0 0-1-1ZM3 4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4Zm9 13H4a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-3H4a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-3H4a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-3h-2a1 1 0 0 1 0-2h2a1 1 0 1 1 0 2Zm0-3h-2a1 1 0 0 1 0-2h2a1 1 0 1 1 0 2Z" />
                     <path d="M6 5H5v1h1V5Z" />
@@ -42,14 +38,14 @@ export default function Feed() {
                 )}
               </span>
               <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{new Date(item.createdAt).toLocaleDateString()}</time>
-              {'slug' in item ?
+              {item.slug ?
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{<Link href={`/posts/${item.slug}`}>{item.title}</Link>}</h3>
                 :
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{item.title}</h3>}
               <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                {'summary' in item ? item.summary : item.overview}
+                {item.summary ? item.summary : item.overview}
               </p>
-              {'url' in item ?
+              {item.url ?
                 <a href={item.url} className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Saiba Mais <svg className="w-3 h-3 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                 </svg></a>
