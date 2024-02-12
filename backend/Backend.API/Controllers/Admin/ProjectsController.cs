@@ -1,17 +1,12 @@
-using Backend.Application.Services.Interfaces;
 using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers.Admin;
 
-[Authorize(Roles = "Admin")]
-[ApiController]
-[Route("api/admin/[controller]")]
 [SwaggerTag("To admins manage projects in the system.")]
-public class ProjectsController : ControllerBase
+public class ProjectsController : AdminBaseApiController
 {
   private readonly IProjectsRepository _projectsRepository;
 

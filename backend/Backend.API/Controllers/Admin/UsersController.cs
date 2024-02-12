@@ -2,17 +2,13 @@ using Backend.Application.Models.InputModels;
 using Backend.Application.Models.ViewModels;
 using Backend.Application.Services.Interfaces;
 using Backend.Core.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers.Admin;
 
-[Authorize(Roles = "Admin")]
-[ApiController]
-[Route("api/admin/[controller]")]
 [SwaggerTag("To admins manage users in the system.")]
-public class UsersController : ControllerBase
+public class UsersController : AdminBaseApiController
 {
   private readonly IUserService _userService;
 

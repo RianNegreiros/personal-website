@@ -5,6 +5,7 @@ using Backend.Application.Validators;
 using Backend.Core.Models;
 using Backend.Infrastructure.Caching;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
@@ -15,11 +16,13 @@ namespace Backend.API.Controllers;
 public class ProjectsController : BaseApiController
 {
     private readonly IProjectsService _projectsService;
+    private readonly UserManager<User> _userManager;
     private readonly ICachingService _cachingService;
 
-    public ProjectsController(IProjectsService projectsService, ICachingService cachingService)
+    public ProjectsController(IProjectsService projectsService, UserManager<User> userManager, ICachingService cachingService)
     {
         _projectsService = projectsService;
+        _userManager = userManager;
         _cachingService = cachingService;
     }
 
@@ -113,7 +116,9 @@ public class ProjectsController : BaseApiController
                 Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
             });
 
-        Project project = await _projectsService.CreateProject(model);
+        User currentUser = await _userManager.FindByIdAsync(model.AuthorId);
+
+        Project project = await _projectsService.CreateProject(model, currentUser);
 
         return Ok(new ApiResponse<Project>
         {

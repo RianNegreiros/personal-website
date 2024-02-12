@@ -9,9 +9,9 @@ public static class SwaggerServiceExtensions
     services.AddSwaggerGen(c =>
     {
       c.EnableAnnotations();
-      c.SwaggerDoc("v1", new OpenApiInfo
+      c.SwaggerDoc("User", new OpenApiInfo
       {
-        Title = "API",
+        Title = "User API",
         Version = "v1",
         Description = "API for portfolio website",
         Contact = new OpenApiContact
@@ -21,6 +21,20 @@ public static class SwaggerServiceExtensions
           Url = new Uri("https://www.riannegreiros.dev"),
         }
       });
+
+      c.SwaggerDoc("Admin", new OpenApiInfo
+      {
+        Title = "Admin API",
+        Version = "v1",
+        Description = "API for portfolio website",
+        Contact = new OpenApiContact
+        {
+          Name = "Rian Negreiros Dos Santos",
+          Email = "riannegreiros@gmail.com",
+          Url = new Uri("https://www.riannegreiros.dev"),
+        }
+      });
+
 
       OpenApiSecurityScheme securitySchema = new()
       {
@@ -48,7 +62,11 @@ public static class SwaggerServiceExtensions
   public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
   {
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+    app.UseSwaggerUI(c =>
+    {
+      c.SwaggerEndpoint("/swagger/Admin/swagger.json", "Admin API v1");
+      c.SwaggerEndpoint("/swagger/User/swagger.json", "User API v1");
+    });
 
     return app;
   }

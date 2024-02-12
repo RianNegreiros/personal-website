@@ -1,16 +1,12 @@
 using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers.Admin;
 
-[Authorize(Roles = "Admin")]
-[ApiController]
-[Route("api/admin/[controller]")]
 [SwaggerTag("To admins manage posts in the system.")]
-public class PostsController : ControllerBase
+public class PostsController : AdminBaseApiController
 {
   private readonly IPostRepository _postRepository;
 
