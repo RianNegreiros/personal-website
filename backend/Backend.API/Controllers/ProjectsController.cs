@@ -29,19 +29,19 @@ public class ProjectsController : BaseApiController
     [AllowAnonymous]
     [HttpGet]
     [SwaggerOperation(Summary = "Get all projects.")]
-    [ProducesResponseType(typeof(ApiResponse<List<Project>>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<Project>>> GetProjects()
+    [ProducesResponseType(typeof(ApiResponse<List<ProjectViewModel>>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<List<ProjectViewModel>>> GetProjects()
     {
-        List<Project>? projects;
+        List<ProjectViewModel>? projects;
         string cachedProjects = await _cachingService.GetAsync("projects");
         if (!string.IsNullOrWhiteSpace(cachedProjects))
         {
-            projects = JsonConvert.DeserializeObject<List<Project>>(cachedProjects);
+            projects = JsonConvert.DeserializeObject<List<ProjectViewModel>>(cachedProjects);
 
             if (projects == null)
                 return NotFound();
 
-            return Ok(new ApiResponse<List<Project>>
+            return Ok(new ApiResponse<List<ProjectViewModel>>
             {
                 Success = true,
                 Data = projects
@@ -55,7 +55,7 @@ public class ProjectsController : BaseApiController
 
         await _cachingService.SetAsync("projects", JsonConvert.SerializeObject(projects));
 
-        return Ok(new ApiResponse<List<Project>>
+        return Ok(new ApiResponse<List<ProjectViewModel>>
         {
             Success = true,
             Data = projects

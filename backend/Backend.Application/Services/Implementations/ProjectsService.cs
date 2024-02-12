@@ -17,9 +17,24 @@ public class ProjectsService : IProjectsService
         _cloudinaryService = cloudinaryService;
     }
 
-    public async Task<List<Project>> GetProjects()
+    public async Task<List<ProjectViewModel>> GetProjects()
     {
-        return await _projectsRepository.GetAllProjectsAsync();
+        List<Project> projects = await _projectsRepository.GetAllProjectsAsync();
+        if (projects != null)
+        {
+            return projects.Select(project => new ProjectViewModel
+            {
+                Id = project.Id,
+                Title = project.Title,
+                Overview = project.Overview,
+                Url = project.Url,
+                ImageUrl = project.ImageUrl,
+                CreatedAt = project.CreatedAt,
+                UpdatedAt = project.UpdatedAt
+            }).ToList();
+        }
+
+        return new List<ProjectViewModel>();
     }
 
     public async Task<Project> GetProject(string id)
