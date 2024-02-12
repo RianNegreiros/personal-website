@@ -27,7 +27,7 @@ public class ProjectsService : IProjectsService
         return await _projectsRepository.GetProjectByIdAsync(id);
     }
 
-    public async Task<Project> CreateProject(ProjectInputModel model)
+    public async Task<Project> CreateProject(ProjectInputModel model, User author)
     {
         string imageUrl = await _cloudinaryService.UploadImageAsync(model.Image.OpenReadStream(), model.Image.FileName);
 
@@ -37,8 +37,8 @@ public class ProjectsService : IProjectsService
             Overview = model.Overview,
             ImageUrl = imageUrl,
             Url = model.Url,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            Author = author,
+            CreatedAt = DateTime.UtcNow
         };
 
         await _projectsRepository.CreateProjectAsync(newProject);
@@ -72,6 +72,7 @@ public class ProjectsService : IProjectsService
         }
 
         project.Url = imageUrl;
+        project.UpdatedAt = DateTime.Now;
 
         await _projectsRepository.UpdateProjectAsync(id, project);
 
