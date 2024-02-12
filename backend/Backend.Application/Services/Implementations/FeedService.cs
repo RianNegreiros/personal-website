@@ -1,6 +1,6 @@
+using Backend.Application.Models.ViewModels;
 using Backend.Application.Services.Interfaces;
 using Backend.Core.Interfaces.Repositories;
-using Backend.Core.Models;
 
 namespace Backend.Application.Services.Implementations;
 
@@ -15,21 +15,39 @@ public class FeedService : IFeedService
     _projectsRepository = projectsRepository;
   }
 
-  public async Task<List<object>> GetFeed()
+  public async Task<List<FeedItemViewModel>> GetFeed()
   {
     var posts = await _postRepository.GetAll();
     var projects = await _projectsRepository.GetAllProjectsAsync();
 
-    var feedItems = new List<object>();
+    var feedItems = new List<FeedItemViewModel>();
 
-    feedItems.AddRange(posts);
-    feedItems.AddRange(projects);
+    feedItems.AddRange(posts.Select(p => new FeedItemViewModel
+    {
+      Id = p.Id,
+      Title = p.Title,
+      Summary = p.Summary,
+      Content = p.Content,
+      Slug = p.Slug,
+      CreatedAt = p.CreatedAt,
+      UpdatedAt = p.UpdatedAt,
+      Type = "Post"
+    }));
+
+    feedItems.AddRange(projects.Select(p => new FeedItemViewModel
+    {
+      Id = p.Id,
+      Title = p.Title,
+      Url = p.Url,
+      ImageUrl = p.ImageUrl,
+      Overview = p.Overview,
+      CreatedAt = p.CreatedAt,
+      UpdatedAt = p.UpdatedAt,
+      Type = "Project"
+    }));
 
     feedItems = feedItems
-        .OrderByDescending(item =>
-            item is Post post ? post.CreatedAt :
-            item is Project project ? project.CreatedAt :
-            default)
+        .OrderByDescending(item => item.CreatedAt)
         .ToList();
 
     return feedItems;
