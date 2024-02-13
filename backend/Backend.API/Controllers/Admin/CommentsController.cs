@@ -6,11 +6,8 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers.Admin;
 
-[Authorize(Roles = "Admin")]
-[ApiController]
-[Route("api/admin/[controller]")]
 [SwaggerTag("To admins manage comments in the system.")]
-public class CommentsController : ControllerBase
+public class CommentsController : AdminBaseApiController
 {
   private readonly ICommentsRepository _commentsRepository;
 

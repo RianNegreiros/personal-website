@@ -1,12 +1,14 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.API.Controllers;
 
+[Authorize(Roles = "Admin")]
 [ApiController]
-[Route("api/[controller]")]
-[ApiExplorerSettings(GroupName = "User")]
-public class BaseApiController : ControllerBase
+[Route("api/admin/[controller]")]
+[ApiExplorerSettings(GroupName = "Admin")]
+public class AdminBaseApiController : ControllerBase
 {
   protected FluentValidation.Results.ValidationResult ValidateModel<TValidator, TModel>(TModel model)
     where TValidator : AbstractValidator<TModel>, new()

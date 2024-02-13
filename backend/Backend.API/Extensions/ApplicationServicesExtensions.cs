@@ -22,6 +22,7 @@ public static class ApplicationServicesExtensions
     services.AddScoped<IProjectsService, ProjectsService>();
     services.AddScoped<ICommentsService, CommentsService>();
     services.AddScoped<IUserService, UserService>();
+    services.AddScoped<IFeedService, FeedService>();
 
     services.AddScoped<ICachingService, CachingService>();
 

@@ -163,11 +163,11 @@ public class PostsController : BaseApiController
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<ActionResult<ApiResponse<PaginatedResult<PostViewModel>>>> GetPostsPaginated([FromQuery] QueryParameters parameters)
   {
-    var posts = new PaginatedResult<PostViewModel>();
+    _ = new PaginatedResult<PostViewModel>();
     var cacheKey = $"posts-{parameters.PageNumber}-{parameters.PageSize}";
 
     var postsCache = await _cachingService.GetAsync(cacheKey);
-
+    PaginatedResult<PostViewModel>? posts;
     if (!string.IsNullOrWhiteSpace(postsCache))
     {
       posts = JsonConvert.DeserializeObject<PaginatedResult<PostViewModel>>(postsCache);

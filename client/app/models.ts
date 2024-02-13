@@ -84,3 +84,17 @@ export interface ProjectData {
   url: string;
   image: File | null;
 }
+
+export type FeedItem = {
+  id: string;
+  title: string;
+  summary?: string;
+  content?: string;
+  slug?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  url?: string;
+  imageUrl?: string;
+  overview?: string;
+  type: string; // "Post" or "Project"
+}

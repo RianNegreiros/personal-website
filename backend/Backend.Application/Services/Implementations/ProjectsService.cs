@@ -17,17 +17,43 @@ public class ProjectsService : IProjectsService
         _cloudinaryService = cloudinaryService;
     }
 
-    public async Task<List<Project>> GetProjects()
+    public async Task<List<ProjectViewModel>> GetProjects()
     {
-        return await _projectsRepository.GetAllProjectsAsync();
+        List<Project> projects = await _projectsRepository.GetAllProjectsAsync();
+        if (projects != null)
+        {
+            return projects.Select(project => new ProjectViewModel
+            {
+                Id = project.Id,
+                Title = project.Title,
+                Overview = project.Overview,
+                Url = project.Url,
+                ImageUrl = project.ImageUrl,
+                CreatedAt = project.CreatedAt,
+                UpdatedAt = project.UpdatedAt
+            }).ToList();
+        }
+
+        return new List<ProjectViewModel>();
     }
 
-    public async Task<Project> GetProject(string id)
+    public async Task<ProjectViewModel> GetProject(string id)
     {
-        return await _projectsRepository.GetProjectByIdAsync(id);
+        Project project = await _projectsRepository.GetProjectByIdAsync(id);
+
+        return new ProjectViewModel
+        {
+            Id = project.Id,
+            Title = project.Title,
+            Overview = project.Overview,
+            Url = project.Url,
+            ImageUrl = project.ImageUrl,
+            CreatedAt = project.CreatedAt,
+            UpdatedAt = project.UpdatedAt
+        };
     }
 
-    public async Task<Project> CreateProject(ProjectInputModel model)
+    public async Task<Project> CreateProject(ProjectInputModel model, User author)
     {
         string imageUrl = await _cloudinaryService.UploadImageAsync(model.Image.OpenReadStream(), model.Image.FileName);
 
@@ -37,8 +63,8 @@ public class ProjectsService : IProjectsService
             Overview = model.Overview,
             ImageUrl = imageUrl,
             Url = model.Url,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            Author = author,
+            CreatedAt = DateTime.UtcNow
         };
 
         await _projectsRepository.CreateProjectAsync(newProject);
@@ -72,6 +98,7 @@ public class ProjectsService : IProjectsService
         }
 
         project.Url = imageUrl;
+        project.UpdatedAt = DateTime.Now;
 
         await _projectsRepository.UpdateProjectAsync(id, project);
 

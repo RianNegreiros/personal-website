@@ -10,51 +10,51 @@ namespace Backend.API.Controllers;
 
 public class FeedController : BaseApiController
 {
-  private readonly IPostService _postService;
+  private readonly IFeedService _feedService;
   private readonly ICachingService _cachingService;
 
-  public FeedController(IPostService postService, ICachingService cachingService)
+  public FeedController(IFeedService feedService, ICachingService cachingService)
   {
-    _postService = postService;
+    _feedService = feedService;
     _cachingService = cachingService;
   }
 
   [HttpGet]
-  [SwaggerOperation(Summary = "Get all posts")]
-  [ProducesResponseType(typeof(ApiResponse<List<PostViewModel>>), StatusCodes.Status200OK)]
+  [SwaggerOperation(Summary = "Get feed with posts and projects")]
+  [ProducesResponseType(typeof(ApiResponse<List<FeedItemViewModel>>), StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  public async Task<ActionResult<ApiResponse<PostViewModel>>> GetPosts()
+  public async Task<ActionResult<ApiResponse<FeedItemViewModel>>> GetFeed()
   {
-    var posts = new List<PostViewModel>();
-    var cacheKey = $"posts";
+    _ = new List<FeedItemViewModel>();
+    var cacheKey = $"feed";
 
-    var postsCache = await _cachingService.GetAsync(cacheKey);
-
-    if (!string.IsNullOrWhiteSpace(postsCache))
+    var feedCache = await _cachingService.GetAsync(cacheKey);
+    List<FeedItemViewModel>? feed;
+    if (!string.IsNullOrWhiteSpace(feedCache))
     {
-      posts = JsonConvert.DeserializeObject<List<PostViewModel>>(postsCache);
+      feed = JsonConvert.DeserializeObject<List<FeedItemViewModel>>(feedCache);
 
-      if (posts == null)
+      if (feed == null)
         return NotFound();
 
-      return Ok(new ApiResponse<List<PostViewModel>>
+      return Ok(new ApiResponse<List<FeedItemViewModel>>
       {
         Success = true,
-        Data = posts
+        Data = feed
       });
     }
 
-    posts = await _postService.GetPosts();
+    feed = await _feedService.GetFeed();
 
-    if (posts == null)
+    if (feed == null)
       return NotFound();
 
-    await _cachingService.SetAsync(cacheKey, JsonConvert.SerializeObject(posts));
+    await _cachingService.SetAsync(cacheKey, JsonConvert.SerializeObject(feed));
 
-    return Ok(new ApiResponse<List<PostViewModel>>
+    return Ok(new ApiResponse<List<FeedItemViewModel>>
     {
       Success = true,
-      Data = posts
+      Data = feed
     });
   }
 }
