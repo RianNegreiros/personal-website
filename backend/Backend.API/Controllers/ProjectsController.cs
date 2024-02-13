@@ -65,22 +65,22 @@ public class ProjectsController : BaseApiController
     [AllowAnonymous]
     [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Get a project by id.")]
-    [ProducesResponseType(typeof(ApiResponse<Project>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<ProjectViewModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Project>> GetProject(string id)
     {
-        Project? project;
+        ProjectViewModel? project;
         string cachedProject = await _cachingService.GetAsync(id);
 
         if (!string.IsNullOrWhiteSpace(cachedProject))
         {
-            project = JsonConvert.DeserializeObject<Project>(cachedProject);
+            project = JsonConvert.DeserializeObject<ProjectViewModel>(cachedProject);
 
             if (project == null)
                 return NotFound();
 
-            return Ok(new ApiResponse<Project>
+            return Ok(new ApiResponse<ProjectViewModel>
             {
                 Success = true,
                 Data = project
@@ -94,7 +94,7 @@ public class ProjectsController : BaseApiController
 
         await _cachingService.SetAsync(id, JsonConvert.SerializeObject(project));
 
-        return Ok(new ApiResponse<Project>
+        return Ok(new ApiResponse<ProjectViewModel>
         {
             Success = true,
             Data = project
@@ -144,7 +144,7 @@ public class ProjectsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Project>> DeleteProject(string id)
     {
-        Project project = await _projectsService.GetProject(id);
+        var project = await _projectsService.GetProject(id);
 
         if (project == null)
         {

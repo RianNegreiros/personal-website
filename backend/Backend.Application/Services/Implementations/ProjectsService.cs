@@ -37,9 +37,20 @@ public class ProjectsService : IProjectsService
         return new List<ProjectViewModel>();
     }
 
-    public async Task<Project> GetProject(string id)
+    public async Task<ProjectViewModel> GetProject(string id)
     {
-        return await _projectsRepository.GetProjectByIdAsync(id);
+        Project project = await _projectsRepository.GetProjectByIdAsync(id);
+
+        return new ProjectViewModel
+        {
+            Id = project.Id,
+            Title = project.Title,
+            Overview = project.Overview,
+            Url = project.Url,
+            ImageUrl = project.ImageUrl,
+            CreatedAt = project.CreatedAt,
+            UpdatedAt = project.UpdatedAt
+        };
     }
 
     public async Task<Project> CreateProject(ProjectInputModel model, User author)
