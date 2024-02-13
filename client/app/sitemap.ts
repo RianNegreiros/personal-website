@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { getFeed } from "./utils/api";
+import { getPosts } from "./utils/api";
 import siteMetadata from "./utils/siteMetaData";
 
 interface PostData {
@@ -8,8 +8,8 @@ interface PostData {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const response = await getFeed();
-  const data: PostData[] = await response.data;
+  const response = await getPosts(0, 0);
+  const data: PostData[] = await response.data.items;
 
   return data.map(article => ({
     url: `${siteMetadata.siteUrl}/posts/${article.slug}`,
