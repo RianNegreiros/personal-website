@@ -15,9 +15,9 @@ Here are some key endpoints you may want to explore:
 - [Home Page](https://riannegreiros.dev)
 - [Blog Page](https://riannegreiros.dev/posts)
 - [Projects Page](https://riannegreiros.dev/projects)
-- [API Endpoints](https://personalwebsitebackend.azurewebsites.net/swagger/index.html)
-- [Health Checks](https://personalwebsitebackend.azurewebsites.net/api/health)
-- [RSS Feed](https://personalwebsitebackend.azurewebsites.net/api/posts/rss)
+- [API Endpoints](https://api.riannegreiros.dev/swagger/index.html)
+- [Health Checks](https://api.riannegreiros.dev/api/health)
+- [RSS Feed](https://api.riannegreiros.dev/api/posts/rss)
 
 ## How to run
 
