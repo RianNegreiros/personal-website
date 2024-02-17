@@ -1,5 +1,6 @@
 using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Backend.Infrastructure.Repositories;
@@ -27,6 +28,21 @@ public class CommentsRepository : ICommentsRepository
     {
         await _comments.InsertOneAsync(comment);
         return comment;
+    }
+
+    public async Task<Comment> AddReplyToComment(string commentId, Comment reply)
+    {
+        reply.Id = ObjectId.GenerateNewId().ToString();
+
+        var filter = Builders<Comment>.Filter.Eq(c => c.Id, commentId);
+        var update = Builders<Comment>.Update
+            .Push(c => c.Replies, reply)
+            .CurrentDate(c => c.UpdatedAt);
+        var options = new FindOneAndUpdateOptions<Comment> { ReturnDocument = ReturnDocument.After };
+
+        Comment updatedComment = await _comments.FindOneAndUpdateAsync(filter, update, options);
+
+        return updatedComment;
     }
 
     public async Task<List<Comment>> GetCommentsForUserById(string userId)

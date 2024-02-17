@@ -75,7 +75,6 @@ export default function PostComponent({
               </div>
             </div>
           </div>
-
           <div className="flex justify-center space-x-4 mb-4">
             <LinkedinShareButton
               url={`${siteMetadata.siteUrl}/posts/${data.slug}`}
@@ -102,7 +101,7 @@ export default function PostComponent({
             </EmailShareButton>
           </div>
 
-          <CommentSection slug={params.slug} comments={comments} />
+          <CommentSection slug={params.slug} comments={comments} setComments={setComments} />
         </>
       )
       }

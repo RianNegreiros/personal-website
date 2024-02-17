@@ -54,7 +54,7 @@ public class CommentsController : BaseApiController
             });
         }
 
-        var user = await _userManager.FindByIdAsync(model.Id);
+        var user = await _userManager.FindByIdAsync(model.AuthorId);
 
         Comment addedComment;
 
@@ -66,9 +66,66 @@ public class CommentsController : BaseApiController
             Data = new CommentViewModel
             {
                 Id = addedComment.Id,
+                PostId = addedComment.PostId,
+                PostSlug = addedComment.PostSlug,
                 Content = addedComment.Content,
-                Author = addedComment.Author,
+                AuthorId = addedComment.Author.Id,
+                AuthorEmail = addedComment.Author.Email,
+                AuthorUsername = addedComment.Author.UserName,
                 CreatedAt = addedComment.CreatedAt
+            }
+        });
+    }
+
+    [Authorize]
+    [HttpPost("replies")]
+    [SwaggerOperation(Summary = "Add a reply to a comment.")]
+    [ProducesResponseType(typeof(ApiResponse<CommentViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> AddReplyToComment(string identifier, [FromBody] CommentInputModel model)
+    {
+        FluentValidation.Results.ValidationResult validationResult = ValidateModel<CommentInputModelValidator, CommentInputModel>(model);
+
+        if (!validationResult.IsValid)
+            return BadRequest(new ApiResponse<CommentViewModel>
+            {
+                Success = false,
+                Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList()
+            });
+
+        CommentViewModel? comment = await _commentsService.GetCommentById(identifier);
+
+        if (comment == null)
+        {
+            return BadRequest(new ApiResponse<CommentViewModel>
+            {
+                Success = false,
+                Errors = new List<string> { "Comment not found." }
+            });
+        }
+
+        var user = await _userManager.FindByIdAsync(model.AuthorId);
+
+        Comment addedReply;
+
+        addedReply = await _commentsService.AddReplyToComment(comment, model, user);
+
+        return Ok(new ApiResponse<CommentViewModel>
+        {
+            Success = true,
+            Data = new CommentViewModel
+            {
+                Id = addedReply.Id,
+                PostId = addedReply.PostId,
+                PostSlug = addedReply.PostSlug,
+                Content = addedReply.Content,
+                AuthorId = addedReply.Author.Id,
+                AuthorEmail = addedReply.Author.Email,
+                AuthorUsername = addedReply.Author.UserName,
+                CreatedAt = addedReply.CreatedAt,
+                UpdatedAt = addedReply.UpdatedAt
             }
         });
     }
@@ -79,16 +136,29 @@ public class CommentsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetCommentsForPost(string identifier)
     {
-        IEnumerable<Comment> comments;
-
-        comments = await _commentsService.GetCommentsForPostByIdentifier(identifier);
+        IEnumerable<Comment> comments = await _commentsService.GetCommentsForPostByIdentifier(identifier);
 
         List<CommentViewModel> commentsViewModel = comments.Select(c => new CommentViewModel
         {
             Id = c.Id,
+            PostId = c.PostId,
+            PostSlug = c.PostSlug,
             Content = c.Content,
-            Author = c.Author,
-            CreatedAt = c.CreatedAt
+            AuthorId = c.Author.Id,
+            AuthorEmail = c.Author.Email,
+            AuthorUsername = c.Author.UserName,
+            Replies = c.Replies.Select(reply => new CommentViewModel
+            {
+                Id = reply.Id,
+                AuthorId = reply.Author.Id,
+                AuthorEmail = reply.Author.Email,
+                AuthorUsername = reply.Author.UserName,
+                Content = reply.Content,
+                CreatedAt = reply.CreatedAt,
+                UpdatedAt = reply.UpdatedAt
+            }).ToList(),
+            CreatedAt = c.CreatedAt,
+            UpdatedAt = c.UpdatedAt
         }).ToList();
 
         return Ok(new ApiResponse<List<CommentViewModel>>

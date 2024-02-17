@@ -21,6 +21,14 @@ public class Comment
     [BsonElement("postSlug")]
     public string PostSlug { get; set; }
 
+    [BsonElement("replies")]
+    public List<Comment> Replies { get; set; } = new List<Comment>();
+
     [BsonElement("createdAt")]
+    [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
     public DateTime CreatedAt { get; set; }
+
+    [BsonElement("updatedAt")]
+    [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+    public DateTime UpdatedAt { get; set; }
 }
