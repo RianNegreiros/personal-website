@@ -57,15 +57,28 @@ export interface SignInData {
 
 export interface Comment {
   id: string;
-  author: { id: string, userName: string };
+  authorId: string;
+  authorUsername: string;
   content: string;
   createdAt: string;
+  replies: Reply[]
 }
 
 export interface CommentData {
   postSlug: string;
   content: string;
+  authorId: string;
+}
+
+export interface Reply {
   id: string;
+  authorId: string;
+  authorEmail: string;
+  authorUsername: string;
+  replies: Reply,
+  createdAt: string;
+  updatedAt: string;
+  content: string;
 }
 
 export interface Project {

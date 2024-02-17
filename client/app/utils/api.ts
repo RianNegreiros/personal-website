@@ -113,7 +113,7 @@ async function getCommentsForPost(postId: string) {
 async function addCommentToPost(commentData: CommentData) {
   try {
     const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
-    commentData.id = userId as string;
+    commentData.authorId = userId as string;
 
     if (!userId) {
       throw new Error('User id not found.');
@@ -126,6 +126,13 @@ async function addCommentToPost(commentData: CommentData) {
     throw new Error('Failed to add comment. Please try again later.');
   }
 }
+
+export const addReplyToComment = async (identifier: string, replyData: { content: string, authorId: string }) => {
+  const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
+  replyData.authorId = userId as string
+  const response = await axios.post(`${API_URL}/comments/${identifier}/replies`, replyData);
+  return response.data;
+};
 
 async function createProject(projectData: ProjectData): Promise<any> {
   try {
