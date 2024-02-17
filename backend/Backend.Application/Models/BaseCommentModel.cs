@@ -4,6 +4,6 @@ namespace Backend.Application.Models;
 
 public class BaseCommentModel
 {
-    [SwaggerSchema(Description = "The comment's id")]
+    [SwaggerSchema(Description = "The comment's content")]
     public string Content { get; set; }
 }
