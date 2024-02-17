@@ -81,6 +81,12 @@ export interface Reply {
   content: string;
 }
 
+export interface InputReply {
+  id: string;
+  authorId: string;
+  content: string;
+}
+
 export interface Project {
   id: string;
   title: string;

@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Comment, CommentData } from "../models";
+import { Comment, CommentData, InputReply } from "../models";
 import { addCommentToPost, addReplyToComment, getCommentsForPost } from "../utils/api";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -9,14 +9,18 @@ interface CommentSectionProps {
   setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
 }
 
-const CommentSection: React.FC<CommentSectionProps> = ({ slug, comments, setComments }) => {
+const CommentSection = ({ slug, comments, setComments }: CommentSectionProps) => {
   const { isLogged } = useAuth();
   const [formData, setFormData] = useState<CommentData>({
     postSlug: slug,
     content: '',
     authorId: ''
   });
-  const [replyData, setReplyData] = useState<any>({ content: '', id: '' });
+  const [replyData, setReplyData] = useState<InputReply>({
+    id: '',
+    content: '',
+    authorId: ''
+  });
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [showReplyForm, setShowReplyForm] = useState<boolean>(false);
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
@@ -54,7 +58,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ slug, comments, setComm
       await addReplyToComment(commentId, replyData);
       const response = await getCommentsForPost(slug);
       setComments(response.data);
-      setReplyData((prevData: any) => ({ ...prevData, content: '' }));
+      setReplyData((prevData: InputReply) => ({ ...prevData, content: '' }));
       setReplyingTo(null)
     } catch (error) {
       console.error('Failed to create reply:', error);
@@ -63,7 +67,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ slug, comments, setComm
 
   const handleReplyChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setReplyData((prevData: any) => ({ ...prevData, [name]: value }));
+    setReplyData((prevData: InputReply) => ({ ...prevData, [name]: value }));
   };
 
   return (
