@@ -24,6 +24,12 @@ namespace Backend.Tests.Application.Services
                 Image = new FormFile(new MemoryStream(new byte[0]), 0, 0, "Image", "test.jpg"),
                 Url = "http://example.com"
             };
+            var author = new User
+            {
+                Id = "test_author_id",
+                UserName = "test_username",
+                Email = "test_email"
+            };
 
             var cloudinaryServiceMock = new Mock<ICloudinaryService>();
             cloudinaryServiceMock.Setup(service => service.UploadImageAsync(It.IsAny<Stream>(), It.IsAny<string>()))
@@ -34,7 +40,7 @@ namespace Backend.Tests.Application.Services
             var projectsService = new ProjectsService(projectsRepositoryMock.Object, cloudinaryServiceMock.Object);
 
             // Act
-            var result = await projectsService.CreateProject(projectInputModel);
+            var result = await projectsService.CreateProject(projectInputModel, author);
 
             // Assert
             Assert.Equal("Test Project", result.Title);
