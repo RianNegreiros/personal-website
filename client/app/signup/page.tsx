@@ -129,7 +129,7 @@ export default function SignUpPage() {
                 </div>
                 <label
                   htmlFor="terms"
-                  className="ml-2 text-sm font-medium text-dracula-foreground dark:text-gray-400">
+                  className="ml-2 text-sm font-medium text-dracula-foreground dark:text-dracula-pink-400">
                   Eu concordo com os
                   <Link href="/terms/service" target="_blank" className="m-1 text-dracula-pink hover:underline dark:text-dracula-pink"
                   >
@@ -143,7 +143,7 @@ export default function SignUpPage() {
               </div>
               <button
                 type="submit"
-                className={`w-full text-dracula-background bg-dracula-pink hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dracula-pink dark:hover:bg-gray-400 dark:focus:ring-gray-400 ${signingUp ? "opacity-70 cursor-not-allowed" : ""
+                className={`w-full text-dracula-background bg-dracula-pink hover:bg-dracula-pink-400 focus:ring-4 focus:outline-none focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dracula-pink dark:hover:bg-dracula-pink-800 dark:focus:ring-dracula-pink-400 ${signingUp ? "opacity-70 cursor-not-allowed" : ""
                   }`}
                 disabled={signingUp}
               >

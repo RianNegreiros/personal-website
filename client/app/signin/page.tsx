@@ -124,7 +124,7 @@ export default function SignInPage() {
               </div>
               <button
                 type="submit"
-                className={`w-full text-white bg-dracula-pink hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-dracula-pink font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dracula-pink dark:hover:bg-gray-400 dark:focus:ring-dracula-pink ${loggingIn ? "opacity-70 cursor-not-allowed" : ""
+                className={`w-full text-white bg-dracula-pink hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-dracula-pink font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dracula-pink dark:hover:bg-dracula-pink-800 dark:focus:ring-dracula-pink ${loggingIn ? "opacity-70 cursor-not-allowed" : ""
                   }`}
                 disabled={loggingIn}
               >
