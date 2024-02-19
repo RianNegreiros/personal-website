@@ -78,7 +78,7 @@ export default function SignInPage() {
                   value={formData.email}
                   onChange={handleInputChange}
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-dracula-pink focus:border-dracula-pink block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dracula-pink dark:focus:border-dracula-pink"
                   placeholder="name@mail.com"
                 />
               </div>
@@ -96,7 +96,7 @@ export default function SignInPage() {
                   onChange={handleInputChange}
                   id="password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-dracula-pink focus:border-dracula-pink block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dracula-pink dark:focus:border-dracula-pink"
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -109,13 +109,13 @@ export default function SignInPage() {
                       checked={formData.rememberMe}
                       onChange={handleInputChange}
                       aria-describedby="remember"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-dracula-pink dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-dracula-pink dark:ring-offset-gray-800"
                     />
                   </div>
                   <div className="ml-3 text-sm">
                     <label
                       htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
+                      className="text-gray-400 dark:text-gray-300"
                     >
                       Lembrar de mim
                     </label>
@@ -124,14 +124,14 @@ export default function SignInPage() {
               </div>
               <button
                 type="submit"
-                className={`w-full text-white bg-teal-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 ${loggingIn ? "opacity-70 cursor-not-allowed" : ""
+                className={`w-full text-white bg-dracula-pink hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-dracula-pink font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dracula-pink dark:hover:bg-gray-400 dark:focus:ring-dracula-pink ${loggingIn ? "opacity-70 cursor-not-allowed" : ""
                   }`}
                 disabled={loggingIn}
               >
                 {loggingIn ? "Logando..." : "Login"}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Ainda não tem uma conta ? <Link href="/signup" className="font-medium text-teal-500 hover:underline dark:text-primary-500">Registre-se</Link>
+                Ainda não tem uma conta ? <Link href="/signup" className="font-medium text-dracula-pink hover:underline dark:text-dracula-pink">Registre-se</Link>
               </p>
             </form>
           </div>

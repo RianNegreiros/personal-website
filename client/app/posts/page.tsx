@@ -54,7 +54,7 @@ export default function BlogPage() {
               <li key={post.id} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                   <div>
-                    <p className="text-base font-medium leading-6 text-teal-500">
+                    <p className="text-base font-medium leading-6 text-dracula-dracula-500">
                       {new Date(post.createdAt).toLocaleDateString()}
                     </p>
                   </div>
@@ -79,12 +79,12 @@ export default function BlogPage() {
             <div className="flex flex-col items-center">
               <div className="inline-flex mt-2 xs:mt-0">
                 {pageNumber > 1 && (
-                  <button onClick={() => handlePageChange(pageNumber - 1)} className={`flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${nextPage ? "rounded-l " : "rounded"}`}>
+                  <button onClick={() => handlePageChange(pageNumber - 1)} className={`inline-flex text-white bg-dracula-pink hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-dracula-pink font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-gray-400 my-4 transition-all duration-500 ease-in-out ${nextPage ? "rounded-l " : "rounded"}`}>
                     Anterior
                   </button>
                 )}
                 {nextPage && (
-                  <button onClick={() => handlePageChange(pageNumber + 1)} className={`flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-gray-700 hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${pageNumber > 1 ? "border-l rounded-r" : "border rounded"}`}>
+                  <button onClick={() => handlePageChange(pageNumber + 1)} className={`inline-flex text-white bg-dracula-pink hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-dracula-pink font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-gray-400 my-4 transition-all duration-500 ease-in-out ${pageNumber > 1 ? "rounded-l " : "rounded"}`}>
                     Próximo
                   </button>
                 )}

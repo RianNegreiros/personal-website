@@ -35,7 +35,7 @@ export default function Projects() {
           {data.map((project) => (
             <article
               key={project.id}
-              className="overflow-hidden dark:border-zinc-600 rounded-lg border border-gray-100 bg-white shadow-lg dark:bg-black dark:shadow-gray-700 shadow-teal-100"
+              className="overflow-hidden dark:border-zinc-600 rounded-lg border border-gray-100 bg-white shadow-lg dark:bg-black dark:shadow-gray-700 shadow-dracula-pink-100"
             >
               <div className="h-56 w-full relative">
                 <Image
@@ -62,7 +62,7 @@ export default function Projects() {
                 <Link
                   href={project.url}
                   target="_blank"
-                  className="cursor-pointer group mt-4 inline-flex items-center gap-1 text-sm font-medium text-teal-500"
+                  className="cursor-pointer group mt-4 inline-flex items-center gap-1 text-sm font-medium text-dracula-pink"
                 >
                   Saiba mais
                   <span className="block transition-all group-hover:ms-0.5">

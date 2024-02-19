@@ -65,7 +65,7 @@ export default function SignUpPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-dracula-pink focus:border-dracula-pink block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dracula-pink dark:focus:border-dracula-pink"
                   placeholder="name@mail.com"
                   required
                 />
@@ -84,7 +84,7 @@ export default function SignUpPage() {
                   value={formData.username}
                   onChange={handleInputChange}
                   required
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-dracula-pink focus:border-dracula-pink block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dracula-pink dark:focus:border-dracula-pink"
                   placeholder="Nome de usuário"
                 />
               </div>
@@ -103,7 +103,7 @@ export default function SignUpPage() {
                   onChange={handleInputChange}
                   placeholder="••••••••"
                   required
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-dracula-pink focus:border-dracula-pink block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dracula-pink dark:focus:border-dracula-pink"
                 />
               </div>
               <div>
@@ -120,37 +120,37 @@ export default function SignUpPage() {
                   onChange={handleInputChange}
                   placeholder="••••••••"
                   required
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-dracula-pink focus:border-dracula-pink block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dracula-pink dark:focus:border-dracula-pink"
                 />
               </div>
               <div className="flex items-start mb-6">
                 <div className="flex items-center h-5">
-                  <input id="terms" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+                  <input id="terms" type="checkbox" value="" className="w-4 h-4 border border-dracula-comment rounded bg-dracula-background focus:ring-3 focus:ring-dracula-pink dark:bg-dracula-background dark:border-dracula-comment dark:focus:ring-dracula-pink dark:ring-offset-dracula-background dark:focus:ring-offset-dracula-background" required />
                 </div>
                 <label
                   htmlFor="terms"
-                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  className="ml-2 text-sm font-medium text-dracula-foreground dark:text-gray-400">
                   Eu concordo com os
-                  <Link href="/terms/service" target="_blank" className="m-1 text-teal-600 hover:underline dark:text-teal-500"
+                  <Link href="/terms/service" target="_blank" className="m-1 text-dracula-pink hover:underline dark:text-dracula-pink"
                   >
                     Termos de Serviço
                   </Link>
                   e
-                  <Link href="/terms/privacy" target="_blank" className="m-1 text-teal-600 hover:underline dark:text-teal-500">
+                  <Link href="/terms/privacy" target="_blank" className="m-1 text-dracula-pink hover:underline dark:text-dracula-pink">
                     Política de Privacidade
                   </Link>
                 </label>
               </div>
               <button
                 type="submit"
-                className={`w-full text-white bg-teal-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 ${signingUp ? "opacity-70 cursor-not-allowed" : ""
+                className={`w-full text-dracula-background bg-dracula-pink hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dracula-pink dark:hover:bg-gray-400 dark:focus:ring-gray-400 ${signingUp ? "opacity-70 cursor-not-allowed" : ""
                   }`}
                 disabled={signingUp}
               >
                 {signingUp ? "Criando..." : "Criar conta"}
               </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Já possui uma conta? <Link href="/signin" className="font-medium text-teal-500 hover:underline dark:text-primary-500">Entre aqui</Link>
+              <p className="text-sm font-light text-dracula-comment dark:text-gray-400">
+                Já possui uma conta? <Link href="/signin" className="font-medium text-dracula-pink hover:underline dark:text-dracula-pink">Entre aqui</Link>
               </p>
             </form>
           </div>
