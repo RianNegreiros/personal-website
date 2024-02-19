@@ -65,6 +65,15 @@ async function getPosts(pageNumber: number, pageSize: number) {
   }
 }
 
+async function checkSession() {
+  try {
+    const response = await axios.get(`${API_URL}/user/me`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to check user session. Please try again later.');
+  }
+}
+
 async function getAdminPosts() {
   try {
     const response = await axios.get(`${API_URL}/admin/posts`);
@@ -208,5 +217,6 @@ export {
   getAdminUsers,
   deleteAdminUser,
   createUser,
-  logoutUser
+  logoutUser,
+  checkSession
 };

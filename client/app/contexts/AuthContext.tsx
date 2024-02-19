@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { checkSession } from '../utils/api';
 
 interface AuthContextType {
   isAdmin: boolean;
@@ -22,18 +23,19 @@ interface AuthProviderProps {
 }
 
 async function autoLogin(
-  setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>,
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>
 ) {
-  const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
-  const isAdmin = localStorage.getItem('isAdmin') || sessionStorage.getItem('isAdmin');
+  const session = await checkSession();
 
-  if (userId) {
+  if (session) {
     setIsLogged(true);
-  }
+  } else {
+    setIsLogged(false);
+    localStorage.removeItem('userId');
+    sessionStorage.removeItem('userId');
 
-  if (isAdmin) {
-    setIsAdmin(true);
+    localStorage.removeItem('isAdmin');
+    sessionStorage.removeItem('isAdmin');
   }
 }
 
@@ -42,7 +44,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
-    autoLogin(setIsAdmin, setIsLogged);
+    autoLogin(setIsLogged);
   }, []);
 
   return (
