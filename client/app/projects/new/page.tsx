@@ -33,7 +33,7 @@ export default function NewProjectPage() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-  
+
     if (name === "image" && e.target instanceof HTMLInputElement && e.target.files && e.target.files.length > 0) {
       setFormData({ ...formData, [name]: e.target.files[0] });
     } else {
@@ -52,7 +52,7 @@ export default function NewProjectPage() {
                 type="text"
                 name="title"
                 id="title"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dracula-pink-600 focus:border-dracula-pink-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dracula-pink dark:focus:border-dracula-pink"
                 placeholder="Type project title"
                 required
                 onChange={handleChange}
@@ -65,7 +65,7 @@ export default function NewProjectPage() {
                 type="text"
                 name="overview"
                 id="overview"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dracula-pink focus:border-dracula-pink block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dracula-pink dark:focus:border-dracula-pink"
                 placeholder="Type project overview"
                 required
                 onChange={handleChange}
@@ -78,7 +78,7 @@ export default function NewProjectPage() {
                 type="text"
                 name="url"
                 id="url"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dracula-pink-600 focus:border-dracula-pink-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-dracula-pink dark:focus:border-dracula-pink"
                 placeholder="Type project url"
                 required
                 onChange={handleChange}
@@ -101,8 +101,7 @@ export default function NewProjectPage() {
           </div>
           <button
             type="submit"
-            className={`inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600 ${isPublishing ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
+            className={`inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white rounded-lg focus:ring-4 bg-dracula-pink hover:bg-dracula-pink-500 focus:outline-none focus:bg-gray-400 ${isPublishing ? 'opacity-50 cursor-not-allowed' : ''}`}
             disabled={isPublishing}
           >
             {isPublishing ? 'Publicando...' : 'Publicar'}

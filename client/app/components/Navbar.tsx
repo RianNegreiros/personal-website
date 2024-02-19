@@ -15,22 +15,19 @@ export default function Navbar() {
       {({ open }) => (
         <>
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justfiy-between h-16">
+            <div className="flex justify-between h-16">
               <div className="flex justify-between w-full">
                 <div className="flex items-center sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
                   <Link href="/">
                     <h1 className="text-2xl font-medium">
-                      Rian <span className="text-teal-500">Negreiros</span>
+                      Rian <span className="text-dracula-pink">Negreiros</span>
                     </h1>
                   </Link>
 
                   <Link
                     href="/"
                     prefetch
-                    className={`${pathname === "/"
-                      ? "border-teal-500 dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                      : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                      }`}
+                    className={`${pathname === "/" ? "border-dracula-pink dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"}`}
                   >
                     Home
                   </Link>
@@ -38,28 +35,21 @@ export default function Navbar() {
                   <Link
                     href="/posts"
                     prefetch
-                    className={`${pathname === "/posts"
-                      ? "border-teal-500 dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                      : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                      }`}
+                    className={`${pathname === "/posts" ? "border-dracula-pink dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"}`}
                   >
                     Blog
                   </Link>
+
                   <Link
                     href="/projects"
                     prefetch
-                    className={`${pathname === "/projects"
-                      ? "border-teal-500 dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                      : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                      }`}
+                    className={`${pathname === "/projects" ? "border-dracula-pink dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"}`}
                   >
                     Projetos
                   </Link>
-
                 </div>
 
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
-
                   <NewLinks pathname={pathname} />
                   <LogoutLink pathname={pathname} />
                   <ThemeButton />
@@ -71,7 +61,7 @@ export default function Navbar() {
 
                 <Disclosure.Button
                   id="mobile-menu"
-                  className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500 dark:hover:bg-gray-800"
+                  className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dracula-pink dark:hover:bg-gray-800"
                 >
                   {open ? (
                     <svg
@@ -114,10 +104,10 @@ export default function Navbar() {
               <Link
                 href="/"
                 prefetch
-                className={`${pathname == "/"
-                  ? "bg-teal-50 border-teal-500 text-teal-500 block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
-                  : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-teal-500 block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
-                  } `}
+                className={`${pathname === "/"
+                  ? "bg-dracula-pink-50 border-dracula-pink text-dracula-pink block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
+                  : "border-transparent text-gray-500 hover:bg-dracula-pink-50 hover:border-gray-300 hover:text-dracula-pink block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
+                  }`}
               >
                 Home
               </Link>
@@ -125,10 +115,10 @@ export default function Navbar() {
               <Link
                 href="/posts"
                 prefetch
-                className={`${pathname == "/posts"
-                  ? "bg-teal-50 border-teal-500 text-teal-500 block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
-                  : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-teal-500 block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
-                  } `}
+                className={`${pathname === "/posts"
+                  ? "bg-dracula-pink-50 border-dracula-pink text-dracula-pink block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
+                  : "border-transparent text-gray-500 hover:bg-dracula-pink-50 hover:border-gray-300 hover:text-dracula-pink block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
+                  }`}
               >
                 Blog
               </Link>
@@ -136,14 +126,13 @@ export default function Navbar() {
               <Link
                 href="/projects"
                 prefetch
-                className={`${pathname == "/projects"
-                  ? "bg-teal-50 border-teal-500 text-teal-500 block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
-                  : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-teal-500 block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
-                  } `}
+                className={`${pathname === "/projects"
+                  ? "bg-dracula-pink-50 border-dracula-pink text-dracula-pink block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
+                  : "border-transparent text-gray-500 hover:bg-dracula-pink-50 hover:border-gray-300 hover:text-dracula-pink block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
+                  }`}
               >
                 Projetos
               </Link>
-
             </div>
           </Disclosure.Panel>
         </>

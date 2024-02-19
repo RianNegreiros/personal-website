@@ -76,7 +76,7 @@ const CommentSection = ({ slug, comments, setComments }: CommentSectionProps) =>
         <article className="mx-auto w-full max-w-2xl">
           <button
             onClick={() => setIsCommentsVisible(!isCommentsVisible)}
-            className="justify-between mb-6 text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800"
+            className="justify-between mb-6 text-white bg-dracula-pink hover:bg-dracula-pink-800 focus:ring-4 focus:outline-none focus:ring-dracula-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-dracula-pink-400 dark:hover:bg-dracula-pink dark:focus:ring-dracula-pink"
             type="button">
             <h2 className="text-lg font-bold text-gray-900 dark:text-white">Comentários ({comments.length})</h2>
             <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -99,7 +99,7 @@ const CommentSection = ({ slug, comments, setComments }: CommentSectionProps) =>
                   required onChange={handleChange} value={formData.content}></textarea>
               </div>
               <button type="submit"
-                className={`inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-teal-500 rounded-lg focus:ring-4 focus:ring-teal-200 dark:focus:ring-teal-900 hover:bg-teal-800 ${!isLogged ? 'cursor-not-allowed opacity-50' : ''}`}
+                className={`inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-dracula-pink rounded-lg focus:ring-4 focus:ring-dracula-pink-200 dark:focus:ring-dracula-pink-900 hover:bg-dracula-pink-800 ${!isLogged ? 'cursor-not-allowed opacity-50' : ''}`}
               >
                 Postar comentário
               </button>
@@ -135,7 +135,7 @@ const CommentSection = ({ slug, comments, setComments }: CommentSectionProps) =>
                       onChange={handleReplyChange}
                       className="p-2 w-full border rounded-md"
                     />
-                    <button type="submit" className="mt-2 px-4 py-2 bg-teal-500 text-white rounded-md">Reply</button>
+                    <button type="submit" className="mt-2 px-4 py-2 bg-dracula-pink text-white rounded-md">Reply</button>
                   </form>
                 )}
                 {comment.replies && comment.replies.map((reply) => (
@@ -169,7 +169,7 @@ const CommentSection = ({ slug, comments, setComments }: CommentSectionProps) =>
                           onChange={handleReplyChange}
                           className="p-2 w-full border rounded-md"
                         />
-                        <button type="submit" className="mt-2 px-4 py-2 bg-teal-500 text-white rounded-md">Reply</button>
+                        <button type="submit" className="mt-2 px-4 py-2 bg-dracula-pink text-white rounded-md">Reply</button>
                       </form>
                     )}
                   </article>

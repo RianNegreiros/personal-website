@@ -52,7 +52,7 @@ export default function PostComponent({
             <div className="space-y-1 text-center">
               <div className="space-y-10 mb-3">
                 <div>
-                  <p className="text-base font-medium leading-6 text-teal-500">
+                  <p className="text-base font-medium leading-6 text-dracula-pink">
                     {new Date(data.createdAt).toLocaleDateString()}
                   </p>
                 </div>
@@ -101,7 +101,11 @@ export default function PostComponent({
             </EmailShareButton>
           </div>
 
-          <CommentSection slug={params.slug} comments={comments} setComments={setComments} />
+          {comments.length !== 0 ? (
+            <CommentSection slug={params.slug} comments={comments} setComments={setComments} />
+          ) : (
+            null
+          )}
         </>
       )
       }
