@@ -34,6 +34,7 @@
     "typescript": "5.3.3"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10"
+    "@tailwindcss/typography": "^0.5.10",
+    "tailwind-dracula": "^1.1.0"
   }
 }
