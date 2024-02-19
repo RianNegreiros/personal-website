@@ -18,13 +18,14 @@ public static class ApplicationServicesExtensions
 
     services.AddScoped<ITokenService, TokenService>();
     services.AddScoped<IPostService, PostService>();
-    services.AddScoped<ICloudinaryService, CloudinaryService>();
     services.AddScoped<IProjectsService, ProjectsService>();
     services.AddScoped<ICommentsService, CommentsService>();
     services.AddScoped<IUserService, UserService>();
     services.AddScoped<IFeedService, FeedService>();
 
+    services.AddScoped<ICloudinaryService, CloudinaryService>();
     services.AddScoped<ICachingService, CachingService>();
+    services.AddScoped<IEmailService, EmailService>();
 
     return services;
   }

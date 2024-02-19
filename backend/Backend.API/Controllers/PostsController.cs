@@ -7,8 +7,10 @@ using Backend.Application.Models.InputModels;
 using Backend.Application.Models.ViewModels;
 using Backend.Application.Services.Interfaces;
 using Backend.Application.Validators;
+using Backend.Core.Interfaces.CloudServices;
 using Backend.Core.Models;
 using Backend.Infrastructure.Caching;
+using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,12 +24,16 @@ public class PostsController : BaseApiController
   private readonly IPostService _postService;
   private readonly UserManager<User> _userManager;
   private readonly ICachingService _cachingService;
+  private readonly IEmailService _emailService;
+  private readonly IBackgroundJobClient _jobClient;
 
-  public PostsController(IPostService postService, UserManager<User> userManager, ICachingService cachingService)
+  public PostsController(IPostService postService, UserManager<User> userManager, ICachingService cachingService, IEmailService emailService, IBackgroundJobClient jobClient)
   {
     _postService = postService;
     _userManager = userManager;
     _cachingService = cachingService;
+    _emailService = emailService;
+    _jobClient = jobClient;
   }
 
   [ResponseCache(Duration = 1200)]
@@ -100,6 +106,10 @@ public class PostsController : BaseApiController
     User currentUser = await _userManager.FindByIdAsync(model.AuthorId);
 
     Post post = await _postService.CreatePost(model, currentUser);
+
+    string emailSubject = "Post Confirmation";
+    string emailMessage = _emailService.GeneratePostConfirmationTemplate(post.Title, post.Slug);
+    _jobClient.Enqueue(() => _emailService.SendEmailAsync(currentUser.Email, emailSubject, emailMessage));
 
     return Ok(new ApiResponse<PostViewModel>
     {

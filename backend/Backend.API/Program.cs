@@ -19,6 +19,7 @@ builder.Services.AddHealthChecks(builder.Configuration);
 
 // Configure middleware
 builder.Services.AddCors(builder.Configuration);
+builder.Services.AddHangfire();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerDocumentation();

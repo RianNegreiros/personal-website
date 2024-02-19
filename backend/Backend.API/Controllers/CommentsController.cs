@@ -3,7 +3,9 @@ using Backend.Application.Models.InputModels;
 using Backend.Application.Models.ViewModels;
 using Backend.Application.Services.Interfaces;
 using Backend.Application.Validators;
+using Backend.Core.Interfaces.CloudServices;
 using Backend.Core.Models;
+using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +19,16 @@ public class CommentsController : BaseApiController
     private readonly ICommentsService _commentsService;
     private readonly IPostService _postService;
     private readonly UserManager<User> _userManager;
+    private readonly IEmailService _emailService;
+    private readonly IBackgroundJobClient _jobClient;
 
-    public CommentsController(ICommentsService commentsService, IPostService postService, UserManager<User> userManager)
+    public CommentsController(ICommentsService commentsService, IPostService postService, UserManager<User> userManager, IEmailService emailService, IBackgroundJobClient jobClient)
     {
         _commentsService = commentsService;
         _postService = postService;
         _userManager = userManager;
+        _emailService = emailService;
+        _jobClient = jobClient;
     }
 
     [Authorize]
@@ -59,6 +65,10 @@ public class CommentsController : BaseApiController
         Comment addedComment;
 
         addedComment = await _commentsService.AddCommentToPost(post, model, user);
+
+        string emailSubject = "Comment Notification";
+        string emailMessage = _emailService.GenerateReplyTemplate(user.UserName, addedComment.Content, addedComment.PostSlug);
+        _jobClient.Enqueue(() => _emailService.SendEmailAsync(user.Email, emailSubject, emailMessage));
 
         return Ok(new ApiResponse<CommentViewModel>
         {
@@ -111,6 +121,10 @@ public class CommentsController : BaseApiController
         Comment addedReply;
 
         addedReply = await _commentsService.AddReplyToComment(comment, model, user);
+
+        string emailSubject = "Comment Reply Notification";
+        string emailMessage = _emailService.GenerateReplyTemplate(user.UserName, addedReply.Content, comment.PostSlug);
+        _jobClient.Enqueue(() => _emailService.SendEmailAsync(user.Email, emailSubject, emailMessage));
 
         return Ok(new ApiResponse<CommentViewModel>
         {

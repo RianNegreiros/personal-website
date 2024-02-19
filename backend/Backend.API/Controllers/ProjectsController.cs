@@ -2,8 +2,10 @@ using Backend.API.Models;
 using Backend.Application.Models.InputModels;
 using Backend.Application.Services.Interfaces;
 using Backend.Application.Validators;
+using Backend.Core.Interfaces.CloudServices;
 using Backend.Core.Models;
 using Backend.Infrastructure.Caching;
+using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,12 +20,16 @@ public class ProjectsController : BaseApiController
     private readonly IProjectsService _projectsService;
     private readonly UserManager<User> _userManager;
     private readonly ICachingService _cachingService;
+    private readonly IEmailService _emailService;
+    private readonly IBackgroundJobClient _jobClient;
 
-    public ProjectsController(IProjectsService projectsService, UserManager<User> userManager, ICachingService cachingService)
+    public ProjectsController(IProjectsService projectsService, UserManager<User> userManager, ICachingService cachingService, IEmailService emailService, IBackgroundJobClient jobClient)
     {
         _projectsService = projectsService;
         _userManager = userManager;
         _cachingService = cachingService;
+        _emailService = emailService;
+        _jobClient = jobClient;
     }
 
     [AllowAnonymous]
@@ -119,6 +125,10 @@ public class ProjectsController : BaseApiController
         User currentUser = await _userManager.FindByIdAsync(model.AuthorId);
 
         Project project = await _projectsService.CreateProject(model, currentUser);
+
+        string emailSubject = "Project Confirmation";
+        string emailMessage = _emailService.GenerateProjectConfirmationTemplate(project.Title);
+        _jobClient.Enqueue(() => _emailService.SendEmailAsync(currentUser.Email, emailSubject, emailMessage));
 
         return Ok(new ApiResponse<Project>
         {
