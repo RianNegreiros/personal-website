@@ -26,11 +26,15 @@ export default function LogoutLink({ pathname }: { pathname: string }) {
       toast.success('Logged out successfully!', {
         position: "top-center",
         autoClose: 3000,
+        className: 'bg-dracula-pink',
+        bodyClassName: 'text-dracula-pink',
       });
     } catch (error) {
       toast.error('Failed to log out. Please try again.', {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 3000,
+        className: 'bg-dracula-red',
+        bodyClassName: 'text-dracula-pink',
       });
     }
   };
