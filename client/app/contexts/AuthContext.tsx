@@ -45,6 +45,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     autoLogin(setIsLogged);
+    const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
+    const isAdmin = localStorage.getItem('isAdmin') || sessionStorage.getItem('isAdmin');
+    if (isAdmin && userId) setIsAdmin(true);
   }, []);
 
   return (
