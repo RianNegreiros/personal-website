@@ -19,7 +19,7 @@ export default function PostsPage() {
   }
 
   return (
-    <div className='divide-y divide-gray-200 dark:divide-gray-700'>
+    <div className='mx-auto flex min-h-screen max-w-6xl flex-col divide-y divide-gray-200 px-4 dark:divide-gray-700 sm:px-6 lg:px-8'>
       <div className='space-y-2 pb-8 pt-6 md:space-y-5'></div>
       <ul>
         {data.map((post) => (

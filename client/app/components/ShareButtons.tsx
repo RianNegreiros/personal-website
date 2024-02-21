@@ -15,7 +15,7 @@ interface ShareButtonsProps {
 
 export default function ShareButtons({ post }: ShareButtonsProps) {
   return (
-    <div className='mb-4 flex justify-center space-x-4'>
+    <div className='mb-8 flex justify-center space-x-4'>
       <LinkedinShareButton
         url={`${siteMetadata.siteUrl}/posts/${post.slug}`}
         title={post.title}

@@ -59,9 +59,7 @@ export default function RootLayout({
         <Providers>
           <ToastContainer />
           <Navbar />
-          <main className='mx-auto flex min-h-screen max-w-6xl flex-col px-4 sm:px-6 lg:px-8'>
-            {children}
-          </main>
+          <main className=''>{children}</main>
           <FloatingButtons />
         </Providers>
         <Footer />

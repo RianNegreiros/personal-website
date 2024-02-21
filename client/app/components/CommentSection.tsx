@@ -86,7 +86,7 @@ const CommentSection = ({
   }
 
   return (
-    <main className='bg-white dark:bg-gray-900'>
+    <main className='bg-white py-4 dark:bg-gray-900'>
       <div className='mx-auto max-w-screen-xl px-4 '>
         <article className='mx-auto w-full max-w-2xl'>
           <button

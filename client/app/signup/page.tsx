@@ -136,7 +136,7 @@ export default function SignUpPage() {
                 </div>
                 <label
                   htmlFor='terms'
-                  className='text-dracula-foreground ml-2 text-sm font-medium dark:text-dracula-pink-400'
+                  className='text-dracula-foreground ml-2 text-sm font-medium dark:text-gray-400'
                 >
                   Eu concordo com os
                   <Link
