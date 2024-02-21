@@ -93,9 +93,8 @@ public class PostService : IPostService
     public async Task<List<PostViewModel>> GetPosts()
     {
         List<Post> posts = await _postRepository.GetAll();
-        if (posts != null)
-        {
-            return posts.Select(post => new PostViewModel
+        return posts != null
+            ? posts.Select(post => new PostViewModel
             {
                 Id = post.Id,
                 Title = post.Title,
@@ -104,36 +103,43 @@ public class PostService : IPostService
                 Content = post.Content,
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt
-            }).ToList();
-        }
-
-        return new List<PostViewModel>();
+            }).ToList()
+            : new List<PostViewModel>();
     }
 
     public async Task<PostViewModel?> GetPostByIdentifier(string identifier)
     {
-        Post post;
-        if (ObjectId.TryParse(identifier, out ObjectId objectId))
-        {
-            post = await _postRepository.GetById(objectId.ToString());
-        }
-        else
-        {
-            post = await _postRepository.GetBySlug(identifier);
-        }
+        Post post = ObjectId.TryParse(identifier, out ObjectId objectId)
+            ? await _postRepository.GetById(objectId.ToString())
+            : await _postRepository.GetBySlug(identifier);
+        return post == null
+            ? null
+            : new PostViewModel
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Summary = post.Summary,
+                Content = post.Content,
+                Slug = post.Slug,
+                CreatedAt = post.CreatedAt,
+                UpdatedAt = post.UpdatedAt
+            };
+    }
 
-        if (post == null)
-            return null;
-
-        return new PostViewModel
-        {
-            Id = post.Id,
-            Title = post.Title,
-            Summary = post.Summary,
-            Content = post.Content,
-            Slug = post.Slug,
-            CreatedAt = post.CreatedAt,
-            UpdatedAt = post.UpdatedAt
-        };
+    public async Task<List<PostViewModel>> GetRandomPosts(int count)
+    {
+        List<Post> posts = await _postRepository.GetRandomPosts(count);
+        return posts != null
+            ? posts.Select(post => new PostViewModel
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Summary = post.Summary,
+                Slug = post.Slug,
+                Content = post.Content,
+                CreatedAt = post.CreatedAt,
+                UpdatedAt = post.UpdatedAt
+            }).ToList()
+            : new List<PostViewModel>();
     }
 }

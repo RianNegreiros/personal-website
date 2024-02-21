@@ -68,4 +68,14 @@ public class PostRepository : IPostRepository
         return await _postCollection.Find(c => c.Author.Id == userId).ToListAsync();
     }
 
+    public async Task<List<Post>> GetRandomPosts(int count)
+    {
+        var pipeline = new BsonDocument[]
+        {
+        new("$sample", new BsonDocument("size", count))
+        };
+
+        return await _postCollection.Aggregate<Post>(pipeline).ToListAsync();
+    }
+
 }

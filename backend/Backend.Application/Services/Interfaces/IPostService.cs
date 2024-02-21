@@ -12,4 +12,5 @@ public interface IPostService
     Task<PaginatedResult<PostViewModel>> GetPaginatedPosts(int pageNumber, int pageSize);
     Task<List<PostViewModel>> GetPosts();
     Task<PostViewModel?> GetPostByIdentifier(string identifier);
+    Task<List<PostViewModel>> GetRandomPosts(int count);
 }

@@ -41,8 +41,8 @@ public class PostsController : BaseApiController
         _jobClient = jobClient;
     }
 
-    [ResponseCache(Duration = 1200)]
     [HttpGet("rss")]
+    [ResponseCache(Duration = 1200)]
     [SwaggerOperation(Summary = "Get Posts RSS Feed")]
     public async Task<IActionResult> Rss()
     {
@@ -57,12 +57,12 @@ public class PostsController : BaseApiController
             posts.Select(post =>
             {
                 var item = new SyndicationItem(
-              post.Title,
-              post.Content,
-              new Uri($"https://www.riannegreiros.dev/posts/{post.Slug}"),
-              post.Id.ToString(),
-              post.CreatedAt
-            )
+                    post.Title,
+                    post.Content,
+                    new Uri($"https://www.riannegreiros.dev/posts/{post.Slug}"),
+                    post.Id.ToString(),
+                    post.CreatedAt
+                )
                 {
                     PublishDate = post.CreatedAt,
                     Copyright = new TextSyndicationContent($"Copyright {post.CreatedAt.Year}"),
@@ -187,14 +187,13 @@ public class PostsController : BaseApiController
         {
             posts = JsonConvert.DeserializeObject<PaginatedResult<PostViewModel>>(postsCache);
 
-            if (posts == null)
-                return NotFound();
-
-            return Ok(new ApiResponse<PaginatedResult<PostViewModel>>
-            {
-                Success = true,
-                Data = posts
-            });
+            return posts == null
+                ? (ActionResult<ApiResponse<PaginatedResult<PostViewModel>>>)NotFound()
+                : (ActionResult<ApiResponse<PaginatedResult<PostViewModel>>>)Ok(new ApiResponse<PaginatedResult<PostViewModel>>
+                {
+                    Success = true,
+                    Data = posts
+                });
         }
 
         posts = await _postService.GetPaginatedPosts(parameters.PageNumber, parameters.PageSize);
@@ -211,6 +210,24 @@ public class PostsController : BaseApiController
         });
     }
 
+    [HttpGet("random/{count}")]
+    [ResponseCache(Duration = 1200)]
+    [SwaggerOperation(Summary = "Get random posts.")]
+    [ProducesResponseType(typeof(ApiResponse<List<PostViewModel>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<ApiResponse<List<PostViewModel>>>> GetRandomPosts(int count)
+    {
+        List<PostViewModel> posts = await _postService.GetRandomPosts(count);
+
+        return posts == null
+            ? (ActionResult<ApiResponse<List<PostViewModel>>>)NotFound()
+            : (ActionResult<ApiResponse<List<PostViewModel>>>)Ok(new ApiResponse<List<PostViewModel>>
+            {
+                Success = true,
+                Data = posts
+            });
+    }
+
     [HttpGet("{identifier}")]
     [SwaggerOperation(Summary = "Get a post by ID or slug.")]
     [ProducesResponseType(typeof(ApiResponse<PostViewModel>), StatusCodes.Status200OK)]
@@ -225,14 +242,13 @@ public class PostsController : BaseApiController
         {
             post = JsonConvert.DeserializeObject<PostViewModel>(postCache);
 
-            if (post == null)
-                return NotFound();
-
-            return Ok(new ApiResponse<PostViewModel>
-            {
-                Success = true,
-                Data = post
-            });
+            return post == null
+                ? (ActionResult<PostViewModel>)NotFound()
+                : (ActionResult<PostViewModel>)Ok(new ApiResponse<PostViewModel>
+                {
+                    Success = true,
+                    Data = post
+                });
         }
 
         post = await _postService.GetPostByIdentifier(identifier);

@@ -76,6 +76,15 @@ async function getPosts(pageNumber: number, pageSize: number) {
   }
 }
 
+async function getRandomPosts(count: number) {
+  try {
+    const response = await axios.get(`${API_URL}/posts/random/${count}`)
+    return response.data
+  } catch (error) {
+    throw new Error('Failed to fetch posts. Please try again later.')
+  }
+}
+
 async function checkSession() {
   try {
     const response = await axios.get(`${API_URL}/user/me`)
@@ -229,6 +238,7 @@ export {
   createPost,
   getPostBySlug,
   getPosts,
+  getRandomPosts,
   getCommentsForPost,
   addCommentToPost,
   createProject,
