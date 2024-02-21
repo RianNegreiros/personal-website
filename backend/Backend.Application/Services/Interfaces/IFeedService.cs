@@ -4,5 +4,5 @@ namespace Backend.Application.Services.Interfaces;
 
 public interface IFeedService
 {
-  Task<List<FeedItemViewModel>> GetFeed();
+    Task<List<FeedItemViewModel>> GetFeed();
 }

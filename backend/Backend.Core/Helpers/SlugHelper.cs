@@ -21,18 +21,18 @@ public static class SlugHelper
 
     public static string Slugify(this string phrase)
     {
-    // Remove all accents and make the string lower case.  
-    string output = phrase.RemoveAccents().ToLower();
+        // Remove all accents and make the string lower case.  
+        string output = phrase.RemoveAccents().ToLower();
 
-    // Remove all special characters from the string, including underscores.  
-    output = Regex.Replace(output, @"[^A-Za-z0-9\s\-_]", "");
+        // Remove all special characters from the string, including underscores.  
+        output = Regex.Replace(output, @"[^A-Za-z0-9\s\-_]", "");
 
-    // Replace all spaces, underscores, and hyphens with a single hyphen.  
-    output = Regex.Replace(output, @"[\s\-_]+", "-");
+        // Replace all spaces, underscores, and hyphens with a single hyphen.  
+        output = Regex.Replace(output, @"[\s\-_]+", "-");
 
-    // Remove leading and trailing hyphens.
-    output = output.Trim('-');
+        // Remove leading and trailing hyphens.
+        output = output.Trim('-');
 
-    return output;
+        return output;
     }
 }

@@ -10,23 +10,23 @@ namespace Backend.API.Extensions;
 
 public static class ApplicationServicesExtensions
 {
-  public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-  {
-    services.AddScoped<IPostRepository, PostRepository>();
-    services.AddScoped<IProjectsRepository, ProjectsRepository>();
-    services.AddScoped<ICommentsRepository, CommentsRepository>();
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    {
+        services.AddScoped<IPostRepository, PostRepository>();
+        services.AddScoped<IProjectsRepository, ProjectsRepository>();
+        services.AddScoped<ICommentsRepository, CommentsRepository>();
 
-    services.AddScoped<ITokenService, TokenService>();
-    services.AddScoped<IPostService, PostService>();
-    services.AddScoped<IProjectsService, ProjectsService>();
-    services.AddScoped<ICommentsService, CommentsService>();
-    services.AddScoped<IUserService, UserService>();
-    services.AddScoped<IFeedService, FeedService>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IPostService, PostService>();
+        services.AddScoped<IProjectsService, ProjectsService>();
+        services.AddScoped<ICommentsService, CommentsService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IFeedService, FeedService>();
 
-    services.AddScoped<ICloudinaryService, CloudinaryService>();
-    services.AddScoped<ICachingService, CachingService>();
-    services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<ICloudinaryService, CloudinaryService>();
+        services.AddScoped<ICachingService, CachingService>();
+        services.AddScoped<IEmailService, EmailService>();
 
-    return services;
-  }
+        return services;
+    }
 }

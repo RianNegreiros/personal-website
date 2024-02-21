@@ -5,14 +5,14 @@ namespace Backend.API.Extensions;
 
 public static class HangfireExtensions
 {
-  public static IServiceCollection AddHangfire(this IServiceCollection services)
-  {
-    services.AddHangfire(config =>
+    public static IServiceCollection AddHangfire(this IServiceCollection services)
     {
-      config.UseMemoryStorage();
-    });
-    services.AddHangfireServer();
+        services.AddHangfire(config =>
+        {
+            config.UseMemoryStorage();
+        });
+        services.AddHangfireServer();
 
-    return services;
-  }
+        return services;
+    }
 }
