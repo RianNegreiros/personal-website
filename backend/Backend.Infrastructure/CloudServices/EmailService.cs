@@ -1,6 +1,9 @@
 using Backend.Core.Interfaces.CloudServices;
+
 using MailKit.Net.Smtp;
+
 using Microsoft.Extensions.Configuration;
+
 using MimeKit;
 
 namespace Backend.Infrastructure.CloudServices;

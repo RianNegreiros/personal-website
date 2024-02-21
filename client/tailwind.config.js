@@ -9,6 +9,6 @@ module.exports = {
   theme: {},
   plugins: [
     require('@tailwindcss/typography'),
-    require('tailwind-dracula')('dracula', true)
+    require('tailwind-dracula')('dracula', true),
   ],
 }

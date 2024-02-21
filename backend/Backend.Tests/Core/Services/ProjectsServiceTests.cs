@@ -1,12 +1,16 @@
 using System.IO;
 using System.Threading.Tasks;
+
 using Backend.Application.Models.InputModels;
 using Backend.Application.Services.Implementations;
 using Backend.Core.Interfaces.CloudServices;
 using Backend.Core.Interfaces.Repositories;
 using Backend.Core.Models;
+
 using Microsoft.AspNetCore.Http;
+
 using Moq;
+
 using Xunit;
 
 namespace Backend.Tests.Application.Services
