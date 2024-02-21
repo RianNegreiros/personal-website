@@ -117,3 +117,10 @@ export type FeedItem = {
   overview?: string
   type: string // "Post" or "Project"
 }
+
+export interface AdminPost {
+  author: { id: string; userName: string }
+  id: string
+  title: string
+  summary: string
+}

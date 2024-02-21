@@ -1,37 +1,34 @@
 'use client'
 
 import AdminDeleteModal from '@/app/components/AdminDeleteModal'
-import { deleteAdminPost, getAdminPosts } from '@/app/utils/api'
+import InternalServerError from '@/app/components/InternalServerError'
+import Loading from '@/app/components/Loading'
+import Unauthorized from '@/app/components/Unauthorized'
+import { useAuth } from '@/app/contexts/AuthContext'
+import { useAdminPosts } from '@/app/hooks/useAdminPosts'
+import { deleteAdminPost } from '@/app/utils/api'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-
-async function fetchData() {
-  const result = await getAdminPosts()
-  return result
-}
-
-interface AdminPost {
-  author: { id: string; userName: string }
-  id: string
-  title: string
-  summary: string
-}
+import { useState } from 'react'
 
 export default function PostsPage() {
-  const [data, setData] = useState<AdminPost[]>([])
-
-  useEffect(() => {
-    async function getData() {
-      const posts = await fetchData()
-      setData(posts)
-    }
-    getData()
-  }, [])
-
-  console.log(data)
-
+  const { isAdmin } = useAuth()
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedPostId, setSelectedPostId] = useState<string>('')
+  const { data, isLoading, error } = useAdminPosts()
+
+  if (!isAdmin) {
+    return (
+      <Unauthorized errorMessage='Você não tem permissão para acessar esta página.' />
+    )
+  }
+
+  if (isLoading) {
+    return <Loading />
+  }
+
+  if (error) {
+    return <InternalServerError errorMessage={error.message} />
+  }
 
   const handleDeleteCancel = () => {
     setIsDeleteModalOpen(false)
@@ -59,39 +56,6 @@ export default function PostsPage() {
                   <span className='text-gray-500'>All Posts: </span>
                   <span className='dark:text-white'>{data.length}</span>
                 </h5>
-              </div>
-            </div>
-            <div className='mx-4 flex flex-col items-stretch justify-between space-y-3 border-t py-4 dark:border-gray-700 md:flex-row md:items-center md:space-x-3 md:space-y-0'>
-              <div className='w-full md:w-1/2'>
-                <form className='flex items-center'>
-                  <label htmlFor='simple-search' className='sr-only'>
-                    Search
-                  </label>
-                  <div className='relative w-full'>
-                    <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
-                      <svg
-                        aria-hidden='true'
-                        className='h-5 w-5 text-gray-500 dark:text-gray-400'
-                        fill='currentColor'
-                        viewBox='0 0 20 20'
-                        xmlns='http://www.w3.org/2000/svg'
-                      >
-                        <path
-                          fillRule='evenodd'
-                          clipRule='evenodd'
-                          d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
-                        />
-                      </svg>
-                    </div>
-                    <input
-                      type='text'
-                      id='simple-search'
-                      placeholder='Search for posts'
-                      required
-                      className='focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400'
-                    />
-                  </div>
-                </form>
               </div>
             </div>
 
@@ -134,7 +98,11 @@ export default function PostsPage() {
                           {post.author.userName}
                         </div>
                       </td>
-                      <td className='px-4 py-3'>{post.summary}</td>
+                      <td className='px-4 py-3'>
+                        {post.summary.length > 100
+                          ? post.summary.substring(0, 100) + '...'
+                          : post.summary}
+                      </td>{' '}
                       <td className='whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white'>
                         <div className='flex items-center space-x-4'>
                           <Link
