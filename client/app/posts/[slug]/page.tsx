@@ -1,5 +1,5 @@
-import PostComponent from '@/app/components/PostComponent'
-import { getCommentsForPost, getPostBySlug } from '@/app/utils/api'
+import Post from '@/app/components/Post'
+import { getPostBySlug } from '@/app/utils/api'
 import siteMetadata from '@/app/utils/siteMetaData'
 import { Metadata } from 'next'
 import { cache } from 'react'
@@ -49,14 +49,5 @@ export default async function PostPage({
 }: {
   params: { slug: string }
 }) {
-  const postData = await getPosts(params.slug)
-  const commentsData = await getCommentsForPost(params.slug)
-
-  return (
-    <PostComponent
-      params={params}
-      postData={postData.data}
-      commentsData={commentsData.data}
-    />
-  )
+  return <Post params={params} />
 }
