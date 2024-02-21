@@ -184,7 +184,7 @@ public class UserController : BaseApiController
     }
 
     [Authorize]
-    [HttpPost("logout")]
+    [HttpGet("logout")]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

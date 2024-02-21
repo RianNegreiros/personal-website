@@ -217,7 +217,7 @@ async function deleteAdminUser(id: string) {
 
 async function logoutUser() {
   try {
-    await axios.post(`${API_URL}/user/logout`)
+    await axios.get(`${API_URL}/user/logout`)
   } catch (error) {
     throw new Error('Failed to logout user. Please try again later.')
   }
