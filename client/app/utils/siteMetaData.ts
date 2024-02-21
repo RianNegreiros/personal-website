@@ -1,7 +1,8 @@
 const siteMetadata = {
   title: 'Rian Negreiros Dos Santos Blog e Portfólio',
   author: 'Rian Negreiros Dos Santos',
-  description: 'Blog e Portfólio de Rian Negreiros Dos Santos, desenvolvedor Back-end',
+  description:
+    'Blog e Portfólio de Rian Negreiros Dos Santos, desenvolvedor Back-end',
   language: 'pt-BR',
   siteUrl: 'https://www.riannegreiros.dev',
   siteLogo: '/app/favicon.ico',

@@ -4,8 +4,8 @@ import Navbar from './components/Navbar'
 import { Providers } from './components/Providers'
 import FloatingButtons from './components/FloatingButtons'
 import Footer from './components/Footer'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Metadata } from 'next'
 import siteMetadata from './utils/siteMetaData'
 
@@ -25,8 +25,8 @@ const initializeMetadata = (): Metadata => {
       description: siteMetadata.description,
       url: siteMetadata.siteUrl,
       siteName: siteMetadata.title,
-      locale: "pt_BR",
-      type: "website",
+      locale: 'pt_BR',
+      type: 'website',
       emails: siteMetadata.email,
     },
     robots: {
@@ -41,10 +41,10 @@ const initializeMetadata = (): Metadata => {
         'max-snippet': -1,
       },
     },
-  };
-};
+  }
+}
 
-export const metadata: Metadata = initializeMetadata();
+export const metadata: Metadata = initializeMetadata()
 
 export default function RootLayout({
   children,
@@ -52,12 +52,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-white text-black dark:bg-gray-900 dark:text-white h-full selection:bg-gray-50 dark:selection:bg-gray-800`}>
+    <html lang='en' suppressHydrationWarning>
+      <body
+        className={`${inter.className} h-full bg-white text-black selection:bg-gray-50 dark:bg-gray-900 dark:text-white dark:selection:bg-gray-800`}
+      >
         <Providers>
           <ToastContainer />
           <Navbar />
-          <main className='flex flex-col min-h-screen max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <main className='mx-auto flex min-h-screen max-w-6xl flex-col px-4 sm:px-6 lg:px-8'>
             {children}
           </main>
           <FloatingButtons />

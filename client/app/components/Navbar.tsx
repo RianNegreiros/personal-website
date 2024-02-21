@@ -1,96 +1,96 @@
-"use client"
+'use client'
 
-import Link from "next/link";
-import ThemeButton from "./ThemeButton";
-import { Disclosure } from "@headlessui/react";
-import { usePathname } from "next/navigation";
-import NewLinks from "./NewLinks";
-import LogoutLink from "./LogoutLink";
+import Link from 'next/link'
+import ThemeButton from './ThemeButton'
+import { Disclosure } from '@headlessui/react'
+import { usePathname } from 'next/navigation'
+import NewLinks from './NewLinks'
+import LogoutLink from './LogoutLink'
 
 export default function Navbar() {
-  let pathname = usePathname() || "/";
+  let pathname = usePathname() || '/'
 
   return (
-    <Disclosure as="nav">
+    <Disclosure as='nav'>
       {({ open }) => (
         <>
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-16">
-              <div className="flex justify-between w-full">
-                <div className="flex items-center sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
-                  <Link href="/">
-                    <h1 className="text-2xl font-medium">
-                      Rian <span className="text-dracula-pink">Negreiros</span>
+          <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8'>
+            <div className='flex h-16 justify-between'>
+              <div className='flex w-full justify-between'>
+                <div className='flex items-center sm:ml-6 sm:flex sm:items-center sm:space-x-8'>
+                  <Link href='/'>
+                    <h1 className='text-2xl font-medium'>
+                      Rian <span className='text-dracula-pink'>Negreiros</span>
                     </h1>
                   </Link>
 
                   <Link
-                    href="/"
+                    href='/'
                     prefetch
-                    className={`${pathname === "/" ? "border-dracula-pink dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"}`}
+                    className={`${pathname === '/' ? 'inline-flex h-full items-center border-b-2 border-dracula-pink px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'}`}
                   >
                     Home
                   </Link>
 
                   <Link
-                    href="/posts"
+                    href='/posts'
                     prefetch
-                    className={`${pathname === "/posts" ? "border-dracula-pink dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"}`}
+                    className={`${pathname === '/posts' ? 'inline-flex h-full items-center border-b-2 border-dracula-pink px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'}`}
                   >
                     Blog
                   </Link>
 
                   <Link
-                    href="/projects"
+                    href='/projects'
                     prefetch
-                    className={`${pathname === "/projects" ? "border-dracula-pink dark:text-white h-full inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" : "border-transparent text-gray-500 dark:text-gray-300 dark:hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"}`}
+                    className={`${pathname === '/projects' ? 'inline-flex h-full items-center border-b-2 border-dracula-pink px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'}`}
                   >
                     Projetos
                   </Link>
                 </div>
 
-                <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
+                <div className='hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8'>
                   <NewLinks pathname={pathname} />
                   <LogoutLink pathname={pathname} />
                   <ThemeButton />
                 </div>
               </div>
 
-              <div className="-mr-2 flex items-center sm:hidden">
+              <div className='-mr-2 flex items-center sm:hidden'>
                 <ThemeButton />
 
                 <Disclosure.Button
-                  id="mobile-menu"
-                  className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dracula-pink dark:hover:bg-gray-800"
+                  id='mobile-menu'
+                  className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dracula-pink dark:hover:bg-gray-800'
                 >
                   {open ? (
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
                       strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
+                      stroke='currentColor'
+                      className='h-6 w-6'
                     >
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M6 18L18 6M6 6l12 12'
                       />
                     </svg>
                   ) : (
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
                       strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
+                      stroke='currentColor'
+                      className='h-6 w-6'
                     >
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5'
                       />
                     </svg>
                   )}
@@ -99,37 +99,40 @@ export default function Navbar() {
             </div>
           </div>
 
-          <Disclosure.Panel className="sm:hidden">
-            <div className="pt-2 pb-3 space-y-1">
+          <Disclosure.Panel className='sm:hidden'>
+            <div className='space-y-1 pb-3 pt-2'>
               <Link
-                href="/"
+                href='/'
                 prefetch
-                className={`${pathname === "/"
-                  ? "bg-dracula-pink-50 border-dracula-pink text-dracula-pink block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
-                  : "border-transparent text-gray-500 hover:bg-dracula-pink-50 hover:border-gray-300 hover:text-dracula-pink block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
-                  }`}
+                className={`${
+                  pathname === '/'
+                    ? 'block border-l-4 border-dracula-pink bg-dracula-pink-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-pink dark:bg-gray-800'
+                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-pink-50 hover:text-dracula-pink dark:text-white dark:hover:bg-gray-700'
+                }`}
               >
                 Home
               </Link>
 
               <Link
-                href="/posts"
+                href='/posts'
                 prefetch
-                className={`${pathname === "/posts"
-                  ? "bg-dracula-pink-50 border-dracula-pink text-dracula-pink block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
-                  : "border-transparent text-gray-500 hover:bg-dracula-pink-50 hover:border-gray-300 hover:text-dracula-pink block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
-                  }`}
+                className={`${
+                  pathname === '/posts'
+                    ? 'block border-l-4 border-dracula-pink bg-dracula-pink-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-pink dark:bg-gray-800'
+                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-pink-50 hover:text-dracula-pink dark:text-white dark:hover:bg-gray-700'
+                }`}
               >
                 Blog
               </Link>
 
               <Link
-                href="/projects"
+                href='/projects'
                 prefetch
-                className={`${pathname === "/projects"
-                  ? "bg-dracula-pink-50 border-dracula-pink text-dracula-pink block pl-3 pr-4 py-2 border-l-4 text-base font-medium dark:bg-gray-800"
-                  : "border-transparent text-gray-500 hover:bg-dracula-pink-50 hover:border-gray-300 hover:text-dracula-pink block pl-3 pr-4 py-2 dark:hover:bg-gray-700 border-l-4 text-base font-medium dark:text-white"
-                  }`}
+                className={`${
+                  pathname === '/projects'
+                    ? 'block border-l-4 border-dracula-pink bg-dracula-pink-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-pink dark:bg-gray-800'
+                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-pink-50 hover:text-dracula-pink dark:text-white dark:hover:bg-gray-700'
+                }`}
               >
                 Projetos
               </Link>
@@ -138,5 +141,5 @@ export default function Navbar() {
         </>
       )}
     </Disclosure>
-  );
+  )
 }
