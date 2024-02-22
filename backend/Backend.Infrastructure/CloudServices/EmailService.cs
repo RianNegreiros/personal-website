@@ -19,7 +19,7 @@ public class EmailService : IEmailService
     {
         var emailMessage = new MimeMessage();
 
-        emailMessage.From.Add(new MailboxAddress("Rian Negreiros Blog e Portfolio", "portfolio@riannegreiros.dev"));
+        emailMessage.From.Add(new MailboxAddress("no-reply", "no-reply@riannegreiros.dev"));
         emailMessage.To.Add(new MailboxAddress("", email));
         emailMessage.Subject = subject;
         emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -33,6 +33,30 @@ public class EmailService : IEmailService
         await client.SendAsync(emailMessage);
 
         await client.DisconnectAsync(true);
+    }
+
+    public string GenerateNewPostNotificationTemplate(string postTitle, string postSlug)
+    {
+        string clientUrl = _config["ClientUrl"];
+        string postUrl = $"{clientUrl}/posts/{postSlug}";
+
+        string htmlTemplate = @"
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>New Post Notification</title>
+        </head>
+        <body>
+            <h1>New Post: {post_title}</h1>
+            <p>A new post titled '{post_title}' has been published.</p>
+            <p>Click <a href='{post_url}'>here</a> to read the post.</p>
+        </body>
+        </html>
+    ";
+
+        string htmlMessage = htmlTemplate.Replace("{post_title}", postTitle).Replace("{post_url}", postUrl);
+
+        return htmlMessage;
     }
 
     public string GeneratePostConfirmationTemplate(string postTitle, string postSlug)

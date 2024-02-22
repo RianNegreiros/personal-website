@@ -29,16 +29,14 @@ public class PostsController : BaseApiController
     private readonly IPostService _postService;
     private readonly UserManager<User> _userManager;
     private readonly ICachingService _cachingService;
-    private readonly IEmailService _emailService;
-    private readonly IBackgroundJobClient _jobClient;
+    private readonly INotificationService _notificationService;
 
-    public PostsController(IPostService postService, UserManager<User> userManager, ICachingService cachingService, IEmailService emailService, IBackgroundJobClient jobClient)
+    public PostsController(IPostService postService, UserManager<User> userManager, ICachingService cachingService, INotificationService notificationService)
     {
         _postService = postService;
         _userManager = userManager;
         _cachingService = cachingService;
-        _emailService = emailService;
-        _jobClient = jobClient;
+        _notificationService = notificationService;
     }
 
     [HttpGet("rss")]
@@ -112,9 +110,19 @@ public class PostsController : BaseApiController
 
         Post post = await _postService.CreatePost(model, currentUser);
 
-        string emailSubject = "Post Confirmation";
-        string emailMessage = _emailService.GeneratePostConfirmationTemplate(post.Title, post.Slug);
-        _jobClient.Enqueue(() => _emailService.SendEmailAsync(currentUser.Email, emailSubject, emailMessage));
+        _notificationService.EnqueueNotification("PostConfirmation", new NotificationContext
+        {
+            Title = post.Title,
+            PostSlug = post.Slug,
+            UserEmail = currentUser.Email
+        });
+
+        _notificationService.EnqueueNotification("NewPostNotification", new NotificationContext
+        {
+            Title = post.Title,
+            PostSlug = post.Slug,
+            UserEmail = currentUser.Email
+        });
 
         return Ok(new ApiResponse<PostViewModel>
         {
