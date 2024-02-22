@@ -7,10 +7,7 @@ public static class HangfireExtensions
 {
     public static IServiceCollection AddHangfire(this IServiceCollection services)
     {
-        services.AddHangfire(config =>
-        {
-            config.UseMemoryStorage();
-        });
+        services.AddHangfire(config => config.UseMemoryStorage());
         services.AddHangfireServer();
 
         return services;
