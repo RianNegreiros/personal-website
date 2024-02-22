@@ -92,9 +92,14 @@ export default function NewsLetter() {
               .
             </div>
           </form>
-          <p className="pt-8 text-sm text-gray-500 dark:text-gray-300">Assine o <a href={`${API_URL}/posts/rss`} className="inline-flex items-center font-medium text-cyan-500 dark:text-cyan-600 hover:underline">
-            Feed RSS
-          </a>
+          <p className='pt-8 text-sm text-gray-500 dark:text-gray-300'>
+            Assine o{' '}
+            <a
+              href={`${API_URL}/posts/rss`}
+              className='inline-flex items-center font-medium text-cyan-500 hover:underline dark:text-cyan-600'
+            >
+              Feed RSS
+            </a>
           </p>
         </div>
       </div>
