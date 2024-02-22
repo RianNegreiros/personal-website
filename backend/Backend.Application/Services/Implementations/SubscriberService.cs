@@ -50,4 +50,22 @@ public class SubscriberService : ISubscriberService
     {
         return await _subscriberRepository.GetAllSubscribedEmailsAsync();
     }
+
+    public async Task<bool> UnsubscribeAsync(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            throw new ArgumentException("Email cannot be empty", nameof(email));
+        }
+
+        var existingSubscriber = await _subscriberRepository.GetByEmailAsync(email);
+        if (existingSubscriber == null || !existingSubscriber.IsSubscribed)
+        {
+            return false;
+        }
+
+        var update = Builders<Subscriber>.Update.Set(s => s.IsSubscribed, false);
+        await _subscriberRepository.UpdateAsync(email, update);
+        return true;
+    }
 }

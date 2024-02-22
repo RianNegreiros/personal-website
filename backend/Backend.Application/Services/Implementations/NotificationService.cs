@@ -45,7 +45,7 @@ public class NotificationService : INotificationService
                 break;
             case "NewPostNotification":
                 string emailSubject = "New Post Published";
-                string emailMessage = _emailService.GenerateNewPostNotificationTemplate(context.Title, context.PostSlug);
+                string emailMessage = _emailService.GenerateNewPostNotificationTemplate(context.UserEmail, context.Title, context.PostSlug);
                 _jobClient.Enqueue(() => NotifyAllSubscribersAboutNewPost(context.UserEmail, emailSubject, emailMessage));
                 break;
             default:

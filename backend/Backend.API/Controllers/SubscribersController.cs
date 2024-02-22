@@ -25,4 +25,16 @@ public class SubscribersController : BaseApiController
         var result = await _subscriberService.AddSubscriberAsync(request.Email);
         return !result ? BadRequest("Email is already subscribed.") : Ok("Subscribed successfully.");
     }
+
+    [HttpGet("unsubscribe")]
+    public async Task<IActionResult> Unsubscribe([FromQuery] string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            return BadRequest("Invalid email address.");
+        }
+
+        var result = await _subscriberService.UnsubscribeAsync(email);
+        return !result ? BadRequest("Email was not subscribed or could not be found.") : Ok("Unsubscribed successfully.");
+    }
 }

@@ -35,26 +35,42 @@ public class EmailService : IEmailService
         await client.DisconnectAsync(true);
     }
 
-    public string GenerateNewPostNotificationTemplate(string postTitle, string postSlug)
+    public string GenerateUnsubscribeLink(string email)
+    {
+        string apiUrl = _config["ApiUrl"];
+        return $"{apiUrl}/subscribers/unsubscribe?email={Uri.EscapeDataString(email)}";
+    }
+
+    public string GenerateNewPostNotificationTemplate(string subscriberEmail, string postTitle, string postSlug)
     {
         string clientUrl = _config["ClientUrl"];
         string postUrl = $"{clientUrl}/posts/{postSlug}";
+        string unsubscribeUrl = GenerateUnsubscribeLink(subscriberEmail);
 
         string htmlTemplate = @"
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>New Post Notification</title>
-        </head>
-        <body>
-            <h1>New Post: {post_title}</h1>
-            <p>A new post titled '{post_title}' has been published.</p>
-            <p>Click <a href='{post_url}'>here</a> to read the post.</p>
-        </body>
-        </html>
-    ";
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>New Post Notification</title>
+                <style>
+                    body { font-family: Arial, sans-serif; }
+                    h1 { color: #333; }
+                    p { color: #666; }
+                    a { color: #007bff; text-decoration: none; }
+                </style>
+            </head>
+            <body>
+                <h1>New Post: {post_title}</h1>
+                <p>A new post titled '{post_title}' has been published.</p>
+                <p>Click <a href='{post_url}'>here</a> to read the post.</p>
+                <p>If you wish to unsubscribe, click <a href='{unsubscribe_url}'>here</a>.</p>
+            </body>
+            </html>
+        ";
 
-        string htmlMessage = htmlTemplate.Replace("{post_title}", postTitle).Replace("{post_url}", postUrl);
+        string htmlMessage = htmlTemplate.Replace("{post_title}", postTitle)
+                                          .Replace("{post_url}", postUrl)
+                                          .Replace("{unsubscribe_url}", unsubscribeUrl);
 
         return htmlMessage;
     }
@@ -66,6 +82,12 @@ public class EmailService : IEmailService
             <html>
             <head>
                 <title>Post Confirmation</title>
+                <style>
+                    body { font-family: Arial, sans-serif; }
+                    h1 { color: #333; }
+                    p { color: #666; }
+                    a { color: #007bff; text-decoration: none; }
+                </style>
             </head>
             <body>
                 <h1>Post Confirmation</h1>
@@ -90,6 +112,12 @@ public class EmailService : IEmailService
             <html>
             <head>
                 <title>Project Confirmation</title>
+                <style>
+                    body { font-family: Arial, sans-serif; }
+                    h1 { color: #333; }
+                    p { color: #666; }
+                    a { color: #007bff; text-decoration: none; }
+                </style>
             </head>
             <body>
                 <h1>Project Confirmation</h1>
@@ -114,6 +142,12 @@ public class EmailService : IEmailService
         <html>
         <head>
             <title>Comment Notification</title>
+            <style>
+                    body { font-family: Arial, sans-serif; }
+                    h1 { color: #333; }
+                    p { color: #666; }
+                    a { color: #007bff; text-decoration: none; }
+            </style>
         </head>
         <body>
             <h1>Comment Notification</h1>
@@ -142,6 +176,12 @@ public class EmailService : IEmailService
         <html>
         <head>
             <title>Comment Reply Notification</title>
+            <style>
+                    body { font-family: Arial, sans-serif; }
+                    h1 { color: #333; }
+                    p { color: #666; }
+                    a { color: #007bff; text-decoration: none; }
+            </style>
         </head>
         <body>
             <h1>Comment Reply Notification</h1>
