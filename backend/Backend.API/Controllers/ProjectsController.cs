@@ -1,4 +1,5 @@
 using Backend.API.Models;
+using Backend.Application.Models;
 using Backend.Application.Models.InputModels;
 using Backend.Application.Services.Interfaces;
 using Backend.Application.Validators;
@@ -24,16 +25,14 @@ public class ProjectsController : BaseApiController
     private readonly IProjectsService _projectsService;
     private readonly UserManager<User> _userManager;
     private readonly ICachingService _cachingService;
-    private readonly IEmailService _emailService;
-    private readonly IBackgroundJobClient _jobClient;
+    private readonly INotificationService _notificationService;
 
-    public ProjectsController(IProjectsService projectsService, UserManager<User> userManager, ICachingService cachingService, IEmailService emailService, IBackgroundJobClient jobClient)
+    public ProjectsController(IProjectsService projectsService, UserManager<User> userManager, ICachingService cachingService, INotificationService notificationService)
     {
         _projectsService = projectsService;
         _userManager = userManager;
         _cachingService = cachingService;
-        _emailService = emailService;
-        _jobClient = jobClient;
+        _notificationService = notificationService;
     }
 
     [AllowAnonymous]
@@ -48,14 +47,13 @@ public class ProjectsController : BaseApiController
         {
             projects = JsonConvert.DeserializeObject<List<ProjectViewModel>>(cachedProjects);
 
-            if (projects == null)
-                return NotFound();
-
-            return Ok(new ApiResponse<List<ProjectViewModel>>
-            {
-                Success = true,
-                Data = projects
-            });
+            return projects == null
+                ? (ActionResult<List<ProjectViewModel>>)NotFound()
+                : (ActionResult<List<ProjectViewModel>>)Ok(new ApiResponse<List<ProjectViewModel>>
+                {
+                    Success = true,
+                    Data = projects
+                });
         }
 
         projects = await _projectsService.GetProjects();
@@ -87,14 +85,13 @@ public class ProjectsController : BaseApiController
         {
             project = JsonConvert.DeserializeObject<ProjectViewModel>(cachedProject);
 
-            if (project == null)
-                return NotFound();
-
-            return Ok(new ApiResponse<ProjectViewModel>
-            {
-                Success = true,
-                Data = project
-            });
+            return project == null
+                ? (ActionResult<Project>)NotFound()
+                : (ActionResult<Project>)Ok(new ApiResponse<ProjectViewModel>
+                {
+                    Success = true,
+                    Data = project
+                });
         }
 
         project = await _projectsService.GetProject(id);
@@ -130,9 +127,11 @@ public class ProjectsController : BaseApiController
 
         Project project = await _projectsService.CreateProject(model, currentUser);
 
-        string emailSubject = "Project Confirmation";
-        string emailMessage = _emailService.GenerateProjectConfirmationTemplate(project.Title);
-        _jobClient.Enqueue(() => _emailService.SendEmailAsync(currentUser.Email, emailSubject, emailMessage));
+        _notificationService.EnqueueNotification("ProjectConfirmation", new NotificationContext
+        {
+            Title = project.Title,
+            UserEmail = currentUser.Email,
+        });
 
         return Ok(new ApiResponse<Project>
         {

@@ -15,6 +15,7 @@ public static class ApplicationServicesExtensions
         services.AddScoped<IPostRepository, PostRepository>();
         services.AddScoped<IProjectsRepository, ProjectsRepository>();
         services.AddScoped<ICommentsRepository, CommentsRepository>();
+        services.AddScoped<ISubscriberRepository, SubscriberRepository>();
 
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPostService, PostService>();
@@ -22,10 +23,11 @@ public static class ApplicationServicesExtensions
         services.AddScoped<ICommentsService, CommentsService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IFeedService, FeedService>();
-
         services.AddScoped<ICloudinaryService, CloudinaryService>();
         services.AddScoped<ICachingService, CachingService>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<INotificationService, NotificationService>();
+        services.AddScoped<ISubscriberService, SubscriberService>();
 
         return services;
     }
