@@ -37,14 +37,13 @@ public class FeedController : BaseApiController
         {
             feed = JsonConvert.DeserializeObject<List<FeedItemViewModel>>(feedCache);
 
-            if (feed == null)
-                return NotFound();
-
-            return Ok(new ApiResponse<List<FeedItemViewModel>>
-            {
-                Success = true,
-                Data = feed
-            });
+            return feed == null
+                ? (ActionResult<ApiResponse<FeedItemViewModel>>)NotFound()
+                : (ActionResult<ApiResponse<FeedItemViewModel>>)Ok(new ApiResponse<List<FeedItemViewModel>>
+                {
+                    Success = true,
+                    Data = feed
+                });
         }
 
         feed = await _feedService.GetFeed();
