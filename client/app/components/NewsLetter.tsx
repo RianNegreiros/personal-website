@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { subscribeNewsLetter } from '../utils/api'
 import { toast } from 'react-toastify'
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+
 export default function NewsLetter() {
   const [email, setEmail] = useState<string>('')
 
@@ -29,7 +31,7 @@ export default function NewsLetter() {
             Newsletter
           </h2>
           <p className='mx-auto mb-8 max-w-2xl  text-gray-500 dark:text-gray-400 sm:text-xl md:mb-12'>
-            Para manter-se atualizado sobre novos artigos, inscreva-se com seu
+            Para manter-se atualizado sobre novos artigos, assine com seu
             e-mail.
           </p>
           <form onSubmit={handleSubmit}>
@@ -68,12 +70,12 @@ export default function NewsLetter() {
                   type='submit'
                   className='border-primary-600 w-full cursor-pointer rounded-lg border bg-dracula-pink px-5 py-3 text-center text-sm font-medium text-white hover:bg-dracula-pink-400 focus:outline-none focus:ring-4 focus:ring-gray-400 dark:bg-dracula-pink dark:hover:bg-dracula-pink-800 dark:focus:ring-dracula-pink-400 sm:rounded-none sm:rounded-r-lg'
                 >
-                  Subscribe
+                  Assinar
                 </button>
               </div>
             </div>
-            <div className='newsletter-form-footer mx-auto max-w-screen-sm text-left text-sm text-gray-500 dark:text-gray-300'>
-              Ao se inscrever, você concorda com os{' '}
+            <div className='mx-auto max-w-screen-sm text-left text-sm text-gray-500 dark:text-gray-300'>
+              Ao assinar, você concorda com os{' '}
               <a
                 href='/terms/service'
                 className='font-medium text-dracula-pink hover:underline dark:text-dracula-pink'
@@ -90,6 +92,10 @@ export default function NewsLetter() {
               .
             </div>
           </form>
+          <p className="pt-8 text-sm text-gray-500 dark:text-gray-300">Assine o <a href={`${API_URL}/posts/rss`} className="inline-flex items-center font-medium text-cyan-500 dark:text-cyan-600 hover:underline">
+            Feed RSS
+          </a>
+          </p>
         </div>
       </div>
     </section>
