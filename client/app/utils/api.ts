@@ -232,6 +232,16 @@ async function logoutUser() {
   }
 }
 
+async function subscribeNewsLetter(email: string) {
+  try {
+    await axios.post(`${API_URL}/subscribers/subscribe`, { email: email })
+  } catch (error) {
+    throw new Error(
+      'Failed to subscribe user to newsletter. Please try again later.',
+    )
+  }
+}
+
 export {
   signUpUser,
   signInUser,
@@ -251,4 +261,5 @@ export {
   createUser,
   logoutUser,
   checkSession,
+  subscribeNewsLetter,
 }

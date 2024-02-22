@@ -10,6 +10,7 @@ import remarkGfm from 'remark-gfm'
 import NotFound from '@/app/components/NotFound'
 import ShareButtons from './ShareButtons'
 import PostSuggestions from './PostSuggestions'
+import NewsLetter from './NewsLetter'
 
 interface PostProps {
   params: { slug: string }
@@ -62,10 +63,6 @@ export default function Post({ params }: PostProps) {
         </div>
       </main>
 
-      <ShareButtons post={post} />
-
-      <PostSuggestions />
-
       {comments.length !== 0 ? (
         <CommentSection
           slug={params.slug}
@@ -73,6 +70,12 @@ export default function Post({ params }: PostProps) {
           setComments={setComments}
         />
       ) : null}
+
+      <ShareButtons post={post} />
+
+      <PostSuggestions />
+
+      <NewsLetter />
     </>
   )
 }
