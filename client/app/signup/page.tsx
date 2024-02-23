@@ -65,7 +65,7 @@ export default function SignUpPage() {
                   name='email'
                   value={formData.email}
                   onChange={handleInputChange}
-                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-pink focus:ring-dracula-pink dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink sm:text-sm'
+                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-purple focus:ring-dracula-purple dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple sm:text-sm'
                   placeholder='name@mail.com'
                   required
                 />
@@ -84,7 +84,7 @@ export default function SignUpPage() {
                   value={formData.username}
                   onChange={handleInputChange}
                   required
-                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-pink focus:ring-dracula-pink dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink sm:text-sm'
+                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-purple focus:ring-dracula-purple dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple sm:text-sm'
                   placeholder='Nome de usuário'
                 />
               </div>
@@ -103,7 +103,7 @@ export default function SignUpPage() {
                   onChange={handleInputChange}
                   placeholder='••••••••'
                   required
-                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-pink focus:ring-dracula-pink dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink sm:text-sm'
+                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-purple focus:ring-dracula-purple dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple sm:text-sm'
                 />
               </div>
               <div>
@@ -121,7 +121,7 @@ export default function SignUpPage() {
                   onChange={handleInputChange}
                   placeholder='••••••••'
                   required
-                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-pink focus:ring-dracula-pink dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink sm:text-sm'
+                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-purple focus:ring-dracula-purple dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple sm:text-sm'
                 />
               </div>
               <div className='mb-6 flex items-start'>
@@ -130,7 +130,7 @@ export default function SignUpPage() {
                     id='terms'
                     type='checkbox'
                     value=''
-                    className='border-dracula-comment bg-dracula-background focus:ring-3 dark:bg-dracula-background dark:border-dracula-comment dark:ring-offset-dracula-background dark:focus:ring-offset-dracula-background h-4 w-4 rounded border focus:ring-dracula-pink dark:focus:ring-dracula-pink'
+                    className='border-dracula-comment bg-dracula-background focus:ring-3 dark:bg-dracula-background dark:border-dracula-comment dark:ring-offset-dracula-background dark:focus:ring-offset-dracula-background h-4 w-4 rounded border focus:ring-dracula-purple dark:focus:ring-dracula-purple'
                     required
                   />
                 </div>
@@ -142,7 +142,7 @@ export default function SignUpPage() {
                   <Link
                     href='/terms/service'
                     target='_blank'
-                    className='m-1 text-dracula-pink hover:underline dark:text-dracula-pink'
+                    className='m-1 text-dracula-purple hover:underline dark:text-dracula-purple'
                   >
                     Termos de Serviço
                   </Link>
@@ -150,7 +150,7 @@ export default function SignUpPage() {
                   <Link
                     href='/terms/privacy'
                     target='_blank'
-                    className='m-1 text-dracula-pink hover:underline dark:text-dracula-pink'
+                    className='m-1 text-dracula-purple hover:underline dark:text-dracula-purple'
                   >
                     Política de Privacidade
                   </Link>
@@ -158,7 +158,7 @@ export default function SignUpPage() {
               </div>
               <button
                 type='submit'
-                className={`text-dracula-background w-full rounded-lg bg-dracula-pink px-5 py-2.5 text-center text-sm font-medium hover:bg-dracula-pink-400 focus:outline-none focus:ring-4 focus:ring-gray-400 dark:bg-dracula-pink dark:hover:bg-dracula-pink-800 dark:focus:ring-dracula-pink-400 ${
+                className={`text-dracula-background w-full rounded-lg bg-dracula-purple px-5 py-2.5 text-center text-sm font-medium hover:bg-dracula-purple-400 focus:outline-none focus:ring-4 focus:ring-gray-400 dark:bg-dracula-purple dark:hover:bg-dracula-purple-800 dark:focus:ring-dracula-purple-400 ${
                   signingUp ? 'cursor-not-allowed opacity-70' : ''
                 }`}
                 disabled={signingUp}
@@ -169,7 +169,7 @@ export default function SignUpPage() {
                 Já possui uma conta?{' '}
                 <Link
                   href='/signin'
-                  className='font-medium text-dracula-pink hover:underline dark:text-dracula-pink'
+                  className='font-medium text-dracula-purple hover:underline dark:text-dracula-purple'
                 >
                   Entre aqui
                 </Link>

@@ -13,13 +13,13 @@ export default function AuthLinks({ pathname }: { pathname: string }) {
       <div>
         <Link
           href='/signin'
-          className='hover:text-dracula-foreground rounded-lg border-2 border-dracula-pink px-4 py-2 text-sm text-gray-500 hover:bg-dracula-pink-800'
+          className='hover:text-dracula-foreground rounded-lg border-2 border-dracula-purple px-4 py-2 text-sm text-gray-500 hover:bg-dracula-purple-800'
         >
           Fazer login
         </Link>
         <Link
           href='/signup'
-          className='ml-2 rounded-lg bg-dracula-pink px-4 py-2 text-sm text-white hover:bg-dracula-pink-800'
+          className='ml-2 rounded-lg bg-dracula-purple px-4 py-2 text-sm text-white hover:bg-dracula-purple-800'
         >
           Registrar-se
         </Link>

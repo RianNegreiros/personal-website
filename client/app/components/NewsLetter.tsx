@@ -13,7 +13,7 @@ export default function NewsLetter() {
       await subscribeNewsLetter(email)
       toast.success('Assinatura bem-sucedida!', {
         className:
-          'bg-white dark:bg-gray-900 text-dracula-pink hover:underline dark:text-dracula-pink',
+          'bg-white dark:bg-gray-900 text-dracula-purple hover:underline dark:text-dracula-purple',
       })
     } catch (error) {
       toast.error(
@@ -68,7 +68,7 @@ export default function NewsLetter() {
               <div>
                 <button
                   type='submit'
-                  className='border-primary-600 w-full cursor-pointer rounded-lg border bg-dracula-pink px-5 py-3 text-center text-sm font-medium text-white hover:bg-dracula-pink-400 focus:outline-none focus:ring-4 focus:ring-gray-400 dark:bg-dracula-pink dark:hover:bg-dracula-pink-800 dark:focus:ring-dracula-pink-400 sm:rounded-none sm:rounded-r-lg'
+                  className=' w-full cursor-pointer rounded-lg border border-dracula-purple bg-dracula-purple px-5 py-3 text-center text-sm font-medium text-black transition-all duration-500 ease-in-out hover:border-white hover:bg-black hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-400 sm:rounded-none sm:rounded-r-lg'
                 >
                   Assinar
                 </button>
@@ -78,14 +78,14 @@ export default function NewsLetter() {
               Ao assinar, você concorda com os{' '}
               <a
                 href='/terms/service'
-                className='font-medium text-dracula-pink hover:underline dark:text-dracula-pink'
+                className='font-medium text-dracula-purple hover:underline dark:text-dracula-purple'
               >
                 Termos de Serviço
               </a>{' '}
               e a{' '}
               <a
                 href='/terms/privacy'
-                className='font-medium text-dracula-pink hover:underline dark:text-dracula-pink'
+                className='font-medium text-dracula-purple hover:underline dark:text-dracula-purple'
               >
                 Política de Privacidade
               </a>

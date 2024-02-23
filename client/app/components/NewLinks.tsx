@@ -11,7 +11,7 @@ export default function NewLinks({ pathname }: { pathname: string }) {
         <div>
           <Link
             href='/posts/new'
-            className='rounded-lg border-2 border-dracula-pink px-4 py-2 text-sm text-gray-500 hover:border-dracula-pink-600 hover:text-white'
+            className='rounded-lg border-2 border-dracula-purple px-4 py-2 text-sm text-gray-500 hover:border-dracula-purple-600 hover:text-white'
           >
             Criar Post
           </Link>
@@ -22,7 +22,7 @@ export default function NewLinks({ pathname }: { pathname: string }) {
         <div>
           <Link
             href='/projects/new'
-            className='rounded-lg border-2 border-dracula-pink px-4 py-2 text-sm text-gray-500 hover:border-dracula-pink-600 hover:text-white'
+            className='rounded-lg border-2 border-dracula-purple px-4 py-2 text-sm text-gray-500 hover:border-dracula-purple-600 hover:text-white'
           >
             Criar Projeto
           </Link>

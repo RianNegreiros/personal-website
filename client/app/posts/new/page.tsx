@@ -54,7 +54,7 @@ export default function NewPostPage() {
                 type='text'
                 name='title'
                 id='title'
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-pink-600 focus:ring-dracula-pink dark:border-gray-600 dark:bg-gray-700 dark:text-dracula-pink dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink'
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-purple-600 focus:ring-dracula-purple dark:border-gray-600 dark:bg-gray-700 dark:text-dracula-purple dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple'
                 placeholder='Type post title'
                 required
                 onChange={handleChange}
@@ -72,7 +72,7 @@ export default function NewPostPage() {
                 type='text'
                 name='summary'
                 id='summary'
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-pink-600 focus:ring-dracula-pink-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink'
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-purple-600 focus:ring-dracula-purple-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple'
                 placeholder='Type post summary'
                 required
                 onChange={handleChange}
@@ -89,7 +89,7 @@ export default function NewPostPage() {
               <textarea
                 id='content'
                 rows={16}
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-pink focus:ring-dracula-pink dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink'
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-purple focus:ring-dracula-purple dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple'
                 placeholder='Place the markdown text here'
                 name='content'
                 required
@@ -99,7 +99,7 @@ export default function NewPostPage() {
           </div>
           <button
             type='submit'
-            className={`mt-4 inline-flex items-center rounded-lg bg-dracula-pink-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-dracula-pink-600 focus:bg-dracula-pink-600 focus:outline-none focus:ring-4 sm:mt-6 ${
+            className={`mt-4 inline-flex items-center rounded-lg bg-dracula-purple-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-dracula-purple-600 focus:bg-dracula-purple-600 focus:outline-none focus:ring-4 sm:mt-6 ${
               isPublishing ? 'cursor-not-allowed opacity-50' : ''
             }`}
             disabled={isPublishing}

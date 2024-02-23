@@ -78,7 +78,7 @@ export default function SignInPage() {
                   value={formData.email}
                   onChange={handleInputChange}
                   id='email'
-                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-pink focus:ring-dracula-pink dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink sm:text-sm'
+                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-purple focus:ring-dracula-purple dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple sm:text-sm'
                   placeholder='name@mail.com'
                 />
               </div>
@@ -96,7 +96,7 @@ export default function SignInPage() {
                   onChange={handleInputChange}
                   id='password'
                   placeholder='••••••••'
-                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-pink focus:ring-dracula-pink dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink sm:text-sm'
+                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-dracula-purple focus:ring-dracula-purple dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple sm:text-sm'
                 />
               </div>
               <div className='flex items-center justify-between'>
@@ -109,7 +109,7 @@ export default function SignInPage() {
                       checked={formData.rememberMe}
                       onChange={handleInputChange}
                       aria-describedby='remember'
-                      className='focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-dracula-pink dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-dracula-pink'
+                      className='focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-dracula-purple dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-dracula-purple'
                     />
                   </div>
                   <div className='ml-3 text-sm'>
@@ -124,7 +124,7 @@ export default function SignInPage() {
               </div>
               <button
                 type='submit'
-                className={`hover:bg-primary-700 w-full rounded-lg bg-dracula-pink px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-dracula-pink dark:bg-dracula-pink dark:hover:bg-dracula-pink-800 dark:focus:ring-dracula-pink ${
+                className={`hover:bg-primary-700 w-full rounded-lg bg-dracula-purple px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-dracula-purple dark:bg-dracula-purple dark:hover:bg-dracula-purple-800 dark:focus:ring-dracula-purple ${
                   loggingIn ? 'cursor-not-allowed opacity-70' : ''
                 }`}
                 disabled={loggingIn}
@@ -135,7 +135,7 @@ export default function SignInPage() {
                 Ainda não tem uma conta ?{' '}
                 <Link
                   href='/signup'
-                  className='font-medium text-dracula-pink hover:underline dark:text-dracula-pink'
+                  className='font-medium text-dracula-purple hover:underline dark:text-dracula-purple'
                 >
                   Registre-se
                 </Link>

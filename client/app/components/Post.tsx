@@ -29,24 +29,34 @@ export default function Post({ params }: PostProps) {
     return <NotFound />
   }
 
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: false,
+  }
+
+  const date = new Date(post.createdAt)
+
   return (
     <main className='bg-white pb-8 pt-4 antialiased dark:bg-gray-900 lg:pb-12 lg:pt-8'>
-      <div className='mx-auto flex max-w-screen-xl justify-between px-4 '>
-        <article className='format format-sm sm:format-base lg:format-lg format-blue dark:format-invert mx-auto w-full max-w-6xl'>
+      <div className='mx-auto flex max-w-screen-xl justify-between px-4'>
+        <article className='format format-sm sm:format-base lg:format-lg format-cyan dark:format-invert mx-auto w-full max-w-6xl'>
           <header className='pt-6 xl:pb-6'>
             <div className='space-y-1 text-center'>
-              <div className='mb-3 space-y-10'>
-                <div>
-                  <p className='text-base font-medium leading-6 text-dracula-pink'>
-                    {new Date(post.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-              </div>
-              <div>
-                <h1 className='md:leading-14 text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl'>
-                  {post.title}
-                </h1>
-              </div>
+              <div className='mb-3 space-y-10'></div>
+              <h1 className='md:leading-14 text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl'>
+                {post.title}
+              </h1>
+            </div>
+
+            <div className='inline-flex w-full items-center justify-center space-x-5 pt-6'>
+              <p className='text-base font-medium leading-6 text-dracula-purple'>
+                {new Intl.DateTimeFormat('pt-BR', options).format(date)}
+              </p>
+              <ShareButtons post={post} />
             </div>
           </header>
 
@@ -71,8 +81,6 @@ export default function Post({ params }: PostProps) {
       <PostSuggestions />
 
       <NewsLetter />
-
-      <ShareButtons post={post} />
     </main>
   )
 }

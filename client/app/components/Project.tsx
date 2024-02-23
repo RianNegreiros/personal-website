@@ -10,7 +10,7 @@ export default function Projects({ project }: ProjectProps) {
   return (
     <article
       key={project.id}
-      className='overflow-hidden rounded-lg border border-gray-100 bg-white shadow-lg shadow-dracula-pink-100 dark:border-zinc-600 dark:bg-black dark:shadow-gray-700'
+      className='overflow-hidden rounded-lg border border-gray-100 bg-white shadow-lg shadow-dracula-purple-100 dark:border-zinc-600 dark:bg-black dark:shadow-gray-700'
     >
       <div className='relative h-56 w-full'>
         <Image
@@ -37,7 +37,7 @@ export default function Projects({ project }: ProjectProps) {
         <Link
           href={project.url}
           target='_blank'
-          className='group mt-4 inline-flex cursor-pointer items-center gap-1 text-sm font-medium text-dracula-pink'
+          className='group mt-4 inline-flex cursor-pointer items-center gap-1 text-sm font-medium text-dracula-purple'
         >
           Saiba mais
           <span className='block transition-all group-hover:ms-0.5'>

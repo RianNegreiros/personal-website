@@ -64,7 +64,7 @@ export default function NewProjectPage() {
                 type='text'
                 name='title'
                 id='title'
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-pink-600 focus:ring-dracula-pink-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink'
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-purple-600 focus:ring-dracula-purple-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple'
                 placeholder='Título do projeto'
                 required
                 onChange={handleChange}
@@ -82,7 +82,7 @@ export default function NewProjectPage() {
                 type='text'
                 name='overview'
                 id='overview'
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-pink focus:ring-dracula-pink dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink'
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-purple focus:ring-dracula-purple dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple'
                 placeholder='Visão geral do projeto'
                 required
                 onChange={handleChange}
@@ -100,7 +100,7 @@ export default function NewProjectPage() {
                 type='text'
                 name='url'
                 id='url'
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-pink-600 focus:ring-dracula-pink-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-pink dark:focus:ring-dracula-pink'
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dracula-purple-600 focus:ring-dracula-purple-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-dracula-purple dark:focus:ring-dracula-purple'
                 placeholder='URL para o projeto, GitHub ou deploy'
                 required
                 onChange={handleChange}
@@ -120,7 +120,7 @@ export default function NewProjectPage() {
                 name='image'
                 className='dark:hover:shadow-dark block w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm 
             text-gray-900 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-inset
-            focus:ring-dracula-pink-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400'
+            focus:ring-dracula-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400'
                 required
                 onChange={handleChange}
               />
@@ -134,7 +134,7 @@ export default function NewProjectPage() {
           </div>
           <button
             type='submit'
-            className={`mt-4 inline-flex items-center rounded-lg bg-dracula-pink px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-dracula-pink-500 focus:bg-gray-400 focus:outline-none focus:ring-4 sm:mt-6 ${isPublishing ? 'cursor-not-allowed opacity-50' : ''}`}
+            className={`mt-4 inline-flex items-center rounded-lg bg-dracula-purple px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-dracula-purple-500 focus:bg-gray-400 focus:outline-none focus:ring-4 sm:mt-6 ${isPublishing ? 'cursor-not-allowed opacity-50' : ''}`}
             disabled={isPublishing}
           >
             {isPublishing ? 'Publicando...' : 'Publicar'}

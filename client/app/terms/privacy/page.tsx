@@ -5,7 +5,13 @@ export default function PrivacyPolicy() {
     <div className='mx-auto my-8 max-w-2xl p-6 text-gray-800 shadow-md dark:text-gray-100'>
       <h2 className='mb-4 text-2xl font-bold'>Política Privacidade</h2>
       <p className='mb-4'>
-        A sua privacidade é importante para nós. É política do riannegreiros.dev respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site <Link href='https://riannegreiros.dev' className='text-blue-500'>riannegreiros.dev</Link>, e outros sites que possuímos e operamos.
+        A sua privacidade é importante para nós. É política do riannegreiros.dev
+        respeitar a sua privacidade em relação a qualquer informação sua que
+        possamos coletar no site{' '}
+        <Link href='https://riannegreiros.dev' className='text-cyan-500'>
+          riannegreiros.dev
+        </Link>
+        , e outros sites que possuímos e operamos.
       </p>
       <p className='mb-4 text-gray-800 dark:text-gray-100'>
         Solicitamos informações pessoais apenas quando realmente precisamos
@@ -31,7 +37,7 @@ export default function PrivacyPolicy() {
           href='https://politicaprivacidade.com/'
           rel='noopener noreferrer'
           target='_blank'
-          className='text-blue-500'
+          className='text-cyan-500'
         >
           políticas de privacidade
         </Link>
@@ -90,8 +96,8 @@ export default function PrivacyPolicy() {
       </h3>
       <p className='mb-4 text-gray-800 dark:text-gray-100'>
         O usuário se compromete a fazer uso adequado dos conteúdos e da
-        informação que o riannegreiros.dev oferece no site e com
-        caráter enunciativo, mas não limitativo:
+        informação que o riannegreiros.dev oferece no site e com caráter
+        enunciativo, mas não limitativo:
       </p>
       <ul className='mb-4 list-disc pl-6'>
         <li className='text-gray-800 dark:text-gray-100'>
@@ -110,10 +116,10 @@ export default function PrivacyPolicy() {
         <li className='text-gray-800 dark:text-gray-100'>
           <span>
             Não causar danos aos sistemas físicos (hardwares) e lógicos
-            (softwares) do riannegreiros.dev, de seus
-            fornecedores ou terceiros, para introduzir ou disseminar vírus
-            informáticos ou quaisquer outros sistemas de hardware ou software
-            que sejam capazes de causar danos anteriormente mencionados.
+            (softwares) do riannegreiros.dev, de seus fornecedores ou terceiros,
+            para introduzir ou disseminar vírus informáticos ou quaisquer outros
+            sistemas de hardware ou software que sejam capazes de causar danos
+            anteriormente mencionados.
           </span>
         </li>
       </ul>
@@ -127,7 +133,10 @@ export default function PrivacyPolicy() {
         recursos que você usa em nosso site.
       </p>
       <p className='mb-4'>
-        Esta política é efetiva a partir de <span className='font-bold underline decoration-sky-500'>14 August 2023 16:26</span>
+        Esta política é efetiva a partir de{' '}
+        <span className='font-bold underline decoration-sky-500'>
+          14 August 2023 16:26
+        </span>
       </p>
     </div>
   )

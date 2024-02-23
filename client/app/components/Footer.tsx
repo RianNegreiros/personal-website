@@ -20,7 +20,7 @@ export default function Footer() {
             © {new Date().getFullYear()}{' '}
             <a
               href='https://www.riannegreiros.dev'
-              className='text-dracula-pink hover:underline'
+              className='text-dracula-purple hover:underline'
             >
               Rian Negreiros™
             </a>
@@ -31,7 +31,7 @@ export default function Footer() {
             <li>
               <a
                 href='/terms/privacy'
-                className='mr-4 text-dracula-pink hover:underline md:mr-6'
+                className='mr-4 text-dracula-purple hover:underline md:mr-6'
               >
                 Política Privacidade
               </a>
@@ -39,7 +39,7 @@ export default function Footer() {
             <li>
               <a
                 href='/terms/service'
-                className='mr-4 text-dracula-pink hover:underline md:mr-6'
+                className='mr-4 text-dracula-purple hover:underline md:mr-6'
               >
                 Termos de Serviço
               </a>

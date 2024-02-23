@@ -20,14 +20,15 @@ export default function Navbar() {
                 <div className='flex items-center sm:ml-6 sm:flex sm:items-center sm:space-x-8'>
                   <Link href='/'>
                     <h1 className='text-2xl font-medium'>
-                      Rian <span className='text-dracula-pink'>Negreiros</span>
+                      Rian{' '}
+                      <span className='text-dracula-purple'>Negreiros</span>
                     </h1>
                   </Link>
 
                   <Link
                     href='/'
                     prefetch
-                    className={`${pathname === '/' ? 'inline-flex h-full items-center border-b-2 border-dracula-pink px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'}`}
+                    className={`${pathname === '/' ? 'inline-flex h-full items-center border-b-2 border-dracula-purple px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'} transition duration-300 ease-in-out`}
                   >
                     Home
                   </Link>
@@ -35,7 +36,7 @@ export default function Navbar() {
                   <Link
                     href='/posts'
                     prefetch
-                    className={`${pathname === '/posts' ? 'inline-flex h-full items-center border-b-2 border-dracula-pink px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'}`}
+                    className={`${pathname === '/posts' ? 'inline-flex h-full items-center border-b-2 border-dracula-purple px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'} transition duration-300 ease-in-out`}
                   >
                     Blog
                   </Link>
@@ -43,7 +44,7 @@ export default function Navbar() {
                   <Link
                     href='/projects'
                     prefetch
-                    className={`${pathname === '/projects' ? 'inline-flex h-full items-center border-b-2 border-dracula-pink px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'}`}
+                    className={`${pathname === '/projects' ? 'inline-flex h-full items-center border-b-2 border-dracula-purple px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'} transition duration-300 ease-in-out`}
                   >
                     Projetos
                   </Link>
@@ -61,7 +62,7 @@ export default function Navbar() {
 
                 <Disclosure.Button
                   id='mobile-menu'
-                  className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dracula-pink dark:hover:bg-gray-800'
+                  className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dracula-purple dark:hover:bg-gray-800'
                 >
                   {open ? (
                     <svg
@@ -106,8 +107,8 @@ export default function Navbar() {
                 prefetch
                 className={`${
                   pathname === '/'
-                    ? 'block border-l-4 border-dracula-pink bg-dracula-pink-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-pink dark:bg-gray-800'
-                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-pink-50 hover:text-dracula-pink dark:text-white dark:hover:bg-gray-700'
+                    ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
+                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
                 }`}
               >
                 Home
@@ -118,8 +119,8 @@ export default function Navbar() {
                 prefetch
                 className={`${
                   pathname === '/posts'
-                    ? 'block border-l-4 border-dracula-pink bg-dracula-pink-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-pink dark:bg-gray-800'
-                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-pink-50 hover:text-dracula-pink dark:text-white dark:hover:bg-gray-700'
+                    ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
+                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
                 }`}
               >
                 Blog
@@ -130,8 +131,8 @@ export default function Navbar() {
                 prefetch
                 className={`${
                   pathname === '/projects'
-                    ? 'block border-l-4 border-dracula-pink bg-dracula-pink-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-pink dark:bg-gray-800'
-                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-pink-50 hover:text-dracula-pink dark:text-white dark:hover:bg-gray-700'
+                    ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
+                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
                 }`}
               >
                 Projetos

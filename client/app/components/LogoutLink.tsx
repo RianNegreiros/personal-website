@@ -25,12 +25,12 @@ export default function LogoutLink({ pathname }: { pathname: string }) {
 
       toast.success('Logged out successfully!', {
         className:
-          'bg-white dark:bg-gray-900 text-dracula-pink hover:underline dark:text-dracula-pink',
+          'bg-white dark:bg-gray-900 text-dracula-purple hover:underline dark:text-dracula-purple',
       })
     } catch (error) {
       toast.error('Failed to log out. Please try again.', {
         className:
-          'bg-white dark:bg-gray-900 text-dracula-pink hover:underline dark:text-dracula-pink',
+          'bg-white dark:bg-gray-900 text-dracula-purple hover:underline dark:text-dracula-purple',
       })
     }
   }
@@ -42,7 +42,7 @@ export default function LogoutLink({ pathname }: { pathname: string }) {
   return (
     <button
       onClick={handleLogout}
-      className='ml-4 rounded-lg bg-dracula-pink px-4 py-2 text-sm text-white hover:bg-dracula-pink-600'
+      className='ml-4 rounded-lg bg-dracula-purple px-4 py-2 text-sm text-white hover:bg-dracula-purple-600'
     >
       Sair
     </button>

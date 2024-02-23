@@ -18,7 +18,7 @@ export default function ThemeButton() {
   return (
     <button
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-      className='rounded-lg bg-dracula-pink-500/30 p-2 text-dracula-pink'
+      className='rounded-lg bg-dracula-purple-500/30 p-2 text-dracula-purple'
     >
       {resolvedTheme === 'dark' ? (
         <svg

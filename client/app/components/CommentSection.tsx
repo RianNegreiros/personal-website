@@ -91,7 +91,7 @@ const CommentSection = ({
         <article className='mx-auto w-full max-w-2xl'>
           <button
             onClick={() => setIsCommentsVisible(!isCommentsVisible)}
-            className='mb-6 inline-flex items-center justify-between rounded-lg bg-dracula-pink px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-dracula-pink-800 focus:outline-none focus:ring-4 focus:ring-dracula-pink-300 dark:bg-dracula-pink-400 dark:hover:bg-dracula-pink dark:focus:ring-dracula-pink'
+            className='mb-6 inline-flex items-center justify-between rounded-lg bg-dracula-purple px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-dracula-purple-800 focus:outline-none focus:ring-4 focus:ring-dracula-purple-300 dark:bg-dracula-purple-400 dark:hover:bg-dracula-purple dark:focus:ring-dracula-purple'
             type='button'
           >
             <h2 className='text-lg font-bold text-gray-900 dark:text-white'>
@@ -139,7 +139,7 @@ const CommentSection = ({
               </div>
               <button
                 type='submit'
-                className={`inline-flex items-center rounded-lg bg-dracula-pink px-4 py-2.5 text-center text-xs font-medium text-white hover:bg-dracula-pink-800 focus:ring-4 focus:ring-dracula-pink-200 dark:focus:ring-dracula-pink-900 ${!isLogged ? 'cursor-not-allowed opacity-50' : ''}`}
+                className={`inline-flex items-center rounded-lg bg-dracula-purple px-4 py-2.5 text-center text-xs font-medium text-white hover:bg-dracula-purple-800 focus:ring-4 focus:ring-dracula-purple-200 dark:focus:ring-dracula-purple-900 ${!isLogged ? 'cursor-not-allowed opacity-50' : ''}`}
               >
                 Postar comentário
               </button>
@@ -198,7 +198,7 @@ const CommentSection = ({
                     />
                     <button
                       type='submit'
-                      className='mt-2 rounded-md bg-dracula-pink px-4 py-2 text-white'
+                      className='mt-2 rounded-md bg-dracula-purple px-4 py-2 text-white'
                     >
                       Reply
                     </button>
@@ -260,7 +260,7 @@ const CommentSection = ({
                           />
                           <button
                             type='submit'
-                            className='mt-2 rounded-md bg-dracula-pink px-4 py-2 text-white'
+                            className='mt-2 rounded-md bg-dracula-purple px-4 py-2 text-white'
                           >
                             Reply
                           </button>
