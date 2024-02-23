@@ -2,17 +2,10 @@ import Link from 'next/link'
 
 export default function PrivacyPolicy() {
   return (
-    <div className='mx-auto my-8 max-w-2xl'>
-      <h2 className='mb-4 text-2xl font-bold text-gray-800 dark:text-gray-100'>
-        Política Privacidade
-      </h2>
-      <p className='mb-4 text-gray-800 dark:text-gray-100'>
-        A sua privacidade é importante para nós. É política do riannegreiros.dev respeitar a sua privacidade em relação a qualquer
-        informação sua que possamos coletar no site{' '}
-        <Link href='https://riannegreiros.dev' className='text-blue-500'>
-          riannegreiros.dev
-        </Link>
-        , e outros sites que possuímos e operamos.
+    <div className='mx-auto my-8 max-w-2xl p-6 text-gray-800 shadow-md dark:text-gray-100'>
+      <h2 className='mb-4 text-2xl font-bold'>Política Privacidade</h2>
+      <p className='mb-4'>
+        A sua privacidade é importante para nós. É política do riannegreiros.dev respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site <Link href='https://riannegreiros.dev' className='text-blue-500'>riannegreiros.dev</Link>, e outros sites que possuímos e operamos.
       </p>
       <p className='mb-4 text-gray-800 dark:text-gray-100'>
         Solicitamos informações pessoais apenas quando realmente precisamos
@@ -133,8 +126,8 @@ export default function PrivacyPolicy() {
         mais seguro deixar os cookies ativados, caso interaja com um dos
         recursos que você usa em nosso site.
       </p>
-      <p className='text-gray-800 dark:text-gray-100'>
-        Esta política é efetiva a partir de 14 August 2023 16:26
+      <p className='mb-4'>
+        Esta política é efetiva a partir de <span className='font-bold underline decoration-sky-500'>14 August 2023 16:26</span>
       </p>
     </div>
   )

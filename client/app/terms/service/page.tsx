@@ -2,19 +2,10 @@ import Link from 'next/link'
 
 export default function TermsOfService() {
   return (
-    <div className='mx-auto mt-10 max-w-2xl p-6 text-gray-800 shadow-md dark:text-gray-100'>
-      <h2 className='mb-4 text-3xl font-bold'>1. Termos</h2>
-      <p>
-        Ao acessar o site{' '}
-        <Link href='https://riannegreiros.dev/' className='text-blue-500'>
-          riannegreiros.dev
-        </Link>
-        , você concorda em cumprir estes termos de serviço, todas as leis e
-        regulamentos aplicáveis e concorda que é responsável pelo cumprimento de
-        todas as leis locais aplicáveis. Se você não concordar com algum desses
-        termos, está proibido de usar ou acessar este site. Os materiais
-        contidos neste site são protegidos pelas leis de direitos autorais e
-        marcas comerciais aplicáveis.
+    <div className='mx-auto my-8 max-w-2xl p-6 text-gray-800 shadow-md dark:text-gray-100'>
+      <h2 className='mb-4 text-2xl font-bold'>1. Termos</h2>
+      <p className='mb-4'>
+        Ao acessar o site <Link href='https://riannegreiros.dev/' className='text-blue-500'>riannegreiros.dev</Link>, você concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis e concorda que é responsável pelo cumprimento de todas as leis locais aplicáveis. Se você não concordar com algum desses termos, está proibido de usar ou acessar este site. Os materiais contidos neste site são protegidos pelas leis de direitos autorais e marcas comerciais aplicáveis.
       </p>
       <h2 className='mb-4 mt-6 text-3xl font-bold'>2. Uso de Licença</h2>
       <p>
@@ -108,12 +99,9 @@ export default function TermsOfService() {
         do site a qualquer momento, sem aviso prévio. Ao usar este site, você
         concorda em ficar vinculado à versão atual desses termos de serviço.
       </p>
-      <h3 className='mb-4 mt-6 text-2xl font-bold'>Lei aplicável</h3>
-      <p>
-        Estes termos e condições são regidos e interpretados de acordo com as
-        leis do riannegreiros.dev e você se submete
-        irrevogavelmente à jurisdição exclusiva dos tribunais naquele estado ou
-        localidade.
+      <h3 className='mb-2 text-xl font-bold'>Lei aplicável</h3>
+      <p className='mb-4'>
+        Estes termos e condições são regidos e interpretados de acordo com as leis do riannegreiros.dev e você se submete irrevogavelmente à jurisdição exclusiva dos tribunais naquele estado ou localidade.
       </p>
     </div>
   )
