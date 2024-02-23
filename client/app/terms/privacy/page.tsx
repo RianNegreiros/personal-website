@@ -7,11 +7,10 @@ export default function PrivacyPolicy() {
         Política Privacidade
       </h2>
       <p className='mb-4 text-gray-800 dark:text-gray-100'>
-        A sua privacidade é importante para nós. É política do Rian Negreiros
-        Dos Santos website respeitar a sua privacidade em relação a qualquer
+        A sua privacidade é importante para nós. É política do riannegreiros.dev respeitar a sua privacidade em relação a qualquer
         informação sua que possamos coletar no site{' '}
         <Link href='https://riannegreiros.dev' className='text-blue-500'>
-          Rian Negreiros Dos Santos website
+          riannegreiros.dev
         </Link>
         , e outros sites que possuímos e operamos.
       </p>
@@ -98,7 +97,7 @@ export default function PrivacyPolicy() {
       </h3>
       <p className='mb-4 text-gray-800 dark:text-gray-100'>
         O usuário se compromete a fazer uso adequado dos conteúdos e da
-        informação que o Rian Negreiros Dos Santos website oferece no site e com
+        informação que o riannegreiros.dev oferece no site e com
         caráter enunciativo, mas não limitativo:
       </p>
       <ul className='mb-4 list-disc pl-6'>
@@ -118,7 +117,7 @@ export default function PrivacyPolicy() {
         <li className='text-gray-800 dark:text-gray-100'>
           <span>
             Não causar danos aos sistemas físicos (hardwares) e lógicos
-            (softwares) do Rian Negreiros Dos Santos website, de seus
+            (softwares) do riannegreiros.dev, de seus
             fornecedores ou terceiros, para introduzir ou disseminar vírus
             informáticos ou quaisquer outros sistemas de hardware ou software
             que sejam capazes de causar danos anteriormente mencionados.
