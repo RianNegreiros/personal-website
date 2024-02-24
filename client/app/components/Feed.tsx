@@ -49,7 +49,7 @@ export default function Feed() {
           {item.url ? (
             <a
               href={item.url}
-              className='inline-flex items-center rounded-lg border border-dracula-aro bg-dracula-aro px-4 py-2 text-sm font-medium text-white transition-all duration-500 ease-in-out hover:bg-dracula-darker focus:outline-none focus:ring-4 focus:ring-gray-400'
+              className='light:border-gray-400 light:bg-white light:text-black light:hover:bg-gray-200 inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium transition-all duration-500 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-400 dark:border-dracula-aro dark:bg-dracula-aro dark:text-white dark:hover:bg-dracula-darker'
             >
               Saiba Mais{' '}
               <svg
