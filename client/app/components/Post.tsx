@@ -70,13 +70,11 @@ export default function Post({ params }: PostProps) {
         </article>
       </div>
 
-      {comments.length !== 0 ? (
-        <CommentSection
-          slug={params.slug}
-          comments={comments}
-          setComments={setComments}
-        />
-      ) : null}
+      <CommentSection
+        slug={params.slug}
+        comments={comments}
+        setComments={setComments}
+      />
 
       <PostSuggestions />
 
