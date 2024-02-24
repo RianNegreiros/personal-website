@@ -19,7 +19,7 @@ export default function Footer() {
           <span className='text-sm text-gray-500 dark:text-gray-400 sm:text-center'>
             © {new Date().getFullYear()}{' '}
             <a
-              href='https://www.riannegreiros.dev'
+              href='https://www.linkedin.com/in/riannegreiros'
               className='text-dracula-purple hover:underline'
             >
               Rian Negreiros™
