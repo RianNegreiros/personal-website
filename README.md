@@ -1,4 +1,14 @@
-# Portfolio website
+# Portfolio
+
+## Table of Contents
+
+- [Usage](#usage)
+- [How to Run](#how-to-run)
+- [Built With](#built-with)
+- [Principles](#principles)
+- [Methodologies](#methodologies)
+- [Tests Features](#tests-features)
+- [Author](#author)
 
 ## Deployment on Azure with Azure Docker Registry
 
@@ -55,7 +65,7 @@ make run-backend
 make run-client
 ```
 
-## Libraries and Tools
+## Built With
 
 - [ASP.NET Core 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 - [ASP.NET Core Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-7.0&tabs=visual-studio)
@@ -70,6 +80,14 @@ make run-client
 - [MongoDB](https://www.mongodb.com/atlas/database)
 - [Redis](https://redis.io/docs/getting-started)
 - [Swagger](https://learn.microsoft.com/pt-br/aspnet/core/tutorials/web-api-help-pages-using-swagger?view=aspnetcore-6.0)
+- [Syndication](https://www.nuget.org/packages/System.ServiceModel.Syndication/)
+- [FluentValidation](https://www.nuget.org/packages/FluentValidation/)
+- [Hangfire](https://www.nuget.org/packages/Hangfire/)
+- [BCrypt](https://www.nuget.org/packages/BCrypt.Net-Next/)
+- [Cloudinary](https://www.nuget.org/packages/CloudinaryDotNet/)
+- [MailKit](https://www.nuget.org/packages/MailKit/)
+- [Moq](https://www.nuget.org/packages/Moq/)
+- [xunit](https://www.nuget.org/packages/xunit/)
 
 ## Principles
 
