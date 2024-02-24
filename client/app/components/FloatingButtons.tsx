@@ -11,12 +11,15 @@ export default function FloatingButtons() {
     return null
   }
 
+  const linksClasses =
+    'flex h-10 w-10 bg-gray-200 items-center justify-center rounded-full dark:bg-gray-800'
+
   return (
-    <div className='fixed bottom-10 right-10 z-50 flex flex-col gap-2'>
+    <div className='fixed bottom-20 right-10 z-50 flex flex-col gap-2'>
       <Link
         href='https://cv.riannegreiros.dev'
         target='_blank'
-        className='flex h-10 w-10 items-center justify-center rounded-full dark:bg-gray-800'
+        className={linksClasses}
       >
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -30,7 +33,7 @@ export default function FloatingButtons() {
       <Link
         href='https://github.com/RianNegreiros'
         target='_blank'
-        className='flex h-10 w-10 items-center justify-center rounded-full dark:bg-gray-800'
+        className={linksClasses}
       >
         <svg
           viewBox='0 0 1024 1024'
@@ -43,7 +46,7 @@ export default function FloatingButtons() {
       <Link
         href='https://www.linkedin.com/in/riannegreiros'
         target='_blank'
-        className='flex h-10 w-10 items-center justify-center rounded-full dark:bg-gray-800'
+        className={linksClasses}
       >
         <svg
           viewBox='0 0 1024 1024'
@@ -57,7 +60,7 @@ export default function FloatingButtons() {
       <Link
         href='mailto: riannegreiros@gmail.com'
         target='_blank'
-        className='flex h-10 w-10 items-center justify-center rounded-full dark:bg-gray-800'
+        className={linksClasses}
       >
         <svg
           viewBox='0 0 1024 1024'
