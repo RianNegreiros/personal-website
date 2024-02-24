@@ -1,11 +1,13 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { Comment, CommentData, InputReply } from '../models'
+import { Comment, CommentData, InputReply } from '@/app/models'
 import {
   addCommentToPost,
   addReplyToComment,
   getCommentsForPost,
-} from '../utils/api'
-import { useAuth } from '../contexts/AuthContext'
+} from '@/app/utils/api'
+import { useAuth } from '@/app/contexts/AuthContext'
+import AuthLinks from './AuthLinks'
+import { usePathname } from 'next/navigation'
 
 interface CommentSectionProps {
   slug: string
@@ -19,6 +21,7 @@ const CommentSection = ({
   setComments,
 }: CommentSectionProps) => {
   const { isLogged } = useAuth()
+  const pathname = usePathname()
   const [formData, setFormData] = useState<CommentData>({
     postSlug: slug,
     content: '',
@@ -31,7 +34,6 @@ const CommentSection = ({
   })
   const [replyingTo, setReplyingTo] = useState<string | null>(null)
   const [showReplyForm, setShowReplyForm] = useState<boolean>(false)
-  const [isCommentsVisible, setIsCommentsVisible] = useState(false)
 
   const handleReplyClick = (commentId: string) => {
     setReplyingTo(commentId)
@@ -89,35 +91,14 @@ const CommentSection = ({
     <main className='bg-white py-4 dark:bg-gray-900'>
       <div className='mx-auto max-w-screen-xl px-4 '>
         <article className='mx-auto w-full max-w-2xl'>
-          <button
-            onClick={() => setIsCommentsVisible(!isCommentsVisible)}
-            className='mb-6 inline-flex items-center justify-between rounded-lg bg-dracula-purple px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-dracula-purple-800 focus:outline-none focus:ring-4 focus:ring-dracula-purple-300 dark:bg-dracula-purple-400 dark:hover:bg-dracula-purple dark:focus:ring-dracula-purple'
-            type='button'
-          >
-            <h2 className='text-lg font-bold text-gray-900 dark:text-white'>
-              Comentários ({comments.length})
-            </h2>
-            <svg
-              className='ms-3 h-2.5 w-2.5'
-              aria-hidden='true'
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 10 6'
-            >
-              <path
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                d='m1 1 4 4 4-4'
-              />
-            </svg>
-          </button>
-          <section
-            className={`transform transition-transform duration-500 ease-in-out ${isCommentsVisible ? '' : 'hidden'}`}
-          >
+          <section className='not-format'>
+            <div className='mb-6 flex items-center justify-between'>
+              <h2 className='text-lg font-bold text-gray-900 dark:text-white lg:text-2xl'>
+                Comentários ({comments.length})
+              </h2>
+            </div>
             <form className='mb-6' onSubmit={handleSubmit}>
-              <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white px-4 py-2 dark:border-gray-700 dark:bg-gray-800'>
+              <div className='mb-4 rounded-lg rounded-t-lg border border-gray-300 bg-white px-4 py-2 dark:border-gray-700 dark:bg-gray-800'>
                 <label htmlFor='comment' className='sr-only'>
                   Seu comentário
                 </label>
@@ -131,18 +112,22 @@ const CommentSection = ({
                       ? 'Escreva um comentário...'
                       : 'Faça login para postar um comentário'
                   }
-                  className='w-full border-0 px-0 text-sm text-gray-900 focus:ring-0 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400'
+                  className='w-full border-0 bg-white px-0 text-sm text-gray-900 focus:ring-0 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400'
                   required
                   onChange={handleChange}
                   value={formData.content}
                 ></textarea>
               </div>
-              <button
-                type='submit'
-                className={`inline-flex items-center rounded-lg bg-dracula-purple px-4 py-2.5 text-center text-xs font-medium text-white hover:bg-dracula-purple-800 focus:ring-4 focus:ring-dracula-purple-200 dark:focus:ring-dracula-purple-900 ${!isLogged ? 'cursor-not-allowed opacity-50' : ''}`}
-              >
-                Postar comentário
-              </button>
+              {isLogged ? (
+                <button
+                  type='submit'
+                  className='inline-flex items-center rounded-lg bg-dracula-purple px-4 py-2.5 text-center text-xs font-medium text-white hover:bg-dracula-purple-800 focus:ring-4 focus:ring-dracula-purple-200 dark:focus:ring-dracula-purple-900'
+                >
+                  Postar comentário
+                </button>
+              ) : (
+                <AuthLinks pathname={pathname} />
+              )}
             </form>
             {comments.map((comment) => (
               <article

@@ -68,7 +68,7 @@ export default function NewsLetter() {
               <div>
                 <button
                   type='submit'
-                  className=' w-full cursor-pointer rounded-lg border border-dracula-purple bg-dracula-purple px-5 py-3 text-center text-sm font-medium text-black transition-all duration-500 ease-in-out hover:border-white hover:bg-black hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-400 sm:rounded-none sm:rounded-r-lg'
+                  className='my-4 inline-flex w-full cursor-pointer rounded-lg border border-gray-300 px-5 py-3 text-center text-sm font-medium transition-all duration-500 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-400 dark:border-dracula-purple-900 dark:bg-dracula-purple-900 dark:text-black dark:hover:border-white dark:hover:bg-black dark:hover:text-white sm:rounded-none sm:rounded-r-lg'
                 >
                   Assinar
                 </button>
