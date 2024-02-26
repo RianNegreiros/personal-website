@@ -3,7 +3,6 @@ using System.Text;
 using Backend.Core.Models;
 using Backend.Infrastructure.Data;
 
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
@@ -69,10 +68,7 @@ public static class IdentityServiceExtensions
             }
         });
 
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
-        });
+        _ = services.AddAuthorization(options => options.AddPolicy("Admin", policy => policy.RequireRole("Admin")));
 
         services.AddDbContext<IdentityDbContext>(opt =>
         {
