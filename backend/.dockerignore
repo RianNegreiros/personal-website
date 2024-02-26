@@ -1,5 +1,1 @@
-bin/
-obj/
-appsettings.json
-appsettings.json.example
-appsettings.Development.json.example
+global.json

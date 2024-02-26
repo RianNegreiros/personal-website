@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
-import { getPosts } from '../utils/api'
-import { Post } from '../models'
+import { useState, useEffect, useCallback } from 'react'
+import { getPosts } from '@/app/utils/api'
+import { Post } from '@/app/models'
 import { AxiosError } from 'axios'
 
 export const usePosts = (initialPage: number, initialPageSize: number) => {
@@ -12,27 +12,27 @@ export const usePosts = (initialPage: number, initialPageSize: number) => {
   const [nextPage, setNextPage] = useState(false)
   const [error, setError] = useState<AxiosError | null>(null)
 
-  const fetchData = async (pageNumber: number, pageSize: number) => {
+  const fetchData = useCallback(async (pageNumber: number, pageSize: number) => {
     try {
       const result = await getPosts(pageNumber, pageSize)
       return result.data
     } catch (error) {
       setError(error as AxiosError)
     }
-  }
+  }, [])
 
-  const handlePageChange = async (newPageNumber: number) => {
+  const handlePageChange = useCallback(async (newPageNumber: number) => {
     setIsLoading(true)
     const fetchedData = await fetchData(newPageNumber, pageSize)
     setData(fetchedData.items)
     setPageNumber(fetchedData.currentPage)
     setNextPage(fetchedData.hasNextPage)
     setIsLoading(false)
-  }
+  }, [pageSize, fetchData])
 
   useEffect(() => {
     handlePageChange(pageNumber)
-  }, [pageNumber, pageSize])
+  }, [handlePageChange, pageNumber])
 
   return {
     isLoading,
