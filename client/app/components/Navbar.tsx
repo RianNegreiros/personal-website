@@ -18,15 +18,19 @@ export default function Navbar() {
             <div className='flex h-16 justify-between'>
               <div className='flex w-full justify-between'>
                 <div className='flex items-center sm:ml-6 sm:flex sm:items-center sm:space-x-8'>
-                  <Link href='/'>
+                  <Link
+                    href='/'
+                    aria-label='Rian Negreiros Home'
+                  >
                     <h1 className='text-2xl font-medium'>
                       Rian{' '}
-                      <span className='text-dracula-purple'>Negreiros</span>
+                      <span className='text-dracula-purple-500'>Negreiros</span>
                     </h1>
                   </Link>
 
                   <Link
                     href='/'
+                    aria-label='Ir para página home'
                     prefetch
                     className={`${pathname === '/' ? 'inline-flex h-full items-center border-b-2 border-dracula-purple px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'} transition duration-300 ease-in-out`}
                   >
@@ -35,6 +39,7 @@ export default function Navbar() {
 
                   <Link
                     href='/posts'
+                    aria-label='Ir para página de posts'
                     prefetch
                     className={`${pathname === '/posts' ? 'inline-flex h-full items-center border-b-2 border-dracula-purple px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'} transition duration-300 ease-in-out`}
                   >
@@ -43,6 +48,7 @@ export default function Navbar() {
 
                   <Link
                     href='/projects'
+                    aria-label='Ir para página de projetos'
                     prefetch
                     className={`${pathname === '/projects' ? 'inline-flex h-full items-center border-b-2 border-dracula-purple px-1 pt-1 text-sm font-medium dark:text-white' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:text-white'} transition duration-300 ease-in-out`}
                   >
@@ -62,6 +68,7 @@ export default function Navbar() {
 
                 <Disclosure.Button
                   id='mobile-menu'
+                  aria-label={open ? 'Fechar menu' : 'Abrir menu'}
                   className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dracula-purple dark:hover:bg-gray-800'
                 >
                   {open ? (
@@ -104,36 +111,36 @@ export default function Navbar() {
             <div className='space-y-1 pb-3 pt-2'>
               <Link
                 href='/'
+                aria-label='Ir para página home'
                 prefetch
-                className={`${
-                  pathname === '/'
-                    ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
-                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
-                }`}
+                className={`${pathname === '/'
+                  ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
+                  : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
+                  }`}
               >
                 Home
               </Link>
 
               <Link
                 href='/posts'
+                aria-label='Ir para página de posts'
                 prefetch
-                className={`${
-                  pathname === '/posts'
-                    ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
-                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
-                }`}
+                className={`${pathname === '/posts'
+                  ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
+                  : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
+                  }`}
               >
                 Blog
               </Link>
 
               <Link
                 href='/projects'
+                aria-label='Ir para página de projetos'
                 prefetch
-                className={`${
-                  pathname === '/projects'
-                    ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
-                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
-                }`}
+                className={`${pathname === '/projects'
+                  ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
+                  : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
+                  }`}
               >
                 Projetos
               </Link>
