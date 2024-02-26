@@ -13,7 +13,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className='mt-auto bg-white dark:bg-dracula-aro-900'>
+    <footer className='mt-auto bg-white dark:bg-gray-900'>
       <div className='mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8'>
         <hr className='my-6 border-dracula-aro-200 dark:border-dracula-aro-700 sm:mx-auto lg:my-8' />
         <div className='sm:flex sm:items-center sm:justify-between'>
