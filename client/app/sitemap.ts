@@ -8,13 +8,18 @@ interface PostData {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const response = await getPosts(0, 0)
-  const data: PostData[] = await response.data.items
+  try {
+    const response = await getPosts(0, 0)
+    const data: PostData[] = response.data.items
 
-  return data.map((post) => ({
-    url: `${siteMetadata.siteUrl}/posts/${post.slug}`,
-    lastModified: post.updatedAt,
-    changeFrequency: 'weekly',
-    priority: 0.5,
-  }))
+    return data.map((post) => ({
+      url: `${siteMetadata.siteUrl}/posts/${post.slug ?? null}`,
+      lastModified: post.updatedAt ?? null,
+      changeFrequency: 'weekly',
+      priority: 0.5,
+    }))
+  } catch (error) {
+    console.error('Failed to fetch posts:', error)
+    return []
+  }
 }
