@@ -1,4 +1,4 @@
-import Axios from 'axios'
+import Axios, { AxiosResponse } from 'axios'
 import {
   CommentData,
   CreateUser,
@@ -6,7 +6,7 @@ import {
   ProjectData,
   SignInData,
   SignUpData,
-} from '../models'
+} from '@/app/models'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -16,7 +16,7 @@ const axios = Axios.create({
 
 axios.defaults.withCredentials = true
 
-async function signUpUser(formData: SignUpData): Promise<any> {
+async function signUpUser(formData: SignUpData): Promise<AxiosResponse> {
   try {
     const response = await axios.post(`${API_URL}/user/register`, formData)
     return response.data
@@ -25,8 +25,7 @@ async function signUpUser(formData: SignUpData): Promise<any> {
   }
 }
 
-async function createUser(formData: CreateUser): Promise<any> {
-  console.log(formData)
+async function createUser(formData: CreateUser): Promise<void> {
   try {
     await axios.post(`${API_URL}/admin/users`, formData)
   } catch (error) {
@@ -65,13 +64,14 @@ async function createPost(formData: PostData) {
   }
 }
 
-async function getPosts(pageNumber: number, pageSize: number) {
+async function getPosts(pageNumber: number, pageSize: number): Promise<AxiosResponse> {
   try {
     const response = await axios.get(
       `${API_URL}/posts/?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     )
     return response.data
   } catch (error) {
+    console.error(error)
     throw new Error('Failed to fetch posts. Please try again later.')
   }
 }
@@ -174,7 +174,7 @@ export const addReplyToComment = async (
   return response.data
 }
 
-async function createProject(projectData: ProjectData): Promise<any> {
+async function createProject(projectData: ProjectData): Promise<AxiosResponse> {
   try {
     const formData = new FormData()
     formData.append('title', projectData.title)

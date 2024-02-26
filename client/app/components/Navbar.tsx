@@ -8,7 +8,7 @@ import NewLinks from './NewLinks'
 import LogoutLink from './LogoutLink'
 
 export default function Navbar() {
-  let pathname = usePathname() || '/'
+  const pathname = usePathname() || '/'
 
   return (
     <Disclosure as='nav'>

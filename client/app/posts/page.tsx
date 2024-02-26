@@ -5,7 +5,6 @@ import Loading from '../components/Loading'
 import { usePosts } from '../hooks/usePosts'
 import InternalServerError from '../components/InternalServerError'
 import Pagination from '../components/PaginationButtons'
-import NewsLetter from '../components/NewsLetter'
 
 export default function PostsPage() {
   const { isLoading, data, pageNumber, nextPage, handlePageChange, error } =
