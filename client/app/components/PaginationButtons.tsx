@@ -21,6 +21,7 @@ const Pagination: React.FC<PaginationProps> = ({
           <button
             onClick={() => handlePageChange(pageNumber - 1)}
             className={buttonClasses}
+            aria-label='Ir para página anterior'
           >
             Anterior
           </button>
@@ -29,6 +30,7 @@ const Pagination: React.FC<PaginationProps> = ({
           <button
             onClick={() => handlePageChange(pageNumber + 1)}
             className={buttonClasses}
+            aria-label='Ir para próxima página'
           >
             Próximo
           </button>

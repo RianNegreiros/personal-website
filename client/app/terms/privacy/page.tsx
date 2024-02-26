@@ -8,7 +8,11 @@ export default function PrivacyPolicy() {
         A sua privacidade é importante para nós. É política do riannegreiros.dev
         respeitar a sua privacidade em relação a qualquer informação sua que
         possamos coletar no site{' '}
-        <Link href='https://riannegreiros.dev' className='text-cyan-500'>
+        <Link
+          href='https://riannegreiros.dev'
+          className='text-cyan-500'
+          aria-label='Link para riannegreiros.dev'
+        >
           riannegreiros.dev
         </Link>
         , e outros sites que possuímos e operamos.
@@ -38,6 +42,7 @@ export default function PrivacyPolicy() {
           rel='noopener noreferrer'
           target='_blank'
           className='text-cyan-500'
+          aria-label='Link para politicaprivacidade.com'
         >
           políticas de privacidade
         </Link>

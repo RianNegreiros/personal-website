@@ -6,7 +6,11 @@ export default function TermsOfService() {
       <h2 className='mb-4 text-2xl font-bold'>1. Termos</h2>
       <p className='mb-4'>
         Ao acessar o site{' '}
-        <Link href='https://riannegreiros.dev/' className='text-cyan-500'>
+        <Link
+          href='https://riannegreiros.dev'
+          className='text-cyan-500'
+          aria-label='Link para riannegreiros.dev'
+        >
           riannegreiros.dev
         </Link>
         , você concorda em cumprir estes termos de serviço, todas as leis e

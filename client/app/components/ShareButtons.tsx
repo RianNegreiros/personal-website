@@ -47,6 +47,7 @@ export default function ShareButtons({ post }: ShareButtonsProps) {
               url={`${siteMetadata.siteUrl}/posts/${post.slug}`}
               title={post.title}
               summary={post.summary}
+              aria-label='Compartilhar no LinkedIn'
             >
               <LinkedinIcon size={32} round />
             </LinkedinShareButton>
@@ -57,6 +58,7 @@ export default function ShareButtons({ post }: ShareButtonsProps) {
               url={`${siteMetadata.siteUrl}/posts/${post.slug}`}
               title={post.title}
               about={post.summary}
+              aria-label='Salvar no Pocket'
             >
               <PocketIcon size={32} round />
             </PocketShareButton>
@@ -67,6 +69,7 @@ export default function ShareButtons({ post }: ShareButtonsProps) {
               url={`${siteMetadata.siteUrl}/posts/${post.slug}`}
               subject={post.title}
               about={post.summary}
+              aria-label='Compartilhar por Email'
             >
               <EmailIcon size={32} round />
             </EmailShareButton>
@@ -76,6 +79,7 @@ export default function ShareButtons({ post }: ShareButtonsProps) {
             <RedditShareButton
               url={`${siteMetadata.siteUrl}/posts/${post.slug}`}
               title={post.title}
+              aria-label='Compartilhar no Reddit'
             >
               <RedditIcon size={32} round />
             </RedditShareButton>
@@ -85,6 +89,7 @@ export default function ShareButtons({ post }: ShareButtonsProps) {
             <TelegramShareButton
               url={`${siteMetadata.siteUrl}/posts/${post.slug}`}
               title={post.title}
+              aria-label='Compartilhar no Telegram'
             >
               <TelegramIcon size={32} round />
             </TelegramShareButton>
@@ -94,6 +99,7 @@ export default function ShareButtons({ post }: ShareButtonsProps) {
             <TwitterShareButton
               url={`${siteMetadata.siteUrl}/posts/${post.slug}`}
               title={post.title}
+              aria-label='Compartilhar no Twitter/X'
             >
               <TwitterIcon size={32} round />
             </TwitterShareButton>
@@ -104,6 +110,7 @@ export default function ShareButtons({ post }: ShareButtonsProps) {
               url={`${siteMetadata.siteUrl}/posts/${post.slug}`}
               title={post.title}
               separator=':: '
+              aria-label='Compartilhar no Whatsapp'
             >
               <WhatsappIcon size={32} round />
             </WhatsappShareButton>

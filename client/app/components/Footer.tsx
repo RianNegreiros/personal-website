@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 export default function Footer() {
@@ -18,12 +19,13 @@ export default function Footer() {
         <div className='sm:flex sm:items-center sm:justify-between'>
           <span className='text-sm text-gray-500 dark:text-gray-400 sm:text-center'>
             © {new Date().getFullYear()}{' '}
-            <a
+            <Link
               href='https://www.linkedin.com/in/riannegreiros'
               className='text-dracula-purple hover:underline'
+              aria-label='Rodapé da página Abrir LinkedIn'
             >
               Rian Negreiros™
-            </a>
+            </Link>
             . Todos os direitos reservados.
           </span>
 

@@ -160,6 +160,7 @@ export default function SignUpPage() {
                 type='submit'
                 className={`w-full rounded-lg bg-dracula-purple px-5 py-2.5 text-center text-sm font-medium text-white transition-colors duration-200 ease-in-out hover:bg-dracula-purple-700 focus:outline-none focus:ring-4 focus:ring-dracula-purple dark:bg-dracula-purple dark:hover:bg-dracula-purple-800 dark:focus:ring-dracula-purple ${signingUp ? 'cursor-not-allowed opacity-70' : ''}`}
                 disabled={signingUp}
+                aria-label='Criar conta'
               >
                 {signingUp ? 'Criando...' : 'Criar conta'}
               </button>
