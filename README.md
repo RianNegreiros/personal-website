@@ -33,11 +33,7 @@ Here are some key endpoints you may want to explore:
 
 ### Prerequisites
 
-- [Docker Engine](https://docs.docker.com/engine/install)
-- Make
-  - [Linux](https://www.gnu.org/software/make/)
-  - [Windows](https://gnuwin32.sourceforge.net/packages/make.htm)
-  - [macOS](https://formulae.brew.sh/formula/make)
+- [Docker Compose](https://docs.docker.com/compose/gettingstarted/)
 
 1- Clone the repository
 
@@ -47,23 +43,13 @@ git clone https://github.com/RianNegreiros/portfolio.git
 
 2- Create and set up the environment variables in the `appsettings.json`/`appsettings.Development.json` using [appsettings.Development.json.example](https://github.com/RianNegreiros/portfolio/blob/main/backend/Backend.API/appsettings.Development.json.example) as reference
 
-3- Run the tests
+3- Run the application
 
 ```bash
-make run-tests
+docker compose up
 ```
 
-4- Run the backend on `localhost:5000`
-
-```bash
-make run-backend
-```
-
-5- Run the client on `localhost:3000`
-
-```bash
-make run-client
-```
+Now you can access the client on `localhost:3000` and the API on `localhost:8080`
 
 ## Built With
 
