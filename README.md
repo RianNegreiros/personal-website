@@ -74,8 +74,6 @@ make run-client
 - [Next.js](https://nextjs.org/docs)
 - [Typescript](https://www.typescriptlang.org/docs)
 - [Tailwind CSS](https://tailwindcss.com/docs/installation)
-- [Docker](https://docs.docker.com)
-- [Docker compose](https://docs.docker.com/compose/gettingstarted)
 - [PostgreSQL](https://www.postgresql.org/about)
 - [MongoDB](https://www.mongodb.com/atlas/database)
 - [Redis](https://redis.io/docs/getting-started)
@@ -87,7 +85,6 @@ make run-client
 - [Cloudinary](https://www.nuget.org/packages/CloudinaryDotNet/)
 - [MailKit](https://www.nuget.org/packages/MailKit/)
 - [Moq](https://www.nuget.org/packages/Moq/)
-- [xunit](https://www.nuget.org/packages/xunit/)
 
 ## Principles
 
