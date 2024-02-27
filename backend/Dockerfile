@@ -7,6 +7,9 @@ COPY . /source
 
 WORKDIR /source/Backend.API
 
+# Add a command to list the contents of the current directory to debug
+RUN ls -la
+
 # This is the architecture you’re building for, which is passed in by the builder.
 # Placing it here allows the previous steps to be cached across architectures.
 ARG TARGETARCH
