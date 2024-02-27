@@ -6,14 +6,9 @@ using MongoDB.Driver;
 
 namespace Backend.Infrastructure.Repositories;
 
-public class PostRepository : IPostRepository
+public class PostRepository(IMongoDatabase database) : IPostRepository
 {
-    private readonly IMongoCollection<Post> _postCollection;
-
-    public PostRepository(IMongoDatabase database)
-    {
-        _postCollection = database.GetCollection<Post>("posts");
-    }
+    private readonly IMongoCollection<Post> _postCollection = database.GetCollection<Post>("posts");
 
     public async Task<Post> Create(Post post)
     {
@@ -49,6 +44,18 @@ public class PostRepository : IPostRepository
     public async Task<List<Post>> GetAll()
     {
         return await _postCollection.Find(_ => true).ToListAsync();
+    }
+
+    public async Task<List<Post>> GetPostsForFeed()
+    {
+        var projection = Builders<Post>.Projection
+            .Include(p => p.Id)
+            .Include(p => p.Title)
+            .Include(p => p.Summary)
+            .Include(p => p.Slug)
+            .Include(p => p.CreatedAt);
+
+        return await _postCollection.Find(_ => true).Project<Post>(projection).ToListAsync();
     }
 
     public async Task<int> Count()

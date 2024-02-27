@@ -4,51 +4,40 @@ using Backend.Core.Interfaces.Repositories;
 
 namespace Backend.Application.Services.Implementations;
 
-public class FeedService : IFeedService
+public class FeedService(IPostRepository postRepository, IProjectsRepository projectsRepository) : IFeedService
 {
-    private readonly IPostRepository _postRepository;
-    private readonly IProjectsRepository _projectsRepository;
-
-    public FeedService(IPostRepository postRepository, IProjectsRepository projectsRepository)
-    {
-        _postRepository = postRepository;
-        _projectsRepository = projectsRepository;
-    }
+    private readonly IPostRepository _postRepository = postRepository;
+    private readonly IProjectsRepository _projectsRepository = projectsRepository;
 
     public async Task<List<FeedItemViewModel>> GetFeed()
     {
-        var posts = await _postRepository.GetAll();
-        var projects = await _projectsRepository.GetAllProjectsAsync();
+        var postsTask = _postRepository.GetPostsForFeed();
+        var projectsTask = _projectsRepository.GetProjectsForFeedAsync();
 
-        var feedItems = new List<FeedItemViewModel>();
+        await Task.WhenAll(postsTask, projectsTask);
 
-        feedItems.AddRange(posts.Select(p => new FeedItemViewModel
+        var posts = await postsTask;
+        var projects = await projectsTask;
+
+        var feedItems = posts.Select(p => new FeedItemViewModel
         {
             Id = p.Id,
             Title = p.Title,
             Summary = p.Summary,
-            Content = p.Content,
             Slug = p.Slug,
             CreatedAt = p.CreatedAt,
-            UpdatedAt = p.UpdatedAt,
             Type = "Post"
-        }));
-
-        feedItems.AddRange(projects.Select(p => new FeedItemViewModel
+        }).Concat(projects.Select(p => new FeedItemViewModel
         {
             Id = p.Id,
             Title = p.Title,
             Url = p.Url,
-            ImageUrl = p.ImageUrl,
             Overview = p.Overview,
             CreatedAt = p.CreatedAt,
-            UpdatedAt = p.UpdatedAt,
             Type = "Project"
-        }));
+        })).ToList();
 
-        feedItems = feedItems
-            .OrderByDescending(item => item.CreatedAt)
-            .ToList();
+        feedItems.Sort((x, y) => y.CreatedAt.CompareTo(x.CreatedAt));
 
         return feedItems;
     }
