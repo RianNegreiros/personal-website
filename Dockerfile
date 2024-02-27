@@ -2,11 +2,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
 # Copy the .csproj and restore as distinct layers
-COPY . .
+COPY ./backend .
 RUN dotnet restore
 
 # Copy everything else and build the API
-COPY . ./
+COPY ./backend ./
 RUN dotnet publish "./Backend.API/Backend.API.csproj" -c Release -o out
 
 # Build runtime image
