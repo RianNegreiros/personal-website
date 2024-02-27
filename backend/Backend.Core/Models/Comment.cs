@@ -22,7 +22,7 @@ public class Comment
     public string PostSlug { get; set; }
 
     [BsonElement("replies")]
-    public List<Comment> Replies { get; set; } = new List<Comment>();
+    public List<Comment> Replies { get; set; } = [];
 
     [BsonElement("createdAt")]
     [BsonDateTimeOptions(Kind = DateTimeKind.Local)]

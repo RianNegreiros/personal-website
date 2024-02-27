@@ -6,11 +6,11 @@ public static class HealthChecksExtensions
     {
         services.AddHealthChecks()
             .AddNpgSql(configuration.GetConnectionString("IdentityConnection"),
-                name: "PostgreSQL", tags: new string[] { "database", "users" })
+                name: "PostgreSQL", tags: ["database", "users"])
             .AddMongoDb(configuration.GetConnectionString("MongoConnection"),
-                name: "MongoDB", tags: new string[] { "database", "posts", "comments", "projects" })
+                name: "MongoDB", tags: ["database", "posts", "comments", "projects"])
             .AddRedis(configuration.GetConnectionString("Redis"),
-                name: "Redis", tags: new string[] { "database", "cache" });
+                name: "Redis", tags: ["database", "cache"]);
 
         return services;
     }

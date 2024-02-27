@@ -1,8 +1,5 @@
 namespace Backend.Core.Exceptions;
 
-public class PostAlreadyExistsException : Exception
+public class PostAlreadyExistsException(string message) : Exception(message)
 {
-    public PostAlreadyExistsException(string message) : base(message)
-    {
-    }
 }

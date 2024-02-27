@@ -46,10 +46,7 @@ public static class IdentityServiceExtensions
             }
             };
         })
-        .AddCookie(options =>
-            {
-                options.Cookie.Name = "token";
-            });
+        .AddCookie(options => options.Cookie.Name = "token");
 
         services.Configure<CookiePolicyOptions>(options =>
         {

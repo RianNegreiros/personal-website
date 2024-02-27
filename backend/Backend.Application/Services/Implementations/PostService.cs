@@ -11,14 +11,9 @@ using MongoDB.Bson;
 
 namespace Backend.Application.Services.Implementations;
 
-public class PostService : IPostService
+public class PostService(IPostRepository postRepository) : IPostService
 {
-    private readonly IPostRepository _postRepository;
-
-    public PostService(IPostRepository postRepository)
-    {
-        _postRepository = postRepository;
-    }
+    private readonly IPostRepository _postRepository = postRepository;
 
     public async Task<Post> CreatePost(PostInputModel model, User author)
     {
@@ -104,7 +99,7 @@ public class PostService : IPostService
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt
             }).ToList()
-            : new List<PostViewModel>();
+            : [];
     }
 
     public async Task<PostViewModel?> GetPostByIdentifier(string identifier)
@@ -140,6 +135,6 @@ public class PostService : IPostService
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt
             }).ToList()
-            : new List<PostViewModel>();
+            : [];
     }
 }

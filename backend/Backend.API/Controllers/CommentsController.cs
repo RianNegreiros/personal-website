@@ -18,20 +18,12 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Backend.API.Controllers;
 
 [Route("api/comments/{identifier}")]
-public class CommentsController : BaseApiController
+public class CommentsController(ICommentsService commentsService, IPostService postService, UserManager<User> userManager, INotificationService notificationService) : BaseApiController
 {
-    private readonly ICommentsService _commentsService;
-    private readonly IPostService _postService;
-    private readonly UserManager<User> _userManager;
-    private readonly INotificationService _notificationService;
-
-    public CommentsController(ICommentsService commentsService, IPostService postService, UserManager<User> userManager, INotificationService notificationService)
-    {
-        _commentsService = commentsService;
-        _postService = postService;
-        _userManager = userManager;
-        _notificationService = notificationService;
-    }
+    private readonly ICommentsService _commentsService = commentsService;
+    private readonly IPostService _postService = postService;
+    private readonly UserManager<User> _userManager = userManager;
+    private readonly INotificationService _notificationService = notificationService;
 
     [Authorize]
     [HttpPost]
@@ -58,7 +50,7 @@ public class CommentsController : BaseApiController
             return BadRequest(new ApiResponse<CommentViewModel>
             {
                 Success = false,
-                Errors = new List<string> { "Post not found." }
+                Errors = ["Post not found."]
             });
         }
 
@@ -117,7 +109,7 @@ public class CommentsController : BaseApiController
             return BadRequest(new ApiResponse<CommentViewModel>
             {
                 Success = false,
-                Errors = new List<string> { "Comment not found." }
+                Errors = ["Comment not found."]
             });
         }
 

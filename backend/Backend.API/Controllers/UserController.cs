@@ -17,18 +17,11 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
 
-public class UserController : BaseApiController
+public class UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService) : BaseApiController
 {
-    private readonly UserManager<User> _userManager;
-    private readonly SignInManager<User> _signInManager;
-    private readonly ITokenService _tokenService;
-
-    public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-        _tokenService = tokenService;
-    }
+    private readonly UserManager<User> _userManager = userManager;
+    private readonly SignInManager<User> _signInManager = signInManager;
+    private readonly ITokenService _tokenService = tokenService;
 
     [HttpPost("register")]
     [SwaggerOperation(Summary = "Register a new user.")]

@@ -10,6 +10,7 @@ public interface IPostRepository
     Task<Post> GetBySlug(string slug);
     Task<List<Post>> GetAllWithParameters(int pageNumber, int pageSize);
     Task<List<Post>> GetAll();
+    Task<List<Post>> GetPostsForFeed();
     Task<int> Count();
     Task Delete(string id);
     Task<List<Post>> GetPostsForUserById(string userId);

@@ -11,16 +11,10 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
 
-public class FeedController : BaseApiController
+public class FeedController(IFeedService feedService, ICachingService cachingService) : BaseApiController
 {
-    private readonly IFeedService _feedService;
-    private readonly ICachingService _cachingService;
-
-    public FeedController(IFeedService feedService, ICachingService cachingService)
-    {
-        _feedService = feedService;
-        _cachingService = cachingService;
-    }
+    private readonly IFeedService _feedService = feedService;
+    private readonly ICachingService _cachingService = cachingService;
 
     [HttpGet]
     [SwaggerOperation(Summary = "Get feed with posts and projects")]

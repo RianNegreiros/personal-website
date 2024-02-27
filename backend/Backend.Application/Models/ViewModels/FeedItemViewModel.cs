@@ -13,23 +13,14 @@ namespace Backend.Application.Models.ViewModels
         [SwaggerSchema("The summary of the feed item.")]
         public string Summary { get; set; }
 
-        [SwaggerSchema("The content of the feed item.")]
-        public string Content { get; set; }
-
         [SwaggerSchema("The slug of the feed item.")]
         public string Slug { get; set; }
 
         [SwaggerSchema("The creation date of the feed item.")]
         public DateTime CreatedAt { get; set; }
 
-        [SwaggerSchema("The last update date of the feed item.")]
-        public DateTime UpdatedAt { get; set; }
-
         [SwaggerSchema("The URL of the feed item.")]
         public string Url { get; set; }
-
-        [SwaggerSchema("The image URL of the feed item.")]
-        public string ImageUrl { get; set; }
 
         [SwaggerSchema("The overview of the feed item.")]
         public string Overview { get; set; }

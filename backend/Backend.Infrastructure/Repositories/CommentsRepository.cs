@@ -6,14 +6,9 @@ using MongoDB.Driver;
 
 namespace Backend.Infrastructure.Repositories;
 
-public class CommentsRepository : ICommentsRepository
+public class CommentsRepository(IMongoDatabase database) : ICommentsRepository
 {
-    private readonly IMongoCollection<Comment> _comments;
-
-    public CommentsRepository(IMongoDatabase database)
-    {
-        _comments = database.GetCollection<Comment>("comments");
-    }
+    private readonly IMongoCollection<Comment> _comments = database.GetCollection<Comment>("comments");
 
     public async Task<List<Comment>> GetAll()
     {

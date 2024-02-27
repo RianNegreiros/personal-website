@@ -6,18 +6,11 @@ using Hangfire;
 
 namespace Backend.Application.Services.Implementations;
 
-public class NotificationService : INotificationService
+public class NotificationService(IEmailService emailService, IBackgroundJobClient jobClient, ISubscriberService subscriberService) : INotificationService
 {
-    private readonly IEmailService _emailService;
-    private readonly ISubscriberService _subscriberService;
-    private readonly IBackgroundJobClient _jobClient;
-
-    public NotificationService(IEmailService emailService, IBackgroundJobClient jobClient, ISubscriberService subscriberService)
-    {
-        _emailService = emailService;
-        _jobClient = jobClient;
-        _subscriberService = subscriberService;
-    }
+    private readonly IEmailService _emailService = emailService;
+    private readonly ISubscriberService _subscriberService = subscriberService;
+    private readonly IBackgroundJobClient _jobClient = jobClient;
 
     public void EnqueueNotification(string notificationType, NotificationContext context)
     {

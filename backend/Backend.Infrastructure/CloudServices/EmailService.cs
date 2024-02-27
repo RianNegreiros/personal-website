@@ -8,13 +8,10 @@ using MimeKit;
 
 namespace Backend.Infrastructure.CloudServices;
 
-public class EmailService : IEmailService
+public class EmailService(IConfiguration configuration) : IEmailService
 {
-    private readonly IConfiguration _config;
-    public EmailService(IConfiguration configuration)
-    {
-        _config = configuration;
-    }
+    private readonly IConfiguration _config = configuration;
+
     public async Task SendEmailAsync(string email, string subject, string message)
     {
         var emailMessage = new MimeMessage();

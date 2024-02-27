@@ -37,12 +37,7 @@ public class CommentsController : AdminBaseApiController
     {
         var comment = await _commentsRepository.GetById(id);
 
-        if (comment == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(comment);
+        return comment == null ? (ActionResult<Comment>)NotFound() : (ActionResult<Comment>)Ok(comment);
     }
 
     [HttpDelete("{id}")]

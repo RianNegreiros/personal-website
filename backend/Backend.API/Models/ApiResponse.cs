@@ -8,6 +8,6 @@ public class ApiResponse<T>
 
     public ApiResponse()
     {
-        Errors = new List<string>();
+        Errors = [];
     }
 }

@@ -40,12 +40,7 @@ public class UsersController : AdminBaseApiController
     {
         var user = await _userService.GetUserById(id);
 
-        if (user == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(user);
+        return user == null ? (ActionResult<User>)NotFound() : (ActionResult<User>)Ok(user);
     }
 
     [HttpPost]
@@ -58,14 +53,7 @@ public class UsersController : AdminBaseApiController
     {
         var result = await _userService.CreateUser(model.Username, model.Email, model.Password, model.Admin);
 
-        if (result.Succeeded)
-        {
-            return Ok("User created successfully");
-        }
-        else
-        {
-            return BadRequest(result.Errors);
-        }
+        return result.Succeeded ? Ok("User created successfully") : BadRequest(result.Errors);
     }
 
     [HttpPut("{id}")]
@@ -77,14 +65,7 @@ public class UsersController : AdminBaseApiController
     public async Task<IActionResult> Update(string id, string? newUserName, string? newEmail)
     {
         var result = await _userService.UpdateUser(id, newUserName, newEmail);
-        if (result.Succeeded)
-        {
-            return Ok("User updated successfully");
-        }
-        else
-        {
-            return BadRequest(result.Errors);
-        }
+        return result.Succeeded ? Ok("User updated successfully") : BadRequest(result.Errors);
     }
 
     [HttpDelete("{id}")]

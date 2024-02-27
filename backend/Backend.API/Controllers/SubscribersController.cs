@@ -5,14 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.API.Controllers;
 
-public class SubscribersController : BaseApiController
+public class SubscribersController(ISubscriberService subscriberService) : BaseApiController
 {
-    private readonly ISubscriberService _subscriberService;
-
-    public SubscribersController(ISubscriberService subscriberService)
-    {
-        _subscriberService = subscriberService;
-    }
+    private readonly ISubscriberService _subscriberService = subscriberService;
 
     [HttpPost("subscribe")]
     public async Task<IActionResult> Subscribe([FromBody] SubscriberInputModel request)

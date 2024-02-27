@@ -5,14 +5,9 @@ using MongoDB.Driver;
 
 namespace Backend.Infrastructure.Repositories;
 
-public class SubscriberRepository : ISubscriberRepository
+public class SubscriberRepository(IMongoDatabase database) : ISubscriberRepository
 {
-    private readonly IMongoCollection<Subscriber> _subscribers;
-
-    public SubscriberRepository(IMongoDatabase database)
-    {
-        _subscribers = database.GetCollection<Subscriber>("subscribers");
-    }
+    private readonly IMongoCollection<Subscriber> _subscribers = database.GetCollection<Subscriber>("subscribers");
 
     public async Task<Subscriber> GetByEmailAsync(string email)
     {

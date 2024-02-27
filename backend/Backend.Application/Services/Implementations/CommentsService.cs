@@ -8,14 +8,9 @@ using MongoDB.Driver.Core.WireProtocol.Messages;
 
 namespace Backend.Application.Services.Implementations;
 
-public class CommentsService : ICommentsService
+public class CommentsService(ICommentsRepository commentsRepository) : ICommentsService
 {
-    private readonly ICommentsRepository _commentsRepository;
-
-    public CommentsService(ICommentsRepository commentsRepository)
-    {
-        _commentsRepository = commentsRepository;
-    }
+    private readonly ICommentsRepository _commentsRepository = commentsRepository;
 
     public async Task<Comment> AddCommentToPost(PostViewModel post, CommentInputModel comment, User author)
     {
