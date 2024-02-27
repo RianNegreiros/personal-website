@@ -8,6 +8,7 @@ using HealthChecks.UI.Client;
 
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,8 +27,17 @@ builder.Services.AddHangfire();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerDocumentation();
 
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.Providers.Add<GzipCompressionProvider>();
+    options.Providers.Add<BrotliCompressionProvider>();
+});
+
 // Configure the HTTP request pipeline
 var app = builder.Build();
+
+app.UseResponseCompression();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
