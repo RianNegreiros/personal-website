@@ -36,12 +36,7 @@ public class ProjectsController : AdminBaseApiController
     {
         var project = await _projectsRepository.GetProjectByIdAsync(id);
 
-        if (project == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(project);
+        return project == null ? (ActionResult<Project>)NotFound() : (ActionResult<Project>)Ok(project);
     }
 
     [HttpDelete("{id}")]

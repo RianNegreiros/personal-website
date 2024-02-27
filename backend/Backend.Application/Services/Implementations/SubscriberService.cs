@@ -6,14 +6,9 @@ using MongoDB.Driver;
 
 namespace Backend.Application.Services.Implementations;
 
-public class SubscriberService : ISubscriberService
+public class SubscriberService(ISubscriberRepository subscriberRepository) : ISubscriberService
 {
-    private readonly ISubscriberRepository _subscriberRepository;
-
-    public SubscriberService(ISubscriberRepository subscriberRepository)
-    {
-        _subscriberRepository = subscriberRepository;
-    }
+    private readonly ISubscriberRepository _subscriberRepository = subscriberRepository;
 
     public async Task<bool> AddSubscriberAsync(string email)
     {

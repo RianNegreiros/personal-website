@@ -8,11 +8,8 @@ using Backend.Application.Models.InputModels;
 using Backend.Application.Models.ViewModels;
 using Backend.Application.Services.Interfaces;
 using Backend.Application.Validators;
-using Backend.Core.Interfaces.CloudServices;
 using Backend.Core.Models;
 using Backend.Infrastructure.Caching;
-
-using Hangfire;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -24,29 +21,19 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Backend.API.Controllers;
 
-public class PostsController : BaseApiController
+public class PostsController(IPostService postService, UserManager<User> userManager, ICachingService cachingService, INotificationService notificationService) : BaseApiController
 {
-    private readonly IPostService _postService;
-    private readonly UserManager<User> _userManager;
-    private readonly ICachingService _cachingService;
-    private readonly INotificationService _notificationService;
-
-    public PostsController(IPostService postService, UserManager<User> userManager, ICachingService cachingService, INotificationService notificationService)
-    {
-        _postService = postService;
-        _userManager = userManager;
-        _cachingService = cachingService;
-        _notificationService = notificationService;
-    }
+    private readonly IPostService _postService = postService;
+    private readonly UserManager<User> _userManager = userManager;
+    private readonly ICachingService _cachingService = cachingService;
+    private readonly INotificationService _notificationService = notificationService;
 
     [HttpGet("rss")]
     [ResponseCache(Duration = 1200)]
     [SwaggerOperation(Summary = "Get Posts RSS Feed")]
     public async Task<IActionResult> Rss()
     {
-        List<PostViewModel> posts = (await _postService.GetPosts())
-        .OrderByDescending(post => post.CreatedAt)
-        .ToList();
+        List<PostViewModel> posts = [.. (await _postService.GetPosts()).OrderByDescending(post => post.CreatedAt)];
 
         var feed = new SyndicationFeed(
             "Rian Negreiros Blog Feed",
@@ -161,7 +148,7 @@ public class PostsController : BaseApiController
             return BadRequest(new ApiResponse<PostViewModel>
             {
                 Success = false,
-                Errors = new List<string> { "User not found" }
+                Errors = ["User not found"]
             });
 
         Post post = await _postService.UpdatePost(identifier, model, currentUser);

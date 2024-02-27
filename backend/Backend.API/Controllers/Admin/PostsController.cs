@@ -36,12 +36,7 @@ public class PostsController : AdminBaseApiController
     {
         var post = await _postRepository.GetById(id);
 
-        if (post == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(post);
+        return post == null ? (ActionResult<Post>)NotFound() : (ActionResult<Post>)Ok(post);
     }
 
     [HttpDelete("{id}")]

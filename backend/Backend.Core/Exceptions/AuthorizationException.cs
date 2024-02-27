@@ -1,8 +1,5 @@
 namespace Backend.Core.Exceptions;
 
-public class AuthorizationException : Exception
+public class AuthorizationException(string message) : Exception(message)
 {
-    public AuthorizationException(string message) : base(message)
-    {
-    }
 }

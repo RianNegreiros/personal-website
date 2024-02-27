@@ -6,23 +6,16 @@ using Backend.Core.Models;
 
 namespace Backend.Application.Services.Implementations;
 
-public class ProjectsService : IProjectsService
+public class ProjectsService(IProjectsRepository projectsRepository, ICloudinaryService cloudinaryService) : IProjectsService
 {
-    private readonly IProjectsRepository _projectsRepository;
-    private readonly ICloudinaryService _cloudinaryService;
-
-    public ProjectsService(IProjectsRepository projectsRepository, ICloudinaryService cloudinaryService)
-    {
-        _projectsRepository = projectsRepository;
-        _cloudinaryService = cloudinaryService;
-    }
+    private readonly IProjectsRepository _projectsRepository = projectsRepository;
+    private readonly ICloudinaryService _cloudinaryService = cloudinaryService;
 
     public async Task<List<ProjectViewModel>> GetProjects()
     {
         List<Project> projects = await _projectsRepository.GetAllProjectsAsync();
-        if (projects != null)
-        {
-            return projects.Select(project => new ProjectViewModel
+        return projects != null
+            ? projects.Select(project => new ProjectViewModel
             {
                 Id = project.Id,
                 Title = project.Title,
@@ -31,10 +24,8 @@ public class ProjectsService : IProjectsService
                 ImageUrl = project.ImageUrl,
                 CreatedAt = project.CreatedAt,
                 UpdatedAt = project.UpdatedAt
-            }).ToList();
-        }
-
-        return new List<ProjectViewModel>();
+            }).ToList()
+            : (List<ProjectViewModel>)([]);
     }
 
     public async Task<ProjectViewModel> GetProject(string id)

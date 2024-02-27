@@ -1,8 +1,5 @@
 namespace Backend.Core.Exceptions;
 
-public class PostNotFoundException : Exception
+public class PostNotFoundException(string message) : Exception(message)
 {
-    public PostNotFoundException(string message) : base(message)
-    {
-    }
 }

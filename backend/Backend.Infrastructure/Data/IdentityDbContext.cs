@@ -5,12 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Infrastructure.Data;
 
-public class IdentityDbContext : IdentityDbContext<User>
+public class IdentityDbContext(DbContextOptions options) : IdentityDbContext<User>(options)
 {
-    public IdentityDbContext(DbContextOptions options) : base(options)
-    {
-    }
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

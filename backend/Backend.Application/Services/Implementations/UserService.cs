@@ -8,18 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Application.Services.Implementations;
 
-public class UserService : IUserService
+public class UserService(UserManager<User> userManager, IPostRepository postRepository, ICommentsRepository commentsRepository) : IUserService
 {
-    private readonly UserManager<User> _userManager;
-    private readonly IPostRepository _postRepository;
-    private readonly ICommentsRepository _commentsRepository;
-
-    public UserService(UserManager<User> userManager, IPostRepository postRepository, ICommentsRepository commentsRepository)
-    {
-        _userManager = userManager;
-        _postRepository = postRepository;
-        _commentsRepository = commentsRepository;
-    }
+    private readonly UserManager<User> _userManager = userManager;
+    private readonly IPostRepository _postRepository = postRepository;
+    private readonly ICommentsRepository _commentsRepository = commentsRepository;
 
     public async Task<IEnumerable<AdminUserViewModel>> GetAllUsers()
     {

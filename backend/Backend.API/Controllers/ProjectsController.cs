@@ -3,11 +3,8 @@ using Backend.Application.Models;
 using Backend.Application.Models.InputModels;
 using Backend.Application.Services.Interfaces;
 using Backend.Application.Validators;
-using Backend.Core.Interfaces.CloudServices;
 using Backend.Core.Models;
 using Backend.Infrastructure.Caching;
-
-using Hangfire;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -20,20 +17,12 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Backend.API.Controllers;
 
 [Authorize(Roles = "Admin")]
-public class ProjectsController : BaseApiController
+public class ProjectsController(IProjectsService projectsService, UserManager<User> userManager, ICachingService cachingService, INotificationService notificationService) : BaseApiController
 {
-    private readonly IProjectsService _projectsService;
-    private readonly UserManager<User> _userManager;
-    private readonly ICachingService _cachingService;
-    private readonly INotificationService _notificationService;
-
-    public ProjectsController(IProjectsService projectsService, UserManager<User> userManager, ICachingService cachingService, INotificationService notificationService)
-    {
-        _projectsService = projectsService;
-        _userManager = userManager;
-        _cachingService = cachingService;
-        _notificationService = notificationService;
-    }
+    private readonly IProjectsService _projectsService = projectsService;
+    private readonly UserManager<User> _userManager = userManager;
+    private readonly ICachingService _cachingService = cachingService;
+    private readonly INotificationService _notificationService = notificationService;
 
     [AllowAnonymous]
     [HttpGet]

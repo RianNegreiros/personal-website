@@ -1,8 +1,5 @@
 namespace Backend.Core.Exceptions;
 
-public class ImageUploadException : Exception
+public class ImageUploadException(string message) : Exception(message)
 {
-    public ImageUploadException(string message) : base(message)
-    {
-    }
 }

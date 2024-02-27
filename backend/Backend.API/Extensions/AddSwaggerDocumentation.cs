@@ -5,6 +5,8 @@ using Microsoft.OpenApi.Models;
 namespace Backend.API.Extensions;
 public static class SwaggerServiceExtensions
 {
+    private static readonly string[] value = new[] { "Bearer" };
+
     public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
     {
         services.AddSwaggerGen(c =>
@@ -51,7 +53,7 @@ public static class SwaggerServiceExtensions
                 }
             };
             c.AddSecurityDefinition("Bearer", securitySchema);
-            OpenApiSecurityRequirement securityRequirement = new() { { securitySchema, new[] { "Bearer" } } };
+            OpenApiSecurityRequirement securityRequirement = new() { { securitySchema, value } };
             c.AddSecurityRequirement(securityRequirement);
 
             c.OperationFilter<SwaggerLogoutOperationFilter>();

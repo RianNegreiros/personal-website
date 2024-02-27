@@ -1,4 +1,3 @@
-using Backend.Application.Models;
 using Backend.Application.Models.InputModels;
 
 using FluentValidation;
