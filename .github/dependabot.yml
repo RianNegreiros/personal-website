@@ -9,3 +9,7 @@ updates:
     directory: "/client"
     schedule:
       interval: "weekly"
+  - package-ecosystem: "nuget"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
