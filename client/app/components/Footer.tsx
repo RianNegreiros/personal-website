@@ -2,13 +2,19 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useLoading } from '../contexts/LoadingContext';
 
 export default function Footer() {
+  const { isLoading } = useLoading();
   const pathname = usePathname()
 
   const paths = ['/signin', '/signup', '/terms/service', '/terms/privacy']
 
   if (paths.includes(pathname)) {
+    return null
+  }
+
+  if (isLoading) {
     return null
   }
 
