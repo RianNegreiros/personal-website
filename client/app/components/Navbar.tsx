@@ -18,10 +18,7 @@ export default function Navbar() {
             <div className='flex h-16 justify-between'>
               <div className='flex w-full justify-between'>
                 <div className='flex items-center sm:ml-6 sm:flex sm:items-center sm:space-x-8'>
-                  <Link
-                    href='/'
-                    aria-label='Rian Negreiros Home'
-                  >
+                  <Link href='/' aria-label='Rian Negreiros Home'>
                     <h1 className='text-2xl font-medium'>
                       Rian{' '}
                       <span className='text-dracula-purple-500'>Negreiros</span>
@@ -113,10 +110,11 @@ export default function Navbar() {
                 href='/'
                 aria-label='Ir para página home'
                 prefetch
-                className={`${pathname === '/'
-                  ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
-                  : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
-                  }`}
+                className={`${
+                  pathname === '/'
+                    ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
+                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
+                }`}
               >
                 Home
               </Link>
@@ -125,10 +123,11 @@ export default function Navbar() {
                 href='/posts'
                 aria-label='Ir para página de posts'
                 prefetch
-                className={`${pathname === '/posts'
-                  ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
-                  : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
-                  }`}
+                className={`${
+                  pathname === '/posts'
+                    ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
+                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
+                }`}
               >
                 Blog
               </Link>
@@ -137,10 +136,11 @@ export default function Navbar() {
                 href='/projects'
                 aria-label='Ir para página de projetos'
                 prefetch
-                className={`${pathname === '/projects'
-                  ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
-                  : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
-                  }`}
+                className={`${
+                  pathname === '/projects'
+                    ? 'block border-l-4 border-dracula-purple bg-dracula-purple-50 py-2 pl-3 pr-4 text-base font-medium text-dracula-purple dark:bg-gray-800'
+                    : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-dracula-purple-50 hover:text-dracula-purple dark:text-white dark:hover:bg-gray-700'
+                }`}
               >
                 Projetos
               </Link>

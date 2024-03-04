@@ -2,10 +2,10 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useLoading } from '../contexts/LoadingContext';
+import { useLoading } from '../contexts/LoadingContext'
 
 export default function Footer() {
-  const { isLoading } = useLoading();
+  const { isLoading } = useLoading()
   const pathname = usePathname()
 
   const paths = ['/signin', '/signup', '/terms/service', '/terms/privacy']
@@ -27,7 +27,7 @@ export default function Footer() {
             © {new Date().getFullYear()}{' '}
             <Link
               href='https://www.linkedin.com/in/riannegreiros'
-              className='text-dracula-purple-500 hover:underline font-semibold'
+              className='font-semibold text-dracula-purple-500 hover:underline'
               aria-label='link de rodapé da página para abrir LinkedIn'
             >
               Rian Negreiros™
@@ -39,7 +39,7 @@ export default function Footer() {
             <li>
               <a
                 href='/terms/privacy'
-                className='mr-4 text-dracula-purple-500 hover:underline font-semibold md:mr-6'
+                className='mr-4 font-semibold text-dracula-purple-500 hover:underline md:mr-6'
               >
                 Política Privacidade
               </a>
@@ -47,7 +47,7 @@ export default function Footer() {
             <li>
               <a
                 href='/terms/service'
-                className='mr-4 text-dracula-purple-500 hover:underline font-semibold md:mr-6'
+                className='mr-4 font-semibold text-dracula-purple-500 hover:underline md:mr-6'
               >
                 Termos de Serviço
               </a>

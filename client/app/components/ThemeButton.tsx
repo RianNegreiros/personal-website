@@ -19,7 +19,11 @@ export default function ThemeButton() {
     <button
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
       className='rounded-lg bg-dracula-purple-500/30 p-2 text-dracula-purple'
-      aria-label={resolvedTheme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
+      aria-label={
+        resolvedTheme === 'dark'
+          ? 'Mudar para tema claro'
+          : 'Mudar para tema escuro'
+      }
     >
       {resolvedTheme === 'dark' ? (
         <svg

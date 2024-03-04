@@ -64,7 +64,10 @@ async function createPost(formData: PostData) {
   }
 }
 
-async function getPosts(pageNumber: number, pageSize: number): Promise<AxiosResponse> {
+async function getPosts(
+  pageNumber: number,
+  pageSize: number,
+): Promise<AxiosResponse> {
   try {
     const response = await axios.get(
       `${API_URL}/posts/?pageNumber=${pageNumber}&pageSize=${pageSize}`,
