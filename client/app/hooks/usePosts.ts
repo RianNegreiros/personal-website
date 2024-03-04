@@ -12,25 +12,31 @@ export const usePosts = (initialPage: number, initialPageSize: number) => {
   const [nextPage, setNextPage] = useState(false)
   const [error, setError] = useState<AxiosError | null>(null)
 
-  const { isLoading, setLoading } = useLoading();
+  const { isLoading, setLoading } = useLoading()
 
-  const fetchData = useCallback(async (pageNumber: number, pageSize: number) => {
-    try {
-      const result = await getPosts(pageNumber, pageSize)
-      return result.data
-    } catch (error) {
-      setError(error as AxiosError)
-    }
-  }, [])
+  const fetchData = useCallback(
+    async (pageNumber: number, pageSize: number) => {
+      try {
+        const result = await getPosts(pageNumber, pageSize)
+        return result.data
+      } catch (error) {
+        setError(error as AxiosError)
+      }
+    },
+    [],
+  )
 
-  const handlePageChange = useCallback(async (newPageNumber: number) => {
-    setLoading(true)
-    const fetchedData = await fetchData(newPageNumber, pageSize)
-    setData(fetchedData.items)
-    setPageNumber(fetchedData.currentPage)
-    setNextPage(fetchedData.hasNextPage)
-    setLoading(false)
-  }, [setLoading, fetchData, pageSize])
+  const handlePageChange = useCallback(
+    async (newPageNumber: number) => {
+      setLoading(true)
+      const fetchedData = await fetchData(newPageNumber, pageSize)
+      setData(fetchedData.items)
+      setPageNumber(fetchedData.currentPage)
+      setNextPage(fetchedData.hasNextPage)
+      setLoading(false)
+    },
+    [setLoading, fetchData, pageSize],
+  )
 
   useEffect(() => {
     handlePageChange(pageNumber)

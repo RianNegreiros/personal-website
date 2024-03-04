@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react'
 import { getProjects } from '@/app/utils/api'
 import { Project } from '../models'
-import { useLoading } from '../contexts/LoadingContext';
+import { useLoading } from '../contexts/LoadingContext'
 
 export function useProjects() {
-  const { isLoading, setLoading } = useLoading();
   const [projects, setProjects] = useState<Project[]>([])
+
+  const { isLoading, setLoading } = useLoading()
 
   useEffect(() => {
     getProjects()
