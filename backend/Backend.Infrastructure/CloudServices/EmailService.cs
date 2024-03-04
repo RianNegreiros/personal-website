@@ -1,35 +1,27 @@
 using Backend.Core.Interfaces.CloudServices;
 
-using MailKit.Net.Smtp;
-
 using Microsoft.Extensions.Configuration;
 
-using MimeKit;
+using Resend;
 
 namespace Backend.Infrastructure.CloudServices;
 
-public class EmailService(IConfiguration configuration) : IEmailService
+public class EmailService(IResend resend, IConfiguration configuration) : IEmailService
 {
+    private readonly IResend _resend = resend;
     private readonly IConfiguration _config = configuration;
 
     public async Task SendEmailAsync(string email, string subject, string message)
     {
-        var emailMessage = new MimeMessage();
-
-        emailMessage.From.Add(new MailboxAddress("no-reply", "no-reply@riannegreiros.dev"));
-        emailMessage.To.Add(new MailboxAddress("", email));
-        emailMessage.Subject = subject;
-        emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+        var emailMessage = new EmailMessage
         {
-            Text = message
+            From = "no-reply@riannegreiros.dev",
+            To = email,
+            Subject = subject,
+            HtmlBody = message
         };
 
-        using var client = new SmtpClient();
-        await client.ConnectAsync("smtp.resend.com", 587, false);
-        await client.AuthenticateAsync("resend", _config["ResendKey"]);
-        await client.SendAsync(emailMessage);
-
-        await client.DisconnectAsync(true);
+        await _resend.EmailSendAsync(emailMessage);
     }
 
     public string GenerateUnsubscribeLink(string email)
