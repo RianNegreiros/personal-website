@@ -19,11 +19,11 @@ builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddMongoDb(builder.Configuration);
 builder.Services.AddRedis(builder.Configuration);
 builder.Services.AddHealthChecks(builder.Configuration);
+builder.Services.AddHangfire();
+builder.Services.AddResend(builder.Configuration);
 
 // Configure middleware
 builder.Services.AddCors(builder.Configuration);
-builder.Services.AddHangfire();
-
 builder.Services.AddControllers();
 builder.Services.AddSwaggerDocumentation();
 
