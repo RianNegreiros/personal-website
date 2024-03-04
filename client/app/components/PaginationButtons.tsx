@@ -12,7 +12,7 @@ const Pagination: React.FC<PaginationProps> = ({
   handlePageChange,
 }) => {
   const buttonClasses =
-    'my-4 inline-flex rounded-lg border px-5 py-2.5 text-center text-sm font-medium transition-all duration-500 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-400 dark:border-dracula-purple-900 dark:bg-dracula-purple-900 dark:text-black dark:hover:border-white dark:hover:bg-black dark:hover:text-white light:border-light-theme-color light:bg-light-theme-color light:text-dark-theme-color light:hover:border-dark-theme-color light:hover:bg-dark-theme-color light:hover:text-light-theme-color'
+    'my-4 inline-flex rounded-lg border px-5 py-2.5 text-center text-sm font-medium transition-all duration-500 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-400 dark:border-dracula-purple-900 dark:bg-dracula-purple-900 dark:text-black dark:hover:border-white dark:hover:bg-gray-900 dark:hover:text-white'
 
   return (
     <div className='flex flex-col items-center'>
