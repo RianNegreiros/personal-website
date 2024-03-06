@@ -55,7 +55,9 @@ public class PostRepository(IMongoDatabase database) : IPostRepository
             .Include(p => p.Slug)
             .Include(p => p.CreatedAt);
 
-        return await _postCollection.Find(_ => true).Project<Post>(projection).ToListAsync();
+        return await _postCollection.Find(_ => true).Project<Post>(projection)
+        .SortByDescending(p => p.CreatedAt)
+        .ToListAsync();
     }
 
     public async Task<int> Count()

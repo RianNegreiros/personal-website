@@ -96,7 +96,7 @@ export default function NewsLetter() {
           <p className='pt-8 text-sm text-gray-500 dark:text-gray-300'>
             Assine o{' '}
             <a
-              href={`${API_URL}/posts/rss`}
+              href={`${API_URL}/rss`}
               className='inline-flex items-center font-medium text-cyan-500 hover:underline dark:text-cyan-600'
             >
               Feed RSS

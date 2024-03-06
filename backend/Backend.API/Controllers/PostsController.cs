@@ -28,54 +28,6 @@ public class PostsController(IPostService postService, UserManager<User> userMan
     private readonly ICachingService _cachingService = cachingService;
     private readonly INotificationService _notificationService = notificationService;
 
-    [HttpGet("rss")]
-    [ResponseCache(Duration = 1200)]
-    [SwaggerOperation(Summary = "Get Posts RSS Feed")]
-    public async Task<IActionResult> Rss()
-    {
-        List<PostViewModel> posts = [.. (await _postService.GetPosts()).OrderByDescending(post => post.CreatedAt)];
-
-        var feed = new SyndicationFeed(
-            "Rian Negreiros Blog Feed",
-            "RSS Feed from Rian Negreiros Dos Santos Blog",
-            new Uri("https://www.riannegreiros.dev"),
-            posts.Select(post =>
-            {
-                var item = new SyndicationItem(
-                    post.Title,
-                    post.Content,
-                    new Uri($"https://www.riannegreiros.dev/posts/{post.Slug}"),
-                    post.Id.ToString(),
-                    post.CreatedAt
-                )
-                {
-                    PublishDate = post.CreatedAt,
-                    Copyright = new TextSyndicationContent($"Copyright {post.CreatedAt.Year}"),
-                    Summary = new TextSyndicationContent(post.Summary),
-                    LastUpdatedTime = post.UpdatedAt
-                };
-                return item;
-            }).ToList()
-        );
-
-        var settings = new XmlWriterSettings
-        {
-            Encoding = Encoding.UTF8,
-            NewLineHandling = NewLineHandling.Entitize,
-            NewLineOnAttributes = true,
-            Indent = true
-        };
-
-        using var stream = new MemoryStream();
-        using (var xmlWriter = XmlWriter.Create(stream, settings))
-        {
-            var rssFormatter = new Rss20FeedFormatter(feed, false);
-            rssFormatter.WriteTo(xmlWriter);
-            xmlWriter.Flush();
-        }
-        return File(stream.ToArray(), "application/rss+xml; charset=utf-8");
-    }
-
     [Authorize(Roles = "Admin")]
     [HttpPost]
     [SwaggerOperation(Summary = "Create a new post.")]
