@@ -17,7 +17,7 @@ interface PostProps {
 }
 
 export default function Post({ params }: PostProps) {
-  const { isLoading, post, comments, setComments } = usePostAndComments(
+  const { isLoading, post, comments, setComments, isError } = usePostAndComments(
     params.slug,
   )
 
@@ -25,7 +25,7 @@ export default function Post({ params }: PostProps) {
     return <Loading />
   }
 
-  if (post === null) {
+  if (isError) {
     return <NotFound />
   }
 

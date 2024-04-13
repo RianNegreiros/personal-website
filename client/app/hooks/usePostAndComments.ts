@@ -4,8 +4,17 @@ import { getPostBySlug, getCommentsForPost } from '@/app/utils/api'
 import { useLoading } from '../contexts/LoadingContext'
 
 export const usePostAndComments = (slug: string) => {
-  const [post, setPost] = useState<Post | null>(null)
+  const [post, setPost] = useState<Post>({
+    id: '',
+    title: '',
+    summary: '',
+    content: '',
+    slug: '',
+    createdAt: '',
+    updatedAt: ''
+  })
   const [comments, setComments] = useState<Comment[]>([])
+  const [isError, setIsError] = useState(false)
 
   const { isLoading, setLoading } = useLoading()
 
@@ -20,11 +29,12 @@ export const usePostAndComments = (slug: string) => {
         setLoading(false)
       } catch (error) {
         console.error('Failed to fetch data:', error)
+        setIsError(true)
         setLoading(false)
       }
     }
     fetchData()
   }, [setLoading, slug])
 
-  return { isLoading, post, comments, setComments }
+  return { isLoading, post, comments, setComments, isError }
 }
