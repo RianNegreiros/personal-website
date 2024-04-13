@@ -157,12 +157,11 @@ public class PostsController(IPostService postService, UserManager<User> userMan
         });
     }
 
-    [HttpGet("random/{count}")]
-    [ResponseCache(Duration = 1200)]
-    [SwaggerOperation(Summary = "Get random posts.")]
+    [HttpGet("suggestions/{count}")]
+    [SwaggerOperation(Summary = "Get posts suggestions.")]
     [ProducesResponseType(typeof(ApiResponse<List<PostViewModel>>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ApiResponse<List<PostViewModel>>>> GetRandomPosts(int count, string? excludeSlug = null)
+    public async Task<ActionResult<ApiResponse<List<PostViewModel>>>> GetPostsSuggestions(int count, string? excludeSlug = null)
     {
         List<PostViewModel> posts = await _postService.GetPostsSuggestions(count, excludeSlug);
 
