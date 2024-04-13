@@ -14,5 +14,5 @@ public interface IPostRepository
     Task<int> Count();
     Task Delete(string id);
     Task<List<Post>> GetPostsForUserById(string userId);
-    Task<List<Post>> GetRandomPosts(int count);
+    Task<List<Post>> GetPostsSuggestions(int count, string? excludeSlug = null);
 }

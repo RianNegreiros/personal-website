@@ -82,7 +82,7 @@ export default function Post({ params }: PostProps) {
         setComments={setComments}
       />
 
-      <PostSuggestions />
+      <PostSuggestions slug={params.slug} />
 
       <NewsLetter />
     </main>

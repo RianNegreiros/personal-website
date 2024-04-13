@@ -121,9 +121,9 @@ public class PostService(IPostRepository postRepository) : IPostService
             };
     }
 
-    public async Task<List<PostViewModel>> GetRandomPosts(int count)
+    public async Task<List<PostViewModel>> GetPostsSuggestions(int count, string? excludeSlug)
     {
-        List<Post> posts = await _postRepository.GetRandomPosts(count);
+        List<Post> posts = await _postRepository.GetPostsSuggestions(count, excludeSlug);
         return posts != null
             ? posts.Select(post => new PostViewModel
             {

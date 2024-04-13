@@ -77,14 +77,14 @@ public class PostRepository(IMongoDatabase database) : IPostRepository
         return await _postCollection.Find(c => c.Author.Id == userId).ToListAsync();
     }
 
-    public async Task<List<Post>> GetRandomPosts(int count)
+    public async Task<List<Post>> GetPostsSuggestions(int count, string? excludeSlug = null)
     {
         var pipeline = new BsonDocument[]
         {
-        new("$sample", new BsonDocument("size", count))
+                new("$match", new BsonDocument("slug", new BsonDocument("$ne", excludeSlug))),
+                new("$sample", new BsonDocument("size", count))
         };
 
         return await _postCollection.Aggregate<Post>(pipeline).ToListAsync();
     }
-
 }

@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { getRandomPosts } from '@/app/utils/api'
 import { Post } from '@/app/models'
+import { getPostsSuggestions } from '../utils/api'
 
-export default function PostSuggestions() {
+interface PostSuggestionsProps {
+  slug: string
+}
+
+
+export default function PostSuggestions({ slug }: PostSuggestionsProps) {
   const [posts, setPosts] = useState<Post[]>([])
 
   useEffect(() => {
-    getRandomPosts(4)
+    getPostsSuggestions(4, slug)
       .then((data) => setPosts(data.data))
       .catch((error) => console.error(error))
-  }, [])
+  }, [slug])
 
   return (
     <aside

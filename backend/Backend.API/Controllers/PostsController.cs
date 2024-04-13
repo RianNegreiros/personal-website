@@ -162,9 +162,9 @@ public class PostsController(IPostService postService, UserManager<User> userMan
     [SwaggerOperation(Summary = "Get random posts.")]
     [ProducesResponseType(typeof(ApiResponse<List<PostViewModel>>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ApiResponse<List<PostViewModel>>>> GetRandomPosts(int count)
+    public async Task<ActionResult<ApiResponse<List<PostViewModel>>>> GetRandomPosts(int count, string? excludeSlug = null)
     {
-        List<PostViewModel> posts = await _postService.GetRandomPosts(count);
+        List<PostViewModel> posts = await _postService.GetPostsSuggestions(count, excludeSlug);
 
         return posts == null
             ? (ActionResult<ApiResponse<List<PostViewModel>>>)NotFound()
