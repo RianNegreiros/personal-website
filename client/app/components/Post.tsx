@@ -38,7 +38,13 @@ export default function Post({ params }: PostProps) {
     hour12: false,
   }
 
-  const date = new Date(post.createdAt)
+  let formattedDate = '';
+  if (post.createdAt) {
+    const date = new Date(post.createdAt);
+    if (!isNaN(date.getTime())) {
+      formattedDate = new Intl.DateTimeFormat('pt-BR', options).format(date);
+    }
+  }
 
   return (
     <main className='bg-white pb-8 pt-4 antialiased dark:bg-gray-900 lg:pb-12 lg:pt-8'>
@@ -54,7 +60,7 @@ export default function Post({ params }: PostProps) {
 
             <div className='inline-flex w-full items-center justify-center space-x-5 pt-6'>
               <p className='text-base font-medium leading-6 text-dracula-purple'>
-                {new Intl.DateTimeFormat('pt-BR', options).format(date)}
+                {formattedDate}
               </p>
               <ShareButtons post={post} />
             </div>
