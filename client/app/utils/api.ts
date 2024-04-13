@@ -81,7 +81,9 @@ async function getPosts(
 
 async function getPostsSuggestions(count: number, excludeSlug: string) {
   try {
-    const response = await axios.get(`${API_URL}/posts/random/${count}?excludeSlug=${excludeSlug}`)
+    const response = await axios.get(
+      `${API_URL}/posts/suggestions/${count}?excludeSlug=${excludeSlug}`,
+    )
     return response.data
   } catch (error) {
     throw new Error('Failed to fetch posts. Please try again later.')

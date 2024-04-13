@@ -17,9 +17,8 @@ interface PostProps {
 }
 
 export default function Post({ params }: PostProps) {
-  const { isLoading, post, comments, setComments, isError } = usePostAndComments(
-    params.slug,
-  )
+  const { isLoading, post, comments, setComments, isError } =
+    usePostAndComments(params.slug)
 
   if (isLoading) {
     return <Loading />
@@ -38,11 +37,11 @@ export default function Post({ params }: PostProps) {
     hour12: false,
   }
 
-  let formattedDate = '';
+  let formattedDate = ''
   if (post.createdAt) {
-    const date = new Date(post.createdAt);
+    const date = new Date(post.createdAt)
     if (!isNaN(date.getTime())) {
-      formattedDate = new Intl.DateTimeFormat('pt-BR', options).format(date);
+      formattedDate = new Intl.DateTimeFormat('pt-BR', options).format(date)
     }
   }
 

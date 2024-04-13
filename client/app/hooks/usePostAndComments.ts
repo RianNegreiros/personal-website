@@ -11,7 +11,7 @@ export const usePostAndComments = (slug: string) => {
     content: '',
     slug: '',
     createdAt: '',
-    updatedAt: ''
+    updatedAt: '',
   })
   const [comments, setComments] = useState<Comment[]>([])
   const [isError, setIsError] = useState(false)

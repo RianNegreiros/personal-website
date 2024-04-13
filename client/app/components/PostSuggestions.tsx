@@ -6,7 +6,6 @@ interface PostSuggestionsProps {
   slug: string
 }
 
-
 export default function PostSuggestions({ slug }: PostSuggestionsProps) {
   const [posts, setPosts] = useState<Post[]>([])
 
