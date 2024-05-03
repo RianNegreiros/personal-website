@@ -43,7 +43,12 @@ public class PostRepository(IMongoDatabase database) : IPostRepository
 
     public async Task<List<Post>> GetAll()
     {
-        return await _postCollection.Find(_ => true).ToListAsync();
+        var filter = Builders<Post>.Filter.Empty;
+        var sort = Builders<Post>.Sort.Descending(p => p.CreatedAt);
+
+        var posts = await _postCollection.FindAsync(filter, new FindOptions<Post> { Sort = sort });
+
+        return await posts.ToListAsync();
     }
 
     public async Task<List<Post>> GetPostsForFeed()
