@@ -11,8 +11,8 @@ public class CachingService : ICachingService
         _cache = cache;
         _options = new DistributedCacheEntryOptions
         {
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(3600),
-            SlidingExpiration = TimeSpan.FromSeconds(1200)
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(12),
+            SlidingExpiration = TimeSpan.FromHours(8)
         };
     }
 
