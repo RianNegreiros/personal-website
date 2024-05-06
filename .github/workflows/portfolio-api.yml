@@ -55,4 +55,4 @@ jobs:
         app-name: 'portfolio-api'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_dda2291c7ab847c9bae5d8deb7905364 }}
-        images: 'index.docker.io/riannegreiros/portfolio-api:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_0023015699aa47558ba08e0a1811d818 }}/riannegreiros/portfolio-api:${{ github.sha }}'
