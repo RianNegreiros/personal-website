@@ -1,12 +1,19 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy container app to Azure Web App - rnds-portfolio-api
+name: Build and deploy container app to Azure Web App - portfolio API
 
 on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.gitignore'
+      - '_docs/**'
+      - 'client/**'
+      - 'Makefile'
+      - 'README.md'
+      - '.vercelignore'
   workflow_dispatch:
 
 jobs:
@@ -45,7 +52,7 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'rnds-portfolio-api'
+        app-name: 'portfolio-api'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_19eb4a08fcc44ac5bc097f9602f1542b }}
         images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_3e5fac16133a4c52ae020b0dcc9995fe }}/appsvc/staticsite:${{ github.sha }}'
