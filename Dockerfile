@@ -1,6 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
-EXPOSE 80
 
 # Copy the .csproj and restore as distinct layers
 COPY ./backend .
