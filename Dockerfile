@@ -1,7 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
-EXPOSE 8080
-ENV ASPNETCORE_URLS http://+:8080
 
 # Copy the .csproj and restore as distinct layers
 COPY ./backend .
@@ -15,4 +13,5 @@ RUN dotnet publish "./Backend.API/Backend.API.csproj" -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build-env /app/out .
+EXPOSE 80
 ENTRYPOINT ["dotnet", "Backend.API.dll"]
