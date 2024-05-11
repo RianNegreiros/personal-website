@@ -1,5 +1,5 @@
 const siteMetadata = {
-  title: 'Rian Negreiros Dos Santos Blog e Portfólio',
+  title: 'Rian N. Dos Santos',
   author: 'Rian Negreiros Dos Santos',
   description:
     'Blog e Portfólio de Rian Negreiros Dos Santos, desenvolvedor Back-end',
