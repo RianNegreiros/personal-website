@@ -1,3 +1,5 @@
+[![Build and deploy container app to Azure Web App - Portfolio API](https://github.com/RianNegreiros/portfolio/actions/workflows/portfolio-api.yml/badge.svg)](https://github.com/RianNegreiros/portfolio/actions/workflows/portfolio-api.yml)
+
 # Portfolio
 
 ## Table of Contents
@@ -10,10 +12,6 @@
 - [Tests Features](#tests-features)
 - [Author](#author)
 
-## Deployment on Azure with Azure Docker Registry
-
-[![Build and deploy to Azure Web App](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml/badge.svg)](https://github.com/RianNegreiros/portfolio/actions/workflows/main_personalwebsitebackend.yml)
-
 ## Usage
 
 You can access the application, hosted at `riannegreiros.dev`, using the following URL:
@@ -25,9 +23,9 @@ Here are some key endpoints you may want to explore:
 - [Home Page](https://riannegreiros.dev)
 - [Blog Page](https://riannegreiros.dev/posts)
 - [Projects Page](https://riannegreiros.dev/projects)
-- [API Endpoints](https://api.riannegreiros.dev/swagger/index.html)
-- [Health Checks](https://api.riannegreiros.dev/api/health)
-- [RSS Feed](https://api.riannegreiros.dev/api/posts/rss)
+- [API Endpoints](https://rnds-portfolio-api.azurewebsites.net/swagger/index.html)
+- [Health Checks](https://rnds-portfolio-api.azurewebsites.net/api/health)
+- [RSS Feed](https://rnds-portfolio-api.azurewebsites.net/api/rss)
 
 ## How to run
 
