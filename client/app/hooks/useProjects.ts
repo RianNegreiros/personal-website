@@ -11,6 +11,7 @@ export function useProjects() {
   const { isLoading, setLoading } = useLoading()
 
   useEffect(() => {
+    setLoading(true)
     getProjects()
       .then((projects) => {
         setProjects(projects.data)
