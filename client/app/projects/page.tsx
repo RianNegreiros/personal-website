@@ -1,14 +1,14 @@
 'use client'
 
 import { useProjects } from '../hooks/useProjects'
-import Loading from '../components/Loading'
 import Project from '../components/Project'
+import CardPlaceholder from '../components/CardPlaceholder'
 
 export default function ProjectsPage() {
   const { isLoading, projects } = useProjects()
 
   if (isLoading) {
-    return <Loading />
+    return <CardPlaceholder />
   }
 
   return (
