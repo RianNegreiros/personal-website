@@ -47,7 +47,7 @@ git clone https://github.com/RianNegreiros/portfolio.git
 docker compose up
 ```
 
-Now you can access the client on `localhost:3000` and the API on `localhost:8080`
+Now you can access the client on `localhost:3000` and the API on `localhost:80/swagger`
 
 ## Built With
 
