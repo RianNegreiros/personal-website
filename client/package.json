@@ -20,7 +20,7 @@
     "@types/react-dom": "18.3.0",
     "autoprefixer": "10.4.19",
     "axios": "^1.7.2",
-    "cssnano": "^7.0.2",
+    "cssnano": "^7.0.3",
     "eslint": "8.57.0",
     "next": "^14.2.4",
     "next-share": "^0.27.0",
