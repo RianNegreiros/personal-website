@@ -24,7 +24,7 @@
     "eslint": "8.57.0",
     "next": "^14.2.4",
     "next-share": "^0.27.0",
-    "next-themes": "^0.3.0",
+    "next-themes": "^0.4.4",
     "postcss": "8.4.38",
     "react": "18.3.1",
     "react-dom": "18.3.1",
